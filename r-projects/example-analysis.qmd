@@ -1,0 +1,60 @@
+---
+title: "Example R Analysis (replace with your project)"
+description: "One-sentence summary of the problem and what you found."
+date: "2026-01-20"
+categories: [R, Statistics]
+format:
+  html:
+    code-fold: true
+---
+
+## Overview
+
+This is how a plain `.R` script becomes a page on the site. Quarto renders
+`.qmd` files (R Markdown / Quarto Markdown) using R code chunks — each chunk
+runs and its output (tables, plots, printed results) is embedded in the page.
+
+Two ways to bring in your real R work:
+
+1. **Fastest:** run `scripts/convert_r_to_qmd.py path/to/your-script.R` (included
+   in this repo) — it wraps your `.R` file into a `.qmd` like this one automatically,
+   with a title/description/date placeholder for you to fill in.
+2. **Manual:** copy your R code into the chunk(s) below by hand and add the
+   YAML header shown above (title, description, date, categories) — that
+   header is what powers the Projects listing cards.
+
+## Data
+
+```{r}
+#| label: setup
+library(tidyverse)
+
+df <- tibble(
+  x = 1:10,
+  y = (1:10)^2
+)
+```
+
+## Analysis
+
+```{r}
+#| label: sample-plot
+#| fig-cap: "Sample output (delete me)"
+ggplot(df, aes(x, y)) +
+  geom_line() +
+  geom_point() +
+  labs(title = "Replace this with your real analysis") +
+  theme_minimal()
+```
+
+```{r}
+summary(df)
+```
+
+## Notes
+
+- If your real script reads a data file, commit that file to the repo (e.g.
+  a `data/` folder) and reference it with a relative path.
+- If a script needs an R package beyond the tidyverse, add it to the
+  `packages:` list in `.github/workflows/publish.yml` under "Install R
+  dependencies".

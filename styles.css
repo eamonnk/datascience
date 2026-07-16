@@ -1,0 +1,23 @@
+/* Small tweaks on top of the Cosmo theme */
+
+.quarto-title-banner {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.quarto-listing .quarto-grid-item {
+  border-radius: 8px;
+  transition: box-shadow 0.15s ease-in-out;
+}
+
+.quarto-listing .quarto-grid-item:hover {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+main {
+  max-width: 900px;
+}
+
+code {
+  border-radius: 4px;
+}

@@ -1,0 +1,32 @@
+---
+title: "About"
+---
+
+## Background
+
+I'm currently completing an MSc in [Programme Name] at [University], focused
+on [areas — e.g. statistical modelling, machine learning, data engineering].
+This site hosts the coursework, projects and personal analyses I've built
+along the way.
+
+## Education
+
+**MSc [Programme Name]**, [University] — [Start year]–[End year]
+: Relevant modules: [Module 1], [Module 2], [Module 3]
+
+**BSc/BA [Previous Degree]**, [University] — [Years]
+
+## Experience
+
+**[Job Title]**, [Company] — [Dates]
+: One or two lines on what you did and the impact.
+
+## Tools & technologies
+
+Python (pandas, scikit-learn, matplotlib), R (tidyverse, ggplot2, caret),
+SQL, Git, Quarto, Jupyter, [anything else relevant].
+
+## Resume
+
+[Download my CV](files/cv.pdf) *(add a PDF to a `files/` folder and update
+this link, or remove the line if you'd rather not host it publicly)*

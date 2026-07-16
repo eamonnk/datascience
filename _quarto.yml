@@ -1,0 +1,48 @@
+project:
+  type: website
+  # Local preview output. The GitHub Action renders to _site and
+  # publishes that to the gh-pages branch — you never need to touch this folder.
+  output-dir: _site
+
+website:
+  title: "Your Name — MSc Portfolio"
+  description: "Data science, analytics and R/Python projects from my MSc coursework"
+  site-url: "https://YOUR-GH-USERNAME.github.io/YOUR-REPO-NAME"
+  favicon: favicon.ico
+  page-footer:
+    left: "© 2026 Your Name"
+    right:
+      - icon: github
+        href: https://github.com/YOUR-GH-USERNAME
+      - icon: linkedin
+        href: https://linkedin.com/in/YOUR-LINKEDIN
+  navbar:
+    background: dark
+    left:
+      - href: index.qmd
+        text: Home
+      - href: projects.qmd
+        text: Projects
+      - href: about.qmd
+        text: About
+    right:
+      - icon: github
+        href: https://github.com/YOUR-GH-USERNAME/YOUR-REPO-NAME
+        aria-label: GitHub repo
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    code-fold: true
+    code-tools: true
+    code-copy: true
+    smooth-scroll: true
+    embed-resources: false
+    grid:
+      body-width: 900px
+
+execute:
+  freeze: auto   # cache/re-use previous renders unless source files change
+  warning: false

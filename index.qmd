@@ -1,0 +1,32 @@
+---
+title: "Hi, I'm Your Name"
+subtitle: "MSc [Your Programme] — Data Science / Analytics Portfolio"
+page-layout: full
+---
+
+Welcome. This site collects the projects, assignments and analyses I completed
+during my MSc, built with **Python (Jupyter notebooks)** and **R**.
+
+I'm currently looking for opportunities in [role you're targeting — e.g. Data
+Analyst / Data Scientist]. Below is a snapshot of my work — see the
+[Projects](projects.qmd) page for the full list, or the [About](about.qmd)
+page for more on my background.
+
+## Featured work
+
+::: {.callout-note appearance="simple"}
+Replace this section with 2–3 of your strongest projects once they're in
+place — link directly to their rendered pages, e.g.
+`[Customer churn prediction](notebooks/churn-model.html)`.
+:::
+
+- **[Project title 1](notebooks/example-notebook.html)** — one-line summary of what it does and the result.
+- **[Project title 2](r-projects/example-analysis.html)** — one-line summary of what it does and the result.
+
+## Skills
+
+`Python` · `R` · `pandas` · `scikit-learn` · `tidyverse` · `ggplot2` · `SQL` · `statistics`
+
+## Get in touch
+
+[LinkedIn](https://linkedin.com/in/YOUR-LINKEDIN) · [GitHub](https://github.com/YOUR-GH-USERNAME) · [Email](mailto:you@example.com)

@@ -1,0 +1,21 @@
+---
+title: "Projects"
+listing:
+  contents:
+    - notebooks
+    - r-projects
+  type: default
+  sort: "date desc"
+  sort-ui: true
+  filter-ui: true
+  categories: true
+  fields: [image, date, title, subtitle, description, categories]
+  feed: false
+page-layout: full
+title-block-banner: false
+---
+
+Every assignment and project below is rendered directly from its original
+`.ipynb` (Python) or `.qmd`/`.R` (R) source — click through to see full code,
+output and commentary. Use the category filters to jump straight to Python or
+R work.
