@@ -1,14 +1,13 @@
 ---
-title: "Hi, I'm Your Name"
-subtitle: "MSc [Your Programme] — Data Science / Analytics Portfolio"
+title: "Side projects and assignment work"
+subtitle: "Data Science / Analytics Portfolio"
 page-layout: full
 ---
 
-Welcome. This site collects the projects, assignments and analyses I completed
-during my MSc, built with **Python (Jupyter notebooks)** and **R**.
+Welcome. This site collects sample side projects, assignments and analyses completed
 
-I'm currently looking for opportunities in [role you're targeting — e.g. Data
-Analyst / Data Scientist]. Below is a snapshot of my work — see the
+
+Below is a snapshot of my work — see the
 [Projects](projects.qmd) page for the full list, or the [About](about.qmd)
 page for more on my background.
 
@@ -29,4 +28,4 @@ place — link directly to their rendered pages, e.g.
 
 ## Get in touch
 
-[LinkedIn](https://linkedin.com/in/YOUR-LINKEDIN) · [GitHub](https://github.com/YOUR-GH-USERNAME) · [Email](mailto:you@example.com)
+[GitHub](https://github.com/Yeamnnk 
