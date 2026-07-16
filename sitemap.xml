@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://YOUR-GH-USERNAME.github.io/YOUR-REPO-NAME/README_test.html</loc>
+    <lastmod>2026-07-16T09:19:26.983Z</lastmod>
+  </url>
+  <url>
+    <loc>https://YOUR-GH-USERNAME.github.io/YOUR-REPO-NAME/about.html</loc>
+    <lastmod>2026-07-16T09:19:26.983Z</lastmod>
+  </url>
+  <url>
+    <loc>https://YOUR-GH-USERNAME.github.io/YOUR-REPO-NAME/projects.html</loc>
+    <lastmod>2026-07-16T09:19:26.984Z</lastmod>
+  </url>
+  <url>
+    <loc>https://YOUR-GH-USERNAME.github.io/YOUR-REPO-NAME/notebooks/example-notebook.html</loc>
+    <lastmod>2026-07-16T09:19:26.983Z</lastmod>
+  </url>
+  <url>
+    <loc>https://YOUR-GH-USERNAME.github.io/YOUR-REPO-NAME/r-projects/example-analysis.html</loc>
+    <lastmod>2026-07-16T09:19:26.984Z</lastmod>
+  </url>
+  <url>
+    <loc>https://YOUR-GH-USERNAME.github.io/YOUR-REPO-NAME/index.html</loc>
+    <lastmod>2026-07-16T09:19:26.983Z</lastmod>
+  </url>
+</urlset>
