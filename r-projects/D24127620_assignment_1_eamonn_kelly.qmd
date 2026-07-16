@@ -1,0 +1,1330 @@
+---
+title: "Water Quality Metric Data Analysis"
+subtitle: "TU060 - Determining water quality metrics rlationships and predictors"
+author: "Eamonn Kelly  - Student ID: D24127620"
+format:
+  html:
+    self-contained: true
+    code-fold: true
+    code-tools: true
+    toc: true
+editor: source
+---
+
+```{=html}
+<style>
+/* Center figure captions in Quarto HTML, make them black and bold */
+.quarto-figure .figure-caption, 
+figure > figcaption { 
+  text-align: center; 
+  color: black; 
+  font-weight: bold; 
+}
+</style>
+```
+
+```{r}
+#| label: install-and-load
+#| message: false
+#| warning: false
+
+quiet_library <- function(pkg) {
+  suppressMessages(suppressWarnings({
+    if (!requireNamespace(pkg, quietly = TRUE)) {
+      install.packages(pkg, quiet = TRUE)
+    }
+    library(pkg, character.only = TRUE)
+  }))
+}
+
+quiet_library("tidyverse")  # Collection of R packages (dplyr, ggplot2, tidyr, etc.) for data wrangling, visualization, and analysis
+quiet_library("pastecs")    # Tools for descriptive statistics, time series analysis, and data exploration (e.g., stat.desc)
+quiet_library("psych")   # Descriptive statistics by group
+quiet_library("FSA")        # Includes general tools for data analysis (e.g., nonparametric tests, bootstrapping)
+quiet_library("semTools")   # Supplementary functions for Structural Equation Modeling (SEM), including model fit, reliability, and measurement invariance tests
+quiet_library("VIM") # Visualization and Imputation of Missing Values
+quiet_library("naniar") #(naniar short for NA + naniar) - Missing data wrangling plus Little's test
+quiet_library("simputation") # For imputing variables
+
+quiet_library("sjstats")  # Provides convenient functions for effect sizes
+quiet_library("gmodels")  # Includes 'CrossTable()' for contingency tables.
+
+quiet_library("car")   # Includes Levene's test for homogeneity
+quiet_library("effectsize")   # Includes calculations for effectsize
+quiet_library("rstatix")   # Includes calculations for effectsize and Dunn's test
+
+quiet_library("gtsummary") # Formatting tables
+quiet_library("flextable") # Formatting tables
+quiet_library("dplyr") # Formatting tables
+quiet_library("knitr") # Formatting tables
+quiet_library("tidyr") # Formatting tables
+quiet_library("Hmisc") # Formatting tables
+
+
+
+
+```
+
+```{r}
+#| label: loaddata
+#| 
+# Data csv file was obtained from ehre
+# https://figshare.com/articles/dataset/Water_Quality_Monitoring_Dataset_Ireland_/25002131
+# More details below
+#Amend this to reflect your folder structure 
+datalocation <- file.path("./")
+datapath <- file.path(datalocation,"WQI Results on Dataset.csv")
+
+#Read in the csv file dataset
+wqi_df <- read.csv(datapath, header=TRUE)
+
+#Setting the column names to be that used in the dataset but in lowercase to make life a bit easier
+colnames(wqi_df) <- tolower(colnames(wqi_df))
+
+
+```
+
+```{r}
+#| label: craete_data_subset
+#
+# Define variables that we want to use in or analysis
+# we'll craete a subset of the data with just those to keep ru dataset as light as we can.
+varsint <- c("waterbodyname",  "years",  "sampledate",  "alkalinity.total..as.caco3.",  "bod...5.days..total.",  "conductivity..25.c",  "dissolved.oxygen",  "ph",  "temperature",  "ccme_wqi",  "wawqi",  "horton.wqi",  "brown.wqi",  "srdd.wqi")
+
+# create data subset of variables we want to lok at
+wqi_dsubset <- wqi_df[varsint]
+
+
+# just get human friendly labels
+colnames(wqi_dsubset) <- c( "waterbodyname", "years", "month", "alkalinity",  "biochem_ox_dmnd", "conductivity", "dissolved.oxygen", "ph",  "temperature", "ccme_wqi",  "wawqi",  "horton.wqi",  "brown.wqi",  "srdd.wqi")
+
+
+
+```
+## Introdction
+
+
+This analysis uses water quality data which was taken over a period of 16 years from 2007 to 2023 across 16 locations in Ireland by the Environmental Protection Agency(EPA). The data was then used to classify water quality at these locations.
+
+Water samples were taken from 160 sites within these 16 geographical areas, at various times throughout the year, tested in labs, and calculations were then carried out to determine Water Quality according to different water quality standards, a number of which exist.
+
+
+The purpose of this analysis is to evaluate the relationships among key physical, geographic and time based patterns to gain a better understanding how individual factors influence overall water quality across these Irish monitoring sites. The aim will be to attempt to identify key predictors of water quality and patterns determining water quality. The analysis examines whether variables such as **ph**, **temperature**, **biochemical oxygen demand *BOD**, **dissolved oxygen** vary by location, season, and which have the greatest impact in determining water quality.
+
+Before developing a predictive model, a series of preliminary analyses were conducted to establish statistical evidence supporting the inclusion of these variables as potential predictors and major determining factors. A set of hypotheses were derived which together test potential predictors (**ph**, **temperature**, **biochemical oxygen demand *BOD**, **dissolved oxygen**) and show a significant association with water quality. Evidence from the analysis of these hypotheses will provide the basis for including these variables in a subsequent **multiple linear regression model** predicting exam outcomes.
+
+
+## Dataset
+
+The data set was sourced from the following location 
+[Water Quality Monitoring Dataset (Ireland)](https://figshare.com/articles/dataset/Water_Quality_Monitoring_Dataset_Ireland_/25002131). Thsi dataset is a merging of multiple csv files from the EPA into a single source. 
+
+We have reduced the dataset down further into a subset of variables which are of interest to us for our analysis.
+
+
+## Description
+
+ Our dataset has `29,159` rows, and `14` variables. Then variables and statistical types are listed in the below table.
+
+
+| variable         | r_type  | is_factor | factor_summary                           | stat_type             |
+| ---------------- | ------- | --------- | ---------------------------------------------------------------- | 
+| waterbodyname    | factor  | TRUE      | 160 levels (e.g., ABBEYTOWN_010, Allua,) | Categorical (Nominal) |
+| years            | integer | FALSE     | NA                                       | Discrete (Ratio)      |
+| month            | factor  | TRUE      | 12 levels (e.g., Jan, Feb, …)            | Categorical (Ordinal) |
+| alkalinity       | double  | FALSE     | NA                                       | Continuous (Ratio)    |
+| biochem_ox_dmnd  | double  | FALSE     | NA                                       | Continuous (Ratio)    |
+| conductivity     | double  | FALSE     | NA                                       | Continuous (Ratio)    |
+| dissolved.oxygen | double  | FALSE     | NA                                       | Continuous (Ratio)    |
+| ph               | double  | FALSE     | NA                                       | Continuous (Interval) |
+| temperature      | double  | FALSE     | NA                                       | Continuous (Interval) |
+| ccme_wqi         | factor  | TRUE      | 5 levels (e.g., Excellent, Fair, …)      | Categorical (Ordinal) |
+| wawqi            | factor  | TRUE      | 6 levels (e.g., Excellent, Fair, …)      | Categorical (Ordinal) |
+| horton.wqi       | factor  | TRUE      | 6 levels (e.g., Excellent, Fair, …)      | Categorical (Ordinal) |
+| brown.wqi        | factor  | TRUE      | 5 levels (e.g., Excellent, Fair, …)      | Categorical (Ordinal) |
+| srdd.wqi         | factor  | TRUE      | 6 levels (e.g., Excellent, Fair, …)      | Categorical (Ordinal) |
+
+Table 2. Variable and Statistical Datatypes present in the data set
+
+```{r}
+summary(wqi_dsubset)
+head(wqi_dsubset)
+```
+
+| Variable | Range (Min–Max) | Mean | SD | Median | IQR (1st Qu. - 3rd Qu| 
+|-----------|-----------------|------|----|---------|--------------|
+| **Year** | 2007–2023 | 2015 | 4.5 | 2015 | 2011–2018 | 
+| **Alkalinity (mg/L)** | 0–442 | 139.9 | 100.2 | 127 | 55–214 |
+| **Biochemical Oxygen Demand (BOD, mg/L)** | 0.0–16.0 | 1.28 | 0.65 | 1.20 | 1.2–1.2 | 
+| **Conductivity (µS/cm)** | 33–4200 | 363 | 270.0 | 356 | 229–501 |  saline influences. |
+| **Dissolved Oxygen (mg/L)** | 0–198 | 58.29 | 22.5 | 54.9 | 49.4–75.0 |
+| **pH** | 4.7–9.8 | 7.55 | 0.7 | 7.7 | 7.2–8.0 | 
+| **Temperature (°C)** | 0.6–637.0* | 10.85 | 2.5 | 10.7 | 8.2–13.1 |
+
+Table 3. Continuous (Interval/Ratio) Data Descriptions
+
+**Some General observations:**
+- **year** - taken over 16 year period.
+- **Biochemical Oxygen Demand (BOD, mg/L)** - very stable data, 75% of data below 1.2 value, there is a potential outlier present though
+- **ph** - mean values
+- **conductivity** - big spread of data of data
+| **Temperature (°C)** - range from just above freezing and 3rd quantile approx 13 C. There is an outlier here.
+
+There do appear to be some outliers, particularly in temperature, with a temperature of 637 C not be a real value. This ms be due to a broken thermometer, or perhaps data entry error. Conductivity, has a 3rd quantile value of 501 yet has a max value of 42000. This could eb an outlier however we need to determine if exrteme values are outliers or actual real data due to extreme environmental conditions
+
+Needs further investigation, as such decided to remove this variable for the moment, and proceed more reliable data from others. Environments can have extreme values when extreme environmental conditions occur, this could  be problematic when determining if a data vlue is an error or actual real measurement. 
+
+### Missing Data
+
+There was no mising data present in the dataset. Analysis was performed on the dataset and no missing data was found. Various ypes of elements were search for including *?*, *unknown*, *none*, *na*, *n/a*, *missing*, *null*, *NULL*, *NaN*, *-*, *--*, * *, and none of these were found to exist. See Appendix for more details.
+
+
+
+### Continuous Variables - Normality and Outliers
+
+#### ph value
+
+```{r}
+#| label: hist_ph
+#| fig.cap: "Figure 1: Histogram of ph"
+
+# create a histogram of ph with density curve over it
+# some referenes taken from hare https://stackoverflow.com/questions/5688082/overlay-histogram-with-density-curve
+gg <- ggplot(wqi_dsubset, aes(x = ph))
+gg <- gg + labs(
+  title = "Histogram of ph",
+  x = "ph",
+  y = "Density"
+)
+# draw the histogram with bin width and colour defined
+gg <- gg + geom_histogram(
+  binwidth = 0.2,
+  colour = "black",
+  aes(y = ..density.., fill = ..count..)
+)
+# sets the colour gradient for the histogram
+gg <- gg + scale_fill_gradient("Count", low = "#DCDCDC", high = "#7C7C7C")
+# creates the normal distribution curve using probability density function
+# using the mean and standard deviation from our dataset ph variable
+gg <- gg + stat_function(
+  fun = dnorm,
+  color = "red",
+  args = list(
+    mean = mean(wqi_dsubset$ph, na.rm = TRUE),
+    sd = sd(wqi_dsubset$ph, na.rm = TRUE)
+  )
+)
+# set the minimal style
+gg <- gg + theme_minimal()
+# call to dislpay the plot
+gg
+
+```
+
+
+```{r}
+#| label: qq_ph
+#| fig.cap: "Figure 2: QQ Plot of ph values"
+
+# craete qq plot for temperature
+# plots the data quantiles on y axis and theoritical values on x axis
+qqnorm(wqi_dsubset$ph,
+       main = "QQ Plot of ph values",
+       xlab = "Theoretical Quantiles",
+       ylab = "Sample Quantiles",
+       col = "steelblue",
+       pch = 19)
+# drawa the comparison line which is standard normal
+qqline(wqi_dsubset$ph, col = "red", lwd = 2)
+```
+```{r}
+#| label: desc_ph
+#| fig.cap: "Table 3: Descriptive Statistics for pH Values"
+
+# 
+# use pastec stats describe to get basic statistics
+pastecs::stat.desc(wqi_dsubset$ph, basic = FALSE)
+
+# will give us mean, sd, median, skew, kurtosis, etc.
+psych::describe(wqi_dsubset$ph)
+
+# Standardized skewness and kurtosis
+ph_skew <- semTools::skew(wqi_dsubset$ph)
+ph_kurt <- semTools::kurtosis(wqi_dsubset$ph)
+ph_skew_z <- ph_skew[1] / ph_skew[2]
+ph_kurt_z <- ph_kurt[1] / ph_kurt[2]
+
+cat("Standardised skewness (z):", round(ph_skew_z, 2), "\n")
+cat("Standardised kurtosis (z):", round(ph_kurt_z, 2), "\n")
+
+#Calculate percentage of standardized scores for total sleep satisfcation
+# are within our limits of +/- 1.96, +/- 3.29
+zph <- abs(scale(wqi_dsubset$ph))
+
+# % beyond ±1.96 (approx 5% expected in normal data)
+FSA::perc(as.numeric(zph), 1.96, "gt")
+
+# % beyond ±3.29 (approx 0.1% expected in normal data)
+FSA::perc(as.numeric(zph), 3.29, "gt")
+```
+Visual inspection of the ph histogram and Q–Q plot indicated a roughly symmetrical, unimodal distribution of pH values. Although standardized skewness (z = –65.23) and kurtosis (z = 26.11) were statistically significant, only 6.1 % of standardized scores exceeded ±1.96 and 0.39 % exceeded ±3.29, using the criteria proposed by Curran, West and Finch (1996). As 99.6% of standardized scores fall within the bounds of +/- 3.29, using the guidance of Field, Miles and Field (2012), the data can be considered to approximate a normal distribution.
+
+#### temperature values
+
+We identified a potential issue earlier with temperature concerngin outliers. we will address that now and check for normality
+
+```{r}
+#| label: 1_del_outliers_temp_view 
+
+# sort tempe in descending order and show top 20 values
+# craete a d to hold these topw 20 avlues, arraneg i desc order, and use dply packge to select the appropriate columns so we can see all the data affected and if there are any other factors that come into play
+top20_temp <- wqi_dsubset %>%
+  arrange(desc(temperature)) %>%
+  dplyr::select(waterbodyname, years, month, temperature, ph, biochem_ox_dmnd, dissolved.oxygen, conductivity) %>%
+  head(20)
+
+# use knitr to create a table of values
+# details sbased around examples from here https://www.geeksforgeeks.org/r-language/kable-method-in-r/
+knitr::kable(top20_temp, caption = "top 20 highest temp values")
+
+```
+
+
+We see that the top 5 temp values are in excess of any possible real values in Ireland. We also note that the top 5 values are from 3 locations, so some repeats. This could eb a thermomter issue or a data entry issue. Given the size of our dataset at 29152 rows of data we will delete these 5 rows. We will do so by removing any temp value above 40 degrees, to ensure we have realistic temp values.  
+
+```{r}
+#| label: 2_del_outliers_del
+
+# get a count how many valeus are > than 40
+sum(wqi_dsubset$temperature > 40, na.rm = TRUE)
+
+# delete these rows 
+wqi_dsubset_clean_t <- wqi_dsubset %>% filter(temperature <= 40 | is.na(temperature))
+
+# compare how many rows were dropped
+n_removed <- nrow(wqi_dsubset) - nrow(wqi_dsubset_clean_t)
+cat("Rows removed due to temperature > 40°C:", n_removed, "\n")
+
+# pritn otu nrows left - shoudl eb 5 less than 29159 - 5  = 29154, just to check nothing untoward happened
+cat("Rows remaining in the dataset =", nrow(wqi_dsubset_clean_t), "\n")
+
+```
+
+
+
+```{r}
+
+#| label: hist_temp
+#| fig.cap: "Figure 3: Histogram of Temp values"
+# using clean_t datafrane now from here on. new cleaned data fram - temp outliers
+# create a histogram of ph with density curve over it
+gg <- ggplot(wqi_dsubset_clean_t, aes(x = temperature))
+gg <- gg + labs(
+  title = "Distribution of Water Temperature Values",
+  x = "Temperature (°C)",
+  y = "Density"
+)
+# draw the histogram with bin width and colour defined
+gg <- gg + geom_histogram(
+  binwidth = 1, 
+  colour = "black",
+  aes(y = ..density.., fill = ..count..)
+)
+# sets the colour gradient for the histogram
+gg <- gg + scale_fill_gradient("Count", low = "#DCDCDC", high = "#7C7C7C")
+# creates the normal distribution curve using probability density function
+# using the mean and standard deviation from our dataset ph variable
+gg <- gg + stat_function(
+  fun = dnorm,
+  color = "red",
+  args = list(
+    mean = mean(wqi_dsubset_clean_t$temperature, na.rm = TRUE),
+    sd = sd(wqi_dsubset_clean_t$temperature, na.rm = TRUE)
+  )
+)
+# set the minimal style
+gg <- gg + theme_minimal()
+# call to dislpay the plot
+gg
+
+
+```
+```{r}
+#| label: qq_temp
+#| fig.cap: "Figure 4: QQ Plot of Temp values"
+
+# craete qq plot for temperature
+# plots the data quantiles on y axis and theoritical values on x axis
+qqnorm(wqi_dsubset_clean_t$temperature,
+       main = "Q–Q Plot of Water Temperature Values",
+       xlab = "Theoretical Quantiles",
+       ylab = "Sample Quantiles",
+       col = "steelblue",
+       pch = 19)
+# drawa the comparison line which is standard normal
+qqline(wqi_dsubset_clean_t$temperature, col = "red", lwd = 2)
+
+```
+
+
+```{r}
+#| label: desc_temp
+#| fig.cap: "Table 4: Descriptive Statistics for Temp"
+
+# 
+# use pastec stats describe to get basic statistics
+pastecs::stat.desc(wqi_dsubset_clean_t$temperature, basic = FALSE)
+
+# will give us mean, sd, median, skew, kurtosis, etc.
+psych::describe(wqi_dsubset_clean_t$temperature)
+
+# Standardized for skewness and kurtosis
+temp_skew <- semTools::skew(wqi_dsubset_clean_t$temperature)
+temp_kurt <- semTools::kurtosis(wqi_dsubset_clean_t$temperature)
+temp_skew_z <- temp_skew[1] / temp_skew[2]
+temp_kurt_z <- temp_kurt[1] / temp_kurt[2]
+
+# print otu the standadized skew and kurtosis
+cat("Standardised skewness (z):", round(temp_skew_z, 2), "\n")
+cat("Standardised kurtosis (z):", round(temp_kurt_z, 2), "\n")
+
+#Calculate percentage of standardized scores for total sleep satisfcation
+# are within our limits of +/- 1.96, +/- 3.29
+ztemp <- abs(scale(wqi_dsubset_clean_t$temperature))
+
+# % beyond ±1.96 (approx 5% expected in normal data)
+FSA::perc(as.numeric(ztemp), 1.96, "gt")
+
+# % beyond ±3.29 (approx 0.1% expected in normal data)
+FSA::perc(as.numeric(ztemp), 3.29, "gt")
+```
+
+Visual inspection of the temperature histogram and Q–Q plot indicated a symmetrical, unimodal distribution of temp values with the QQ plot shows minor deviations from normal at the tails. Standardized skewness (z = 17.06) and kurtosis (z = -7.39) were not statistically significant, only 4.2 % of standardized scores exceeded ±1.96 and 0.065 % exceeded ±3.29, using the criteria proposed by Curran, West and Finch (1996). As 99.35% of standardized scores fall within the bounds of +/- 3.29, using the guidance of Field, Miles and Field (2012), the data can be considered to approximate a normal distribution.
+
+####  Biochemical Oxygen Demand (BOD)
+
+```{r}
+
+#| label: hist_bod
+#| fig.cap: "Figure 5: Histogram of Biochemical Oxygen Demand (BOD) Values"
+
+# create a histogram of ph with density curve over it
+gg <- ggplot(wqi_dsubset_clean_t, aes(x = biochem_ox_dmnd))
+gg <- gg + labs(
+  title = "Distribution of Biochemical Oxygen Demand (BOD) Values",
+  x = "BOD (mg/L)",
+  y = "Density"
+)
+# draw the histogram with bin width and colour defined
+gg <- gg + geom_histogram(
+  binwidth = 0.2,               
+  colour = "black",
+  aes(y = ..density.., fill = ..count..)
+)
+# set the colour gradient for the histogram
+gg <- gg + scale_fill_gradient("Count", low = "#DCDCDC", high = "#7C7C7C")
+# creates the normal distribution curve using probability density function
+# using the mean and standard deviation from our dataset ph variable
+gg <- gg + stat_function(
+  fun = dnorm,
+  color = "red",
+  args = list(
+    mean = mean(wqi_dsubset_clean_t$biochem_ox_dmnd, na.rm = TRUE),
+    sd = sd(wqi_dsubset_clean_t$biochem_ox_dmnd, na.rm = TRUE)
+  )
+)
+# set the minimal style
+gg <- gg + theme_minimal()
+# call to dislpay the plot
+gg
+```
+
+
+
+```{r}
+
+#| label: qq_bod
+#| fig.cap: "Figure 6: QQ Plot of Biochemical Oxygen Demand (BOD) Values"
+
+# craete qq plot for temperature
+# plots the data quantiles on y axis and theoritical values on x axis
+qqnorm(wqi_dsubset_clean_t$biochem_ox_dmnd,
+       main = "Q–Q Plot of Biochemical Oxygen Demand (BOD) Values",
+       xlab = "Theoretical Quantiles",
+       ylab = "Sample Quantiles",
+       col = "steelblue",
+       pch = 19)
+# drawa the comparison line which is standard normal
+qqline(wqi_dsubset_clean_t$biochem_ox_dmnd, col = "red", lwd = 2)
+
+```
+
+```{r}
+#| label: desc_bod
+#| fig.cap: "Table 5: Descriptive Statistics for Biochemical Oxygen Demand (BOD) Values (Untransformed)"
+
+# use pastec stats describe to get basic statistics
+pastecs::stat.desc(wqi_dsubset_clean_t$biochem_ox_dmnd, basic = FALSE)
+
+# will give us mean, sd, median, skew, kurtosis, etc.
+psych::describe(wqi_dsubset_clean_t$biochem_ox_dmnd)
+
+# Standardized scores for skewness and kurtosis
+bod_skew <- semTools::skew(wqi_dsubset_clean_t$biochem_ox_dmnd)
+bod_kurt <- semTools::kurtosis(wqi_dsubset_clean_t$biochem_ox_dmnd)
+bod_skew_z <- bod_skew[1] / bod_skew[2]
+bod_kurt_z <- bod_kurt[1] / bod_kurt[2]
+
+# print otu the standadized skew and kurtosis 
+cat("Standardised skewness (z):", round(bod_skew_z, 2), "\n")
+cat("Standardised kurtosis (z):", round(bod_kurt_z, 2), "\n")
+
+#Calculate percentage of standardized scores for total sleep satisfcation
+# are within our limits of +/- 1.96, +/- 3.29
+zbod <- abs(scale(wqi_dsubset_clean_t$biochem_ox_dmnd))
+
+# % beyond ±1.96 (approx 5% expected in normal data)
+FSA::perc(as.numeric(zbod), 1.96, "gt")
+
+# % beyond ±3.29 (approx 0.1% expected in normal data)
+FSA::perc(as.numeric(zbod), 3.29, "gt")
+
+```
+
+
+Visual inspection of the Biochemical Oxygen Demand (BOD) histogram indicated a highly positive skew with standardised skewness (z = 564.87) with pronounced leptokurtosis with standardised kurtosis (z = 4163.14). The Q–Q plot indicated a strong right tail, showing a small number of high BOD readings (up to 16) among predominantly low values (mean = 1.27 and median = 1.20 and a standard deviation = 0.55).
+
+To address the skewness and non-normal distribution, we applied a transform to the log10.
+
+
+##### Transformation)
+
+```{r}
+# Transform the data and save as a column in the survey dataset
+# we need to add +1 as we have some zero values and wil result in an erro otherwsie
+# we will create a new column'bod_log10' for the log values =, retaining the original values
+wqi_dsubset_clean_t_bod <- wqi_dsubset_clean_t %>%
+  mutate(bod_log10 = log10(biochem_ox_dmnd + 1))  # adds +1 to handle zeros safely
+
+summary(wqi_dsubset_clean_t_bod )
+```
+
+```{r}
+
+#| label: hist_bod_2
+#| fig.cap: "Figure 7: Histogram of Biochemical Oxygen Demand (BOD) Values"
+
+# create a histogram of ph with density curve over it
+# we will sue our new dataframe and new log 10 column from thw transfform
+gg <- ggplot(wqi_dsubset_clean_t_bod, aes(x = bod_log10))
+gg <- gg + labs(
+  title = "Distribution of Biochemical Oxygen Demand (BOD) Values",
+  x = "BOD (mg/L)",
+  y = "Density"
+)
+# draw the histogram with bin width and colour defined
+gg <- gg + geom_histogram(
+  binwidth = 0.2,               
+  colour = "black",
+  aes(y = ..density.., fill = ..count..)
+)
+# set the colour gradient for the histogram
+gg <- gg + scale_fill_gradient("Count", low = "#DCDCDC", high = "#7C7C7C")
+# creates the normal distribution curve using probability density function
+# using the mean and standard deviation from our dataset ph variable
+gg <- gg + stat_function(
+  fun = dnorm,
+  color = "red",
+  args = list(
+    mean = mean(wqi_dsubset_clean_t_bod$bod_log10, na.rm = TRUE),
+    sd = sd(wqi_dsubset_clean_t_bod$bod_log10, na.rm = TRUE)
+  )
+)
+# set the minimal style
+gg <- gg + theme_minimal()
+# call to dislpay the plot
+gg
+```
+
+```{r}
+#| label: qq_bod_2
+#| fig.cap: "Figure 8: QQ Plot of Biochemical Oxygen Demand (BOD) Values"
+
+# craete qq plot for temperature
+# plots the data quantiles on y axis and theoritical values on x axis
+qqnorm(wqi_dsubset_clean_t_bod$bod_log10,
+       main = "Q–Q Plot of Biochemical Oxygen Demand (BOD) Values",
+       xlab = "Theoretical Quantiles",
+       ylab = "Sample Quantiles",
+       col = "steelblue",
+       pch = 19)
+# drawa the comparison line which is standard normal
+qqline(wqi_dsubset_clean_t_bod$bod_log10, col = "red", lwd = 2)
+
+```
+```{r}
+#| label: desc_bod_2
+#| fig.cap: "Table 6: Descriptive Stats for BOD Values - Transformed Log10"
+
+# use pastec stats describe to get basic statistics
+pastecs::stat.desc(wqi_dsubset_clean_t_bod$bod_log10, basic = FALSE)
+
+# will give us mean, sd, median, skew, kurtosis, etc.
+psych::describe(wqi_dsubset_clean_t_bod$bod_log10)
+
+# Standardized skewness and kurtosis
+bod_skew <- semTools::skew(wqi_dsubset_clean_t_bod$bod_log10)
+bod_kurt <- semTools::kurtosis(wqi_dsubset_clean_t_bod$bod_log10)
+bod_skew_z <- bod_skew[1] / bod_skew[2]
+bod_kurt_z <- bod_kurt[1] / bod_kurt[2]
+
+# print otu the standadized skew and kurtosis
+cat("Standardised skewness (z):", round(bod_skew_z, 2), "\n")
+cat("Standardised kurtosis (z):", round(bod_kurt_z, 2), "\n")
+
+#Calculate percentage of standardized scores for total sleep satisfcation
+# are within our limits of +/- 1.96, +/- 3.29
+zbod <- abs(scale(wqi_dsubset_clean_t_bod$bod_log10))
+
+# % beyond ±1.96 (approx 5% expected in normal data)
+FSA::perc(as.numeric(zbod), 1.96, "gt")
+
+# % beyond ±3.29 (approx 0.1% expected in normal data)
+FSA::perc(as.numeric(zbod), 3.29, "gt")
+```
+
+Visual inspection of the histogram and Q–Q plot of the Biochemical Oxygen Demand (BOD) values, which have been transformed by Log10, show a correction to the previous positive skewness in the histogram, and while there is still deviation from the tails we now have Standardised skewness (z = 184.15) and standardised kurtosis (z = 676.68). However, aproximately 93.6% of standardized scores lay within ±1.96 , and 97,96% are within ±3.29 z, (Curran, West, & Finch, 1996). Following the guidance of Field, Miles, and Field (2012), the data can be considered to approximate a normal distribution.
+
+#### Dissolved Oxygen (DO)
+
+```{r}
+#| label: hist_do
+#| fig.cap: "Figure 9: Distribution of Dissolved Oxygen (DO) Values"
+
+# create a histogram of ph with density curve over it
+gg <- ggplot(wqi_dsubset_clean_t_bod, aes(x = dissolved.oxygen))
+gg <- gg + labs(
+  title = "Distribution of Dissolved Oxygen (DO) Values",
+  x = "Dissolved Oxygen (mg/L)",
+  y = "Density"
+)
+# draw the histogram with bin width and colour defined
+gg <- gg + geom_histogram(
+  binwidth = 2,                 # adjust as needed for smoother bins
+  colour = "black",
+  aes(y = ..density.., fill = ..count..)
+)
+# sets the colour gradient for the histogram
+gg <- gg + scale_fill_gradient("Count", low = "#DCDCDC", high = "#7C7C7C")
+# creates the normal distribution curve using probability density function
+# using the mean and standard deviation from our dataset ph variable
+gg <- gg + stat_function(
+  fun = dnorm,
+  color = "red",
+  args = list(
+    mean = mean(wqi_dsubset_clean_t_bod$dissolved.oxygen, na.rm = TRUE),
+    sd = sd(wqi_dsubset_clean_t_bod$dissolved.oxygen, na.rm = TRUE)
+  )
+)
+# set the minimal style
+gg <- gg + theme_minimal()
+
+# call to dislpay the plot
+gg
+
+```
+
+
+```{r}
+
+#| label: qq_do
+#| fig.cap: "Figure 10: Q–Q Plot of Dissolved Oxygen (DO) Values"
+
+# craete qq plot for do
+# plots the data quantiles on y axis and theoritical values on x axis
+qqnorm(wqi_dsubset_clean_t_bod$dissolved.oxygen,
+       main = "Q–Q Plot of Dissolved Oxygen (DO) Values",
+       xlab = "Theoretical Quantiles",
+       ylab = "Sample Quantiles",
+       col = "steelblue",
+       pch = 19)
+# drawa the comparison line which is standard normal
+qqline(wqi_dsubset_clean_t_bod$dissolved.oxygen, col = "red", lwd = 2)
+
+```
+```{r}
+#| label: desc_do
+#| fig.cap: "Table 11: Descriptive Statistics for Dissolved Oxygen (DO) Values"
+
+# use pastec stats describe to get basic statistics
+pastecs::stat.desc(wqi_dsubset_clean_t_bod$dissolved.oxygen, basic = FALSE)
+
+# will give us mean, sd, median, skew, kurtosis, etc.
+psych::describe(wqi_dsubset_clean_t_bod$dissolved.oxygen)
+
+# Standardized skewness and kurtosis
+do_skew <- semTools::skew(wqi_dsubset_clean_t_bod$dissolved.oxygen)
+do_kurt <- semTools::kurtosis(wqi_dsubset_clean_t_bod$dissolved.oxygen)
+do_skew_z <- do_skew[1] / do_skew[2]
+do_kurt_z <- do_kurt[1] / do_kurt[2]
+
+cat("Standardised skewness (z):", round(do_skew_z, 2), "\n")
+cat("Standardised kurtosis (z):", round(do_kurt_z, 2), "\n")
+
+# --- Percent of cases outside typical z-score thresholds ---
+# Absolute z-scores for Dissolved Oxygen
+zdo <- abs(scale(wqi_dsubset_clean_t_bod$dissolved.oxygen))
+
+# % beyond ±1.96 (approx 5% expected in normal data)
+FSA::perc(as.numeric(zdo), 1.96, "gt")
+
+# % beyond ±3.29 (approx 0.1% expected in normal data)
+FSA::perc(as.numeric(zdo), 3.29, "gt")
+
+```
+Visual inspection of the Dissolved Oxygen (DO) histogram and Q–Q plot indicated a bimodal or a potential  multi-modal distribution of values with the QQ plot shows minor deviations from normal at the tails, and somewhat through the centre. Standardized skewness (z = -1.88) and kurtosis (z = -4.66) were not statistically significant, and only 93% of standardized scores exceeded ±1.96 and 99.9% exceeded ±3.29, using the criteria proposed by Curran, West and Finch (1996). Using vidual plot data and the guidance of Field, Miles and Field (2012), the data can be considered to bimodal or potentially multimodal.
+
+We will not apply a transformation to that data, rather consider it non-parametric.
+
+### Visualization
+
+The following are some facetted plots of variables of interest for quality standard. We are using the water quality measurement of **CCME WQI**, an its categories *Excellent* and *Poor** and the corresponding variable values that correspond to these.
+
+
+```{r}
+#| fig.cap: "Figure 12: Boxplot of Water Quality variance per variable"
+# keep onyl quality rows that contain v aleu of interest
+wqi_long <- wqi_dsubset_clean_t_bod %>%
+  tidyr::pivot_longer(
+    cols = c(ph, temperature, biochem_ox_dmnd, dissolved.oxygen),
+    names_to = "parameter",
+    values_to = "value"
+  )
+wqi_subset <- wqi_long %>%
+  filter(ccme_wqi %in% c("Excellent", "Poor"))
+
+# boxplots for each parameter
+ggplot(wqi_subset, aes(x = ccme_wqi, y = value, fill = ccme_wqi)) +
+  geom_boxplot(alpha = 0.7, outlier.shape = NA) +
+  facet_wrap(~ parameter, scales = "free_y", ncol = 2) +
+  theme_minimal() +
+  labs(
+    title = "Comparison of Key Water Quality Parameters\nBetween 'Excellent' and 'Poor' CCME WQI Classes",
+    x = "CCME WQI Category",
+    y = "Measured Value"
+  ) +
+  theme(legend.position = "none")
+
+```
+
+Bocplots of water quality classification across variables 
+- **bod**: Excellent Water Quality is achieved between 1-2.5 mg/L, not above this, but poor water quality can occur at any range of values.
+- **disolved oxygen**: Excellent water quality is achieved at narrow specific range of lower values while poor water quality is achieved at very narrow range of higher values circa 50+. 
+- **ph**: Clear distinction between poor and excellent values.Higher ph values gviign pooer water quality.
+- **temperature**: There is a sweet spot between approx 9 and 12 where excellent quality occurs. Values higher (between approx 13C-18C) or lower (between approx 0C and 7C) lead to poorer water quality.
+
+
+
+```{r}
+#| fig.cap: "Figure 13: Water Quality variance per variable"
+# create  facetted plot of excellent and poor for our data types t
+# pipe the data into long format fo plotting specifyign what variables to sue
+# and store in wqi_long dataframe
+wqi_long <- wqi_dsubset_clean_t_bod %>%
+  tidyr::pivot_longer(
+    cols = c(ph, temperature, biochem_ox_dmnd, dissolved.oxygen),
+    names_to = "parameter",
+    values_to = "value"
+  )
+
+# keep onyl quality rows that contain v aleu of interest
+wqi_subset <- wqi_long %>%
+  filter(ccme_wqi %in% c("Excellent", "Poor"))
+
+# create the facetted plot, set transparency to 0.5
+ggplot(wqi_subset, aes(x = value, fill = ccme_wqi)) +
+  geom_density(alpha = 0.5) +
+  facet_wrap(~ parameter, scales = "free_x", ncol = 2) +
+  theme_minimal() +
+  labs(
+    title = "Density Distributions of Key Parameters\nfor 'Excellent' and 'Poor' Water Quality Classes",
+    x = "Measured Value",
+    y = "Density",
+    fill = "CCME WQI Category"
+  )
+
+```
+
+“Density plots highlight differences in distribution shape between water quality classes. 
+- **bod**: Excellent Water Quality is achieved between 1-2.5 mg/L, not above this, but poor water quality can occur at any range of values.
+- **disolved oxygen**: Excellent water quality is achieved at lower values while poor water quality is achieved at hgher values circa 50+. This pattern is contrary to the expected ecological relationship between DO and water quality, where higher oxygen typically indicates better conditions. The reversal may reflect dataset-specific factors such as differences between coastal or marine sampling locations, possible sensor calibration differences, or the weighting of dissolved oxygen within the CCME WQI calculation. This variable has also been classied as multimodal earlier. This would require further investigation. 
+- **ph**: We see that the higher the ph value the poorer the water quality.
+- **temperature**: There is a sweet spot between approx 9 and 12 where excellent quality occurs. Values higher (between approx 13C-18C) or lower (between approx 0C and 7C) lead to poorer water quality
+
+
+
+
+```{r}
+#| fig.cap: "Figure 14: Comparative of numebr of variable values for water Quality Index systems"
+
+# Select the relevant columns using the exact names you showed
+wqi_compare <- wqi_dsubset_clean_t_bod %>%
+  select(waterbodyname, ccme_wqi, wawqi, horton.wqi, brown.wqi, srdd.wqi) %>%
+  pivot_longer(
+    cols = -waterbodyname,
+    names_to = "WQI_System",
+    values_to = "Class"
+  )
+
+# Plot a comparison of classification counts
+ggplot(wqi_compare, aes(x = Class, fill = WQI_System)) +
+  geom_bar(position = "dodge") +
+  theme_minimal() +
+  labs(
+    title = "Comparison of Water Quality Classifications Across WQI Systems",
+    x = "Water Quality Class",
+    y = "Number of Sites",
+    fill = "WQI System"
+  )
+```
+
+
+Below is a table of classification systems and how the same data for oru dataset is classified across each of them.
+
+| Observation | Interpretation|
+|----------------|------------|
+| **CCME_WQI** | Most values classified as **“Fair”**, very few reach the criteria **Excellent**.|
+| **WAWQI**   | Most values classified as**“Good”**  and even spread for others.|
+| **Brown_WQI** | Most values classified as**“Good”** and then **Excellent**.|
+| **Horton_WQI**| Fairly even classification
+| **SRDD_WQI**  | Even distributi acrss top 3 to 4 categories|
+
+There is a large variety of standards. We will continue to use **CCME_WQI**, however using Fair as a more appropriate category for good water quality rather than excellent. as it appears to be very difficul to achieve that standard for Irish waters. This would require further investigation.
+
+
+## Section 4 : Results
+
+### Section 4.1 Hypothesis 1:
+
+**Null and Alternate Hypothesis**
+Ho = There is no statistically significant relationship between Biochemical Oxygen Demand (BOD) and temperature
+Ha = There is a statistically significant elatinoshipt between Biochemical Oxygen Demand (BOD) and temperature
+
+This is a two tailed test, as we do not indicate if is a positive or negative relationship.
+
+**Variables**:
+- Biochemical Oxygen Demand (BOD): Variable is Continuous (ratio), and as per earlier analysis, its data can be considered to approximate a normal distribution.
+- temperature:  Variable is Continous (interval), and as per earlier analysis, data can be considered to approximate a normal distribution.
+
+**Statistical test**:
+Both variables are continuous ratio variable types. As such we will sue a *Pearson correlation* as our statistical test.
+
+
+
+
+
+
+```{r}
+
+#| label: scatter_temp_bod
+#| fig.cap: "Figure 15: Scatterplot of Temperature and Biochemical Oxygen Demand (BOD)"
+#| fig.align: center
+
+ggplot(wqi_dsubset_clean_t_bod, aes(x = temperature, y = bod_log10)) +
+  geom_point(alpha = 0.5, colour = "steelblue") +
+  geom_smooth(method = "lm", colour = "red", se = FALSE) +
+  labs(
+    title = "Relationship Between Water Temperature and Biochemical Oxygen Demand (BOD)",
+    x = "Temperature (°C)",
+    y = "Biochemical Oxygen Demand (log₁₀ mg/L)"
+  ) +
+  theme_minimal()
+```
+
+Checking for *Homoscedasticity* and *Heterocedasciticity*. Scatterplot is not exact rectangle or square, but it is not a cone shape, as such we have Homoscedasticity.
+
+Theer is also a very weak linear relationship.
+
+
+```{r}
+
+#| label: corr_bod_temp
+#| fig.cap: "Table 12: Pearson Correlation Between Water Temperature and Biochemical Oxygen Demand (BOD)"
+
+# Pearson correlation between Temperature and BOD (log10)
+pearcor_bod_temp <- stats::cor.test(wqi_dsubset_clean_t_bod$temperature, wqi_dsubset_clean_t_bod$bod_log10, method = "pearson")
+
+pearcor_bod_temp
+
+
+# calculate effect size Using function from effectsize package to convert t to Cohen's d
+
+effectsize::t_to_d(t = pearcor_bod_temp$statistic, pearcor_bod_temp$parameter)
+```
+
+**Results**
+The relationship between Biochemical Oxygen Demand (BOD) and temperature was investigated using a Pearson correlation. While a statistically Significant result was found (r =0.1, n=29152. p=<0.01), it is very weak. Cohen's d also indicated a very small effect. There is therefore no evidence to reject the null hypothesis in favour of the alternate. We can conclude that there is no statistically significant relationship between Biochemical Oxygen Demand (BOD) and temperature, theresfore the null hypothesis is true and hholds.
+
+
+**Conclusion**
+While temperature has a bearing on BOD, it is a very weak affect and there must be another variable which drives the BOD value. Further anlysis will be required to identify that or those variables. 
+
+
+### Section 4.2 Hypothesis 2 :
+
+**Null and Alternate Hypothesis**
+Ho = There is no statistically significant difference in mean ph between water bodies rated “Fair” and those rated “Poor” in the CCME_WQI water classification system.
+Ha = There is a statistically significant difference in mean pH between water bodies rated “Fair” and those rated “Poor” in the CCME_WQI water classification system.
+
+This will be a  two-tailed test as we are nto sayign it is greater or less than.  We specify with alpha = 0.05.
+
+
+
+
+**Variables**:
+- ph: Variable is Continuous (interval), and as per earlier analysis, its data can be considered to approximate a normal distribution.
+- ccme_wqi :  Variable is Categorical(ordinal), and as per earlier analysis, data can be considered to approximate a normal distribution.
+
+**Statistical test**:
+As one variable is Continuous(Interval) and the other is Categorical (Oordinal) with two factors, "Fair" and "Poor".  As such we will use an **Independent samples t-test** as our statistical test.
+
+
+```{r}
+# we'll create a new dataset, a subset fo our existing dataset with just the two factors
+# we are interested in Fair and Poor
+wqi_h2_subset <- wqi_dsubset_clean_t_bod %>%
+  filter(ccme_wqi %in% c("Fair", "Poor")) %>%
+  # drop the other levels in thr factor
+  droplevels()   
+
+
+str(wqi_h2_subset)
+nrow(wqi_h2_subset)
+ncol(wqi_h2_subset)
+```
+**Density histogram plot**
+
+```{r}
+
+ggplot(wqi_h2_subset, aes(x = ph, fill = ccme_wqi)) +
+  geom_histogram(aes(y = ..density..), alpha = 0.6, position = "identity", bins = 30) +
+  geom_density(alpha = 0.3) +
+  theme_minimal() +
+  labs(title = "Distribution of pH by Water Quality Class",
+       x = "pH", y = "Density", fill = "CCME WQI")
+```
+**Box Plot**:
+
+```{r}
+ggplot(wqi_h2_subset, aes(x = ccme_wqi, y = ph, fill = ccme_wqi)) +
+  geom_boxplot(alpha = 0.7) +
+  theme_minimal() +
+  labs(title = "Boxplot of pH across Water Quality Classes",
+       x = "CCME WQI", y = "pH")
+```
+**Scatter Plot**
+
+```{r}
+
+
+#| label: scatter_ph_fair_poor
+#| fig.cap: "Figure 16: Scatterplot of ph vs Fair and Poor Water Quality Categories"
+#| fig.align: center
+
+
+# Create scatter (jittered) plot
+ggplot(wqi_h2_subset , aes(x = ccme_wqi, y = ph, colour = ccme_wqi)) +
+  geom_jitter(width = 0.2, alpha = 0.5, size = 1.5) +
+  stat_summary(fun = mean, geom = "point", shape = 18, size = 4, colour = "black") +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = 0.1, colour = "black") +
+  labs(
+    title = "Distribution of pH Across 'Fair' and 'Poor' Water Quality Classes",
+    x = "CCME WQI Category",
+    y = "pH"
+  ) +
+ # scale_colour_manual(values = c("Fair" = "#1E90FF", "Poor" = "#FF4500")) +
+  scale_colour_manual(values = c("Fair" = "blue", "Poor" = "red")) +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+
+```
+
+
+rom the scatter plot we see 'Fair' has a comparatively large number of ph values witha  spread from approx 5-9.5. Wheres 'Poor' has a smaller number of values in the range of approximately (6-8.5)
+
+The means are approx 7.5 for 'Fair' and 7.9 for 'Poor'
+
+**Leven's Test**:
+
+```{r}
+leveneTest(ph~ ccme_wqi, data=wqi_h2_subset)
+```
+
+Levene's Test for testing equality of variances was run. the results were (F-statistic=9.72 and p=0.0018, df=1, 17430). As p< 0.05, this is a statistically sgnificant result. 
+
+The null hypothesis for Levene’s test is that variances are equal. Levene’s test for equality of variances was statistically significant, indicating that the assumption of homogeneity of variance does not hold.
+
+As a resutl we will sue Welchs correction when running our independent t-test.
+
+
+**Independent t-test**
+
+
+We will use Welches correct when runnign thr t-test
+
+```{r}
+# where y is numeric and x is a binary factor
+# var.equal  = False  as Welches correction is present as an outcome of the earlier 
+# leven's test i.e. we do not have homogeneity
+res<-t.test(ph~ccme_wqi, data=wqi_h2_subset, var.equal = FALSE) 
+res
+
+# #Calculate eta squared
+# effes=round((res$statistic*res$statistic)/((res$statistic*res$statistic)+(res$parameter)),3)
+# effes
+
+effes <- round((6.2791^2) / ((6.2791^2) + res$parameter), 3)
+effes
+
+```
+**Results**
+Independetn t-test with Welch's correction was run, the results being
+- t=-6.27
+- df=77.059
+- p-value = 1.854-08 , which we will report as < 0.01
+- mean in group Fair = 7.536
+- mean in group Poor - 7.841
+
+Therefore, Poor has a higher mean ph value than Fair. The p-value is also very small, indicating it is a statistically signifcant result
+
+he effect size value of eta squaed = 0.338, which indicates that 34% of the variance in ph can be attribute to differences between th Fair and Poor water quality classifications. This is a relatively large effect.
+
+
+
+**Conclusion**
+A statistically significant result was found, therefore the Null hypothesis does not hold, and the alternate is true i.e.  There is a statistically significant difference in mean pH between water bodies rated “Fair” and those rated “Poor” in the CCME_WQI water classification system.
+
+The ph value accounts for approximately 34% of water quality rating variances between Fair and Poor quality classifications. This is a significant factor in water quality.
+
+
+
+### Section 4.3 Hypothesis 3 :
+
+Does Dissolved Oxygen (DO) differ significantly between Fair, Moderate, and Good water quality categories?
+
+**Null and Alternate Hypothesis**
+Ho=There is no statistically significant difference in the median Dissolved Oxygen between the water quality categories.
+Ha = There is a statistically significant difference in median Dissolved Oxygen between at least two of the categories.
+
+This will be a  two-tailed test as we are not saying it is greater or less than.  We specify with alpha = 0.05.
+
+
+
+**Variables**:
+- dissolved.oxygen: Variable is Continuous (ratio), and as per earlier analysis, it cannot be considered normal, rather it is bimodal, and therefore non-parametric.
+- ccme_wqi :  Variable is Categorical(ordinal), and as per earlier analysis, data can be considered to approximate a normal distribution. We are categorizing it into 3 categoriesm, "Fair",  "Moderate" and "Good". We also confirmed earlier that aour categorical data is a factor with levels. 
+
+**Statistical test**:
+As one variable is Continuous (ratio) and the other is Categorical (Ordinal) with three factors, "Fair",  "Moderate" and "Good".  As such we will use an **Kruskal–Wallis ** as our statistical test.
+
+
+
+
+```{r}
+# we'll create a new dataset, a subset fo our existing dataset with just the two factors
+# we are interested in Fair and Poor
+wqi_h3_subset <- wqi_dsubset_clean_t_bod %>%
+  filter(ccme_wqi %in% c("Fair", "Moderate", "Good")) %>%
+  # drop the other levels in thr factor
+  droplevels()   
+
+# ensure the categories are levels in the factor
+wqi_h3_subset$ccme_wqi <- factor(wqi_h3_subset$ccme_wqi, levels = c("Fair", "Moderate", "Good"))
+
+
+str(wqi_h3_subset)
+nrow(wqi_h3_subset)
+ncol(wqi_h3_subset)
+table(wqi_h3_subset$ccme_wqi)
+```
+
+**Box Plot**
+
+```{r}
+#| label: scatter_ph_fair_poor
+#| fig.cap: "Figure 17: Scatterplot of Dissolved Oxygen vs Fair and Poor Water Quality Categories"
+#| fig.align: center
+ggplot(wqi_h3_subset, aes(x = ccme_wqi, y = dissolved.oxygen, fill = ccme_wqi)) +
+  geom_boxplot(outlier.alpha = 0.2, width = 0.6) +
+  stat_summary(fun = median, geom = "point", shape = 21, size = 3, fill = "white") +
+  labs(
+    title = "Dissolved Oxygen by Water Quality Category",
+    x = "CCME_WQI Category",
+    y = "Dissolved Oxygen (mg/L)"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+
+
+
+```
+
+
+```{r}
+
+#run a kruskal wallis test - this is the omnibus stest
+stats::kruskal.test(dissolved.oxygen~ccme_wqi,data=wqi_h3_subset)
+
+```
+
+```{r}
+# run the dunns test wuht bonnferroni correction
+tmp <- FSA::dunnTest(dissolved.oxygen ~ ccme_wqi, data = wqi_h3_subset, method = "bonferroni")
+
+#convert Dunn’s test result to a data frame
+dunn_test_df <- as.data.frame(tmp$res)
+
+#filter for statistically significant comparisons (p < 0.05)
+significant_results <- dunn_test_df %>%
+  filter(P.adj < 0.05)
+
+# round the p-values for clarity
+significant_results <- significant_results %>%
+  mutate(
+    P.unadj = round(P.unadj, 3),
+    P.adj = round(P.adj, 3)
+  )
+
+#add median DO per group (for richer context)
+group_medians <- wqi_h3_subset %>%
+  group_by(ccme_wqi) %>%
+  summarise(
+    Median_DO = round(median(dissolved.oxygen, na.rm = TRUE), 2),
+    IQR_DO = round(IQR(dissolved.oxygen, na.rm = TRUE), 2),
+    n = n()
+  )
+
+
+ft <- flextable(significant_results) %>%
+  set_table_properties(width = 1, layout = "autofit") %>%
+  autofit()
+
+#print results
+ft
+group_medians
+```
+
+chi-squared = 6579.2
+d=2
+p-value = <2.2e-16 = wihc we will call p-value < 0.01
+
+**Result**
+
+Kruskal-Wallis test was run, the results being (chi-squared = 6579.2
+d=2, p-value = <2.2e-16 = whichwe will call p-value < 0.01)
+
+Therefore, this is  statistically significant result, as p <0.01 which is a lot less than or critical value of 0.05.
+
+The Kruskal-Wallis tells us there is a statistically significant result but it does not tell us which group it aplies to. We carry out Post hoc test to determine where the significant result ie.
+
+Post hoc test was a Dunn's test with a Bonnferoni correction. Kruskal–Wallis and Dunn’s tests confirm statistically that these medians differ significantly, but the direction is not what we might intuitively expect — “Good” water quality (per CCME_WQI) has the lowest median DO and largets spread (IQR - 44.9). he highest median being in thr Moderat Category, with IQR = 43.1)
+
+there may be seasonal or possibly regional factors which could be affecting the result. This woudl require further investigation
+
+
+
+
+
+ **Conclusion**
+ 
+The Kruskal–Wallis test (chi squared = 6479.2, df = 2, p < 0.001) indicated a significant difference in median dissolved oxygen across CCME_WQI categories. Dunn’s post hoc tests with Bonferroni correction, showed all pairwise differences were significant (p < 0.001).
+Median DO was highest for Moderate sites (88.0 mg/L), followed by Fair (54.9 mg/L), and lowest for Good (39.9 mg/L).
+
+
+
+### Section 4.4 Hypothesis 4 :
+
+Does water quality vary by month?
+
+**Null and Alternate Hypothesis**
+Ho=There is no statistically significant association between Month and CCME_WQI classification.
+Ha = There is a statistically significant association between Month and CCME_WQI classification.
+
+This will be a  two-tailed test as we are not saying it is greater or less than.  We specify with alpha = 0.05.
+
+
+
+**Variables**:
+- dissolved.oxygen: Variable is Continuous (ratio), and as per earlier analysis, it cannot be considered normal, rather it is bimodal, and therefore non-parametric.
+- ccme_wqi :  Variable is Categorical(ordinal), and as per earlier analysis, data can be considered to approximate a normal distribution. We are categorizing it into 3 categoriesm, "Fair",  "Moderate" and "Good". We also confirmed earlier that aour categorical data is a factor with levels. However we will treat this variable as categorical, without an order. 
+
+**Statistical test**:
+Both variables are categorical with 12 months and 3 quality values, "Fair",  "Moderate" and "Good".  As such we will use a **Chi squared ** test as our statistical test. The variables will ahve different numebr of levels, ie,, month will have 12 and water quality will have 
+
+As we have more than two values in each category as will also use **Cramer's V** to calculate the effect size if one exists.
+
+
+
+```{r}
+# we'll create a new dataset, a subset fo our existing dataset with just the two factors
+# we are interested in Fair and Poor
+wqi_h3_subset <- wqi_dsubset_clean_t_bod %>%
+  filter(ccme_wqi %in% c("Fair", "Moderate", "Good")) %>%
+  # drop the other levels in thr factor
+  droplevels()   
+
+# ensure the categories are levels in the factor
+wqi_h3_subset$ccme_wqi <- factor(wqi_h3_subset$ccme_wqi, levels = c("Fair", "Moderate", "Good"), ordered=FALSE)
+
+# we'll make sure the  months are in calendar order and not alphabetical
+# will eb easier for veiwing
+wqi_h3_subset$month <- factor(
+  wqi_h3_subset$month,
+  levels = c("Jan","Feb","Mar","Apr","May","Jun",
+             "Jul","Aug","Sep","Oct","Nov","Dec"),
+  ordered = FALSE
+)
+
+
+str(wqi_h3_subset)
+nrow(wqi_h3_subset)
+ncol(wqi_h3_subset)
+table(wqi_h3_subset$ccme_wqi)
+table(wqi_h3_subset$month)
+```
+**Contngency Table**
+
+```{r}
+# Create the contingency table (Month × Water Quality)
+contingency_table <- table(wqi_h3_subset$month, wqi_h3_subset$ccme_wqi)
+
+# Add row and column totals
+contingency_with_totals <- addmargins(contingency_table)
+
+# Display as a formatted table
+knitr::kable(contingency_with_totals, digits = 0, 
+             caption = "Table 13: Contingency Table Month and Water Quality metric")
+```
+
+```{r}
+
+#CrossTable(predictor, outcome, fisher = TRUE, chisq = TRUE, expected = TRUE)
+#Note: for this approach there must be the same number of values for both variables so
+#missing data is important. 
+
+# Remove rows where either variable is NA
+wqi_clean <- wqi_h3_subset %>%
+  filter(!is.na(month) & !is.na(ccme_wqi))
+
+# Now run CrossTable requesting both Fisher and Chi Square so we have full information
+# We request the format in SPSS to make it easier to interpret.
+gmodels::CrossTable(
+  wqi_clean$month,
+  wqi_clean$ccme_wqi,
+  fisher = FALSE,   
+  chisq = TRUE,     
+  expected = TRUE, 
+  sresid = TRUE,    
+  format = "SPSS"   
+)
+
+
+# 
+# Create contingency table
+mytable <- xtabs(~ month + ccme_wqi, data = wqi_clean)
+#You can use the chisq.test function in the stats package to do the test
+#set the flag correct=TRUE to get Yates correction needed for 2x2 table
+ctest <- stats::chisq.test(mytable, correct = FALSE)  
+# No Yates correction (not 2x2)
+ctest
+
+# Cramer's V (strength of association)
+# effect_size <- sjstats::cramer(mytable)
+# effect_size
+
+# Optional: Phi coefficient (for 2x2 tables only)
+#Calculate effect sizes
+# sjstats::phi(mytable)
+sjstats::cramer(mytable)
+
+
+
+```
+**Result**
+
+There is a statistically significant association between Month and CCME_WQI classification (χ²(22, N = 28,923) = 780.63, p < 0.001).
+
+
+
+A Chi-square test of independence found a statistically significant association result  between month and CCME_WQI classification, chi squared (22, N = 28,923) = 780.63, p < .001.
+
+Cramér’s V = 0.12 indicated a small effect size, suggesting that water quality classifications vary modestly across months.
+
+“Good” classifications were more frequent in spring and autumn (April, October) and less frequent in winter (January–February), indicating seasonal variation in water quality.
+
+Column totals on Right hand side collectively add up to 100% which is a good sign.
+
+
+**Conclusion**
+
+This indicates that water quality classifications vary significantly across months — suggesting a seasonal pattern in water quality levels. This requires further investigation.
+
+
+## Appendix
+
+
+### Dataset analysis
+```{r}
+head(wqi_df)
+nrow(wqi_df)
+ncol(wqi_df)
+str(wqi_df)
+```
+
+### Missing Data:
+  
+There are no missing values. No placeholders which may indicate null data is presidential.
+As a result of no missing data being present there was no need to run Little's test, to identify MCAR data, or dig subsequently into MAR or MNAR options. Thsi did not come into play as the data set was clean.
+
+```{r}
+
+# Missing Data
+# carete a list of valeus that can be opresent in data, to ID them
+placeholders <- c("?", "unknown", "none", "na", "n/a", "missing", "null", "NULL", "NaN", "-", "--", " ")
+
+# check if placeholder list avlues above exist in the dataset
+# convert all occurrences of the list elements in datframe to NA to standardise missing or misleadingg data values
+# and allow yo deal wiht them together cleanly
+# sourced from here https://www.rdocumentation.org/packages/naniar/versions/1.1.0/topics/replace_with_na_all
+wqi_dsubset_clean <- replace_with_na_all(data = wqi_dsubset, condition = ~ tolower(as.character(.x)) %in% placeholders)
+
+
+# get summary table of numebrs and percentages for missing non real values 
+missing_data_summary <- miss_var_summary(wqi_dsubset)
+
+# View results
+print(missing_data_summary)
+
+```
+
+### Future areas of study
+
+- inlcude analysis on water body types i.e. rivers, lakes, etc
+- extreme data values - sometimes hard to kno if they are error or real data. Need perisitence over time, persistence in location and measurement. Some more detailed geographical knowledge is could eb added ot the analysis perhaps..
+- Water quality standards,  **CCME_WQI** ,  **WAWQI**   , | **Brown_WQI** ,| **Horton_WQI**, | **SRDD_WQI**. Sme additional analysis may be needed on them.
+
+
+## References
+- [EPA - Summary report - Water qaulity in ireland]
+(https://www.epa.ie/publications/monitoring--assessment/freshwater--marine/EPA-Water-Quality-in-Ireland-Summary-Report-ACC.pdf )
+
+- Curran, West and Finch (1996).
+- Field, Miles and Field (2012),
+- knitr to create a table of values
+# details sbased around examples from here https://www.geeksforgeeks.org/r-language/kable-method-in-r/
+- ggplot # create a histogram of ph with density curve over it
+# some referene taken from ehre https://stackoverflow.com/questions/5688082/overlay-histogram-with-density-curve
+- Water quality standards,  **CCME_WQI** ,  **WAWQI**   , | **Brown_WQI** ,| **Horton_WQI**, | **SRDD_WQI**
+- https://rstudio.github.io/cheatsheets/html/data-visualization.html
