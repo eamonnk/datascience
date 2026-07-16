@@ -1,0 +1,512 @@
+---
+title: "Dimension Reduction"
+subtitle: "TU059 - Phase 2 Task 4 - Dimension Reducton"
+author: "Student Number: D24127620, Student Name: Eamonn Kelly, Programme Code: TU059"
+format:
+    html:
+      self-contained: true
+      toc: true      # Enables table of contents
+      toc_float: true # Makes the TOC float on the side
+      toc_depth: 3   # Specifies the depth of headers to include in TOC
+      fig-cap-location: bottom
+---
+
+
+# Introduction
+Complete the PCA making relevant decisions and report your findings.
+https://www.kaggle.com/datasets/hayriyigit/website-satisfaction-survey
+
+
+These are the variables of interest to this task:
+
+***Navigation:***
+
+| **Variable** | **Meaning**                    |
+| ------------ | ------------------------------ |
+| **q1**       | Ease of navigating the website |
+| **q2**       | Clarity of the menu/structure  |
+| **q3**       | Ease of finding information    |
+| **q4**       | Website is intuitive to use    |
+| **q5**       | Layout helps navigation        |
+
+
+***Typography:***
+
+| **Variable** | **Meaning**                     |
+| ------------ | ------------------------------- |
+| **q9**       | Text readability and formatting |
+
+***Colour:***
+
+| **Variable** | **Meaning**                                   |
+| ------------ | --------------------------------------------- |
+| **q7**       | Colour scheme suitability                     |
+| **q8**       | Layout attractiveness (partly colour-related) |
+
+***Interactivity:***
+
+| **Variable** | **Meaning**                                                   |
+| ------------ | ------------------------------------------------------------- |
+| **q15**      | Website loading speed (affects perceived interactivity)       |
+| **q16**      | Reliability / absence of errors (supports smooth interaction) |
+| **q17**      | Responsiveness on device (directly interactive behaviour)     |
+
+
+**Note:** Throughout the code, placeholders have been included for some steps e.g. step 5 retains 8 components, step 6 uses all the data. However, you need to make decisions based on your interpretation of the outcomes of the relevant steps.
+
+**WHAT YOU NEED TO DO:**
+
+- **Step 2:** Review the outcomes and write a report on the suitability of the dataset for dimension reduction.
+
+- **Step 3 and Step 4:** Review the outcomes and decide how many components you wish to retain. Adjust any visualizations you need to.
+
+- **Step 5:** Adjust the code to retain the required number of components and apply rotation. Write a report on the outcome of the PCA.
+
+- **Step 6:** Complete the code to conduct the reliability analysis. Write the report on the reliability of the data.
+
+- **Conclusion:** Write a conclusion on the success and usefulness (or otherwise) of the PCA.
+
+
+```{r echo=FALSE, include=FALSE}
+#| label: load_libs
+# Set CRAN mirror for non-interactive sessions
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+
+quiet_library <- function(pkg) {
+  suppressMessages(suppressWarnings({
+    if (!requireNamespace(pkg, quietly = TRUE)) {
+      install.packages(pkg, quiet = TRUE)
+    }
+    library(pkg, character.only = TRUE)
+  }))
+}
+# tidyverse: For data manipulation (dplyr), wrangling (tidyr), and plotting (ggplot2),
+# essential for preparing datasets before running PCA/EFA.
+quiet_library("tidyverse")
+
+# psych: Core package for PCA, EFA, reliability analysis (Cronbach's alpha),
+# factor extraction, rotation, and interpreting loadings.
+quiet_library("psych")
+
+# REdaS: Provides KMO (Kaiser-Meyer-Olkin) and Bartlett's test functions
+# used to assess whether the dataset is suitable for dimension reduction.
+quiet_library("REdaS")
+
+# Hmisc: Contains correlation tools and functions for handling missing data,
+# useful for computing correlation matrices required for PCA/EFA.
+quiet_library("Hmisc")
+
+# corrplot: Produces visual correlation matrix heatmaps,
+# helping identify clusters of variables and collinearity patterns.
+quiet_library("corrplot")
+
+# ggcorrplot: ggplot-based correlation matrix visualisation,
+# offering cleaner, publication-ready heatmaps.
+quiet_library("ggcorrplot")
+
+# factoextra: Visualisation tools for PCA and EFA outputs,
+# including scree plots, biplots, eigenvalue charts, and clustering plots.
+quiet_library("factoextra")
+
+# nFactors: Helps determine the number of factors/components to retain
+# using methods like parallel analysis and eigenvalue comparisons.
+quiet_library("nFactors")
+
+# knitr: Enables clean rendering of tables, outputs, and formatted results
+# inside R Markdown or Quarto reports.
+quiet_library("knitr")
+
+```
+
+
+```{r echo=FALSE, include=FALSE}
+#| label: loaduxData
+datalocation <- file.path("./")
+# Load the dataset (update the path as needed)
+datapath <- file.path(datalocation,'WebSatisfaction.csv')
+websat <- read.csv(datapath)
+
+# Extract all relevant UX attribute variables into one dataframe
+uxData <- websat[, c(
+  # Navigation
+  "q1", "q2", "q3", "q4", "q5",
+  
+  # Typography
+  "q9",
+  
+  # Colour
+  "q7", "q8",
+  
+  # Interactivity
+  "q15", "q16", "q17"
+)]
+```
+
+```{r}
+#| label: str_output
+#| tbl-cap: "dataframe str output"
+# Check structure
+str(uxData)
+
+```
+
+```{r}
+#| label: uxData_stats
+#| tbl-cap: "uxData statistics"
+# verify the shape of the dataframe and some additional metrics
+class(uxData)
+ncol(uxData)
+nrow(uxData)
+summary(uxData)
+```
+
+
+# STEP 1: Create and screen the correlation matrix for the uxData dataset
+## Step 1a: Create the matrix
+You can change this to use another approach if you wish.
+
+```{r}
+#| label: uxData_create_corr_matrix
+#| tbl-cap: "Correlation matrix"
+#create a correlation matrix  
+uxMatrix<-cor(uxData)
+round(uxMatrix, 2)
+```
+
+All the variables correlate with at least one other at .3 or above (absolute values) and nothing above .8:
+
+| Variable | Highest Correlation | Meets ≥ .30 Rule  | Notes                    |
+| -------- | ------------------- | ----------------- | ------------------------ |
+| **q1**   | 0.73 (with q2)      |  Yes             | Strong                   |
+| **q2**   | 0.74 (with q4)      |  Yes             | Strong                   |
+| **q3**   | 0.65 (with q4)      |  Yes             | Strong                   |
+| **q4**   | 0.74 (with q2)      |  Yes             | Strong                   |
+| **q5**   | 0.61 (with q15)     |  Yes             | Strong                   |
+| **q9**   | **0.58 (with q16)** | ️ Yes            |  Strong|
+| **q7**   | 0.67 (with q17)     | ️ Yes            | Strong                   |
+| **q8**   | 0.64 (with q17)     | ️ Yes            | Strong                   |
+| **q15**  | 0.66 (with q17)     | ️ Yes            | Strong                   |
+| **q16**  | 0.58 (with q9)      | ️ Yes            | Strong                   |
+| **q17**  | 0.67 (with q7)      | ️ Yes            | Strong                   |
+
+
+
+## Step 1b: Visualize the correlation matrix
+You can change this to use another visualization if you wish.
+```{r}
+#| label: vis_correl_matrix
+
+# 1. Basic correlation matrix plot
+ggcorrplot::ggcorrplot(uxMatrix)
+```
+
+```{r}
+#| label: vis_corr_matrix_labels
+# 5. Correlation matrix showing coefficients with labels
+# Note: This can become cluttered with a high number of variables
+#| fig-width: 16
+#| fig-height: 16
+
+ggcorrplot::ggcorrplot(
+  uxMatrix,
+  lab = TRUE,
+  lab_size = 2.5,
+  tl.cex = 8,
+  tl.srt = 45,
+  type = "lower"
+)
+
+```
+
+# STEP 2: Check if the data is suitable for dimension reduction (there is enough variance of the right kind)
+
+You want to do the following:
+
+  * Check that your variables are correlated by doing Bartlett's test of Sphericity.
+    + Check that the result is statistically significant.
+  
+  * Check that variables are not too highly correlated for PCA.
+    + Calculate and inspect the determinant.
+    + Check to see if it is greater than 0.00001.
+  
+  * Check that there is enough variance in your variables that could be caused by an underlying factor/dimension.
+    + Use the Kaiser-Meyer-Olkin Measure of Sampling Adequacy (MSA) test.
+    + High values close to 1 suggest that PCA/FA might be useful.
+    + Values over 0.8 or over are considered strong.
+    + Anything less than 0.5 suggests that PCA/FA won’t be useful.
+    + 0.00 to 0.49 unacceptable, 0.50 to 0.59 miserable, 0.60 to 0.69 mediocre ,0.70 to 0.79 middling, 0.80 to 0.89 meritorious, 0.90 to 1.00 marvellous.
+    + [Kaiser-Meyer-Olkin (KMO) Test for Sampling Adequacy](https://www.statisticshowto.com/kaiser-meyer-olkin/)
+
+## Step 2a: Check Bartlett's test
+```{r}
+#| label: bartlett_output
+psych::cortest.bartlett(uxData)
+```
+
+
+## STEP 2b: Check the (KMO)
+
+```{r}
+#| label: kmo_output
+#| tbl-cap: "Kaiser-Meyer-Olkin Statistics"
+#KMO 
+REdaS::KMOS(uxData)
+```
+
+## STEP 2c:  Check the Determinant
+
+```{r}
+#| label: determ_output
+#| tbl-cap: "Correlation Matrix Determinant"
+#Determinant:
+det(uxMatrix)
+
+```
+
+## Step 2d: Suitability of the Data for Dimension Reduction
+
+Data Observations and requirements for dimension reduction
+
+- shape of dataframe uxData = (73, 11)
+- all variables are numeric and treated as continuous.
+- all variables are 'int' type (none coded as factor types)
+- all variables have values of '1' or '2' as a min value, with max value of '10' appearing in all variables.
+- Data appears like a questionnaire with responses values in a 10-point Likert scale. This corresponds to the description on th kaggle website where the data was sourced from. 
+- A guideline is that ordered data should be in the same direction i.e. for ordinal positive and negative values align. If they do not we should reverse code to ensure they do. We do not know the original questions however so cannot determine any direction in the data, and as such we will not reverse code the data.
+- Guidelines suggest a minimum of 5 observations per variable, with some guidelines recommending at least 100 observations. We require minimum 55 observations. While we do not meet the 100 observations guide, we exceed our minimum requirement with 73 rows in our dataframe i.e. (73 > 55).
+
+The correlation matrix output and the correlation heat map tell us there is 'Strong' correlation between all variables, with correlations > '0.3'. No values exceed 0.8, which informs us that it is unlikely colinearity exists, implying there is sufficient uniqueness present across the variables. But we do have strong correlations with most in the range '0.6' to '0.7' range. This satisfies another of our requirements for suitability for dimension reduction. Items q1 to q5 have commonality, likewise items q5 to q17 also, these may be two distinct related clusters of items.
+
+Using the guidance of Field (2024), the questionnaire response data was assessed for its suitability for dimension reduction. Bartlett’s test of sphericity produced a significant result, χ²(55) = 455.93, p < 0.001, indicating that the observed correlation matrix is not an identity matrix and therefore contains sufficient shared variance for factor extraction. The Kaiser–Meyer–Olkin (KMO) Measure of Sampling Adequacy was '0.82', which falls within the “meritorious” range according to Kaiser and Rice’s (1974) criteria, suggesting that the dataset is well suited for dimension reduction techniques. Examination of the determinant of the correlation matrix yielded a value of '0.00116', which is above the recommended minimum threshold of 0.00001, further indicating that the data is not affected by multicollinearity or singularity issues. Collectively, these diagnostics demonstrate that the  'uxData' dataset is appropriate for principal component analysis or exploratory factor analysis
+
+
+# STEP 3: Execute the PCA
+In this step, run the PCA using all of the remaining variables in the uxData dataset. The purpose here is simply to let R extract all possible components so we can see the complete structure of the data. You should focus on the loading matrix that is produced. 
+A loading tells you how strongly each variable relates to a component. 
+At this stage you are not trying to interpret all components; instead, you are trying to understand the overall structure so that we can make decisions in the next step.
+
+
+```{r}
+#| label: pca_no_rot
+#| tbl-cap: "PCA with no rotation"
+#do the reduction
+pc1 <-  principal(uxData, nfactors = length(uxData), rotate = "none")#Conduct the PCA extracting the same number of components as there are variables
+
+pc1#output all details of the PCA
+
+```
+
+The initial unrotated PCA was performed using all possible components, extracting 11 components — one for each original variable. 
+
+
+The unrotated loading matrix showed that several variables loaded strongly on the first component, including q5 (.81), q15 (.76), q8 (.74) and q2 (.74). These variables represent related aspects of the questionaire. Other components showed weaker and more diffuse patterns, reflecting the fact that PCA extracts all variance, including variance that is not meaningful.
+
+The eigenvalues indicated that the first three components explained the majority of total variance:
+
+PC1: 5.37 (48.8%)
+
+PC2: 1.93 (17.6%)
+
+PC3: 0.84 (7.6%)
+
+Together, the first three components accounted for 74% of total variance, with subsequent components contributing very little, each eigen value being below 1and explaining approx < or less 5% of the total variance each).
+
+Only the first two components meet the Kaiser criterion > 1, namely PC1 = 5.37 and PC2 = 1.93.
+
+# STEP 4:  Decide on which components to retain
+Once the full PCA is run, you need to decide how many components to keep for interpretation. There are two main things to look at:
+
+The scree plot – This helps you visually identify where the “elbow” or point of inflexion is. After this point, the components explain very little additional variance.
+
+Eigenvalues – A common guideline is to keep components with eigenvalues greater than 1 (Kaiser’s criterion) or greater than 0.7 (Joliffe's criterion).
+
+
+```{r}
+#| label: plot_scree-_eigenvals
+#Create the scree plot
+plot(pc1$values, type = "b") 
+
+#Print the variance explained by each component
+pc1$Vaccounted 
+
+#Print the Eigenvalues
+pc1$values
+
+
+#Another way to look at the eigenvalues plus variance explained (need to use princomp function of PCA to get right class for use with factoextra functions)
+pcf=princomp(uxData)
+factoextra::get_eigenvalue(pcf)
+factoextra::fviz_eig(pcf, addlabels = TRUE, ylim = c(0, 50))#Visualize the Eigenvalues
+factoextra::fviz_pca_var(pcf, col.var = "black")
+factoextra::fviz_pca_var(pcf, col.var = "cos2",
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), 
+             repel = TRUE # Avoid text overlapping
+             )
+
+#Print the loadings above the level of 0.3
+psych::print.psych(pc1, cut = 0.3, sort = TRUE)
+
+#Create a diagram showing the components and how the manifest variables load
+fa.diagram(pc1) 
+
+#Show the loadings of variables on to components
+fa.sort(pc1$loading)
+```
+
+
+Communalities - tell us how much of each variable’s variance is captured by the components we keep.
+A communality close to 1 means the retained components represent that variable very well.
+A communality below about 0.4 may indicate that the variable is not well represented.
+
+
+```{r}
+#| label: plot_commun
+#Output the communalities of variables across components (will be one for PCA since all the variance is used)
+pc1$communality 
+#Visualize contribution of variables to each component
+var <- factoextra::get_pca_var(pcf)
+corrplot::corrplot(var$contrib, is.corr=FALSE)
+```
+
+***If you want to visualize the contributions of the variables to each component use this code**
+```{r}
+#| label: plot_var_contrib
+#| fig-cap: "Contribution of variables to PC8"
+#| fig-align: center
+# Contributions of variables to PC?
+factoextra::fviz_contrib(pcf, choice = "var", axes = 8, top = 10)# Replace the value for axes with the number of the component e.g. 1 for PC1, 2 for PC2, 8 for PC8
+
+```
+
+
+## Step 4a. Decide how many components to retain and complete the code for Step 5
+
+Two criteria were used:
+
+1. Scree plot
+
+The scree plot showed a clear “elbow” at Component 2, with a possible additional inflection at component '3' indicating that meaningful reductions end after 2, but additional inflection at components '3' although not as sharp as it is after '2', from a visual inspection. Components 4–11 contributed trivial additional variance.
+
+2. Eigenvalues
+
+Kaiser’s criterion (eigenvalue > 1) supported retaining two components (5.37, 1.93).
+Joliffe’s criterion (eigenvalue > 0.7) would retain the third component (0.84).
+
+Inspection revealed that the third component was statistically weak and conceptually incoherent, only adding 8% proportion variance to components '1' and '2', who together account for 66%. Also, only one loading for component '3' nears 0.5, for variables that are conceptually related, namely q7  = -0.48, and little loading across other components. 
+
+Decision: A **two-component** solution was chosen as the most parsimonious and theoretically interpretable representation of the data.
+
+# STEP 5: Repeat with reduced components and rotation
+
+***You must:***
+- Decide how may components to retain
+- Re-run the PCA asking for only those components
+- Apply a rotation — usually varimax when doing PC
+
+NOTE: I did not re-run the exploratory PCA that was run earlier, as thought it best to leave the existing value nfactors=length(uxData)' so the thought process and analysis was visible in the rendered html and .qmd if needed. This was a conscious decision. so hopefully the correct one. I proceeded on to perform PCA with verimax rotation next.
+
+The rotated solution gives you a clearer picture of the underlying dimensions in the dataset, and this is the version you would normally interpret.
+
+```{r}
+#| label: pca_rotation
+#| tbl-cap: "PCA with rotation"
+#Apply rotation to try to refine the component structure- you decide how may
+pc2 <-  principal(uxData, nfactors = 2, rotate = "varimax") #replace the value of nfactors with the number of components to retain
+#output the components, cuts out anythign below 0.3 and sort but strongest first
+psych::print.psych(pc2, cut = 0.3, sort = TRUE)
+#output the communalities, the contribution of variables to each component
+pc2$communality
+#NOTE: you can do all the other things done for the model in step 4 if you want to
+pc2$Vaccounted
+```
+
+## Step 5a: Report the outcomes of the PCA
+
+
+A principal component analysis (PCA) with varimax rotation was conducted on the 'uxData' dataset to explore the underlying structure of its UX variables. An initial unrotated PCA indicated that the first two components had eigenvalues exceeding Kaiser’s criterion and together explained 66% of the total variance. The scree plot showed a clear point of inflection after the second component, supporting the retention of two components as the most interpretable and parsimonious solution.
+
+The rotated PCA revealed a clear and coherent structure:
+
+Component 1: Navigation
+This component showed strong positive loadings from q2 (.86), q1 (.85), q4 (.84), q3 (.78) and q5(.70), These variables represent ease of site navigation. High communalities (e.g., q2 h² = .77; q1 h² = .74) indicate that this component captures a substantial proportion of variance in these variables.
+
+Component 2: Typography, Colour and Interactivity
+This component showed strong positive loadings from q17 (.79), q9 (.77), q15 (.76), q16 (.76) and q8(.71). These variables are closely linked to site typography, Colour and Interactivity. Communalities for these indicators were moderate to high ((e.g., q17 h² = .71; q9 h² = .60)), supporting the component’s coherence.
+
+
+The two retained components reflect key dimensions of user experience such as navigation, typography, colour and interctivity.
+
+
+# Step 6a. Complete the Code for Reliability Analysis
+
+# STEP 6: Reliability Analysis
+
+Check whether the variables within each proposed group consistently measure the same underlying construct.
+
+Cronbach's alpha is used to evaluate internal consistency:
+   α > .80 = good
+   α ~ .70 = acceptable
+   α < .60 = poor
+
+ Note: Dimension reduction does NOT guarantee reliability.
+ A component/factor may be statistically valid but not reliable as a scale.
+ If we are just trying to reduce the number of variables we may still be able to use. If however we want to use the component/factor as a reliable measure of a concept it will cause use problems if it is not considered reliable.
+ 
+
+```{r}
+#| label: reliab_analysis
+#| tbl-cap: "Reliability Analysis"
+#If you know that certain sections should be treated as groups, test these separately
+#Output Cronbach alpha values - use pysch::alpha
+
+# Component 1: navigation
+comp1_vars <- uxData[, c("q2", "q4", "q1", "q3", "q5")]
+
+# Component 2:  typography, colour and interctivity.
+comp2_vars <- uxData[, c("q17", "q9", "q15", 'q16', 'q8' )]
+
+# Compute Cronbach's Alpha for each PCA-derived component
+psych::alpha(comp1_vars)   # navigation
+psych::alpha(comp2_vars)   # typography, colour and interctivity.
+
+# https://www.rdocumentation.org/packages/psych/versions/2.5.6/topics/alpha - alpha based on covariances
+cat(sprintf(" \nComponent 1 raw alpha = %.3f\n" , psych::alpha(comp1_vars)$total$raw_alpha))
+cat(sprintf(" \nComponent 2 raw alpha = %.3f\n" , psych::alpha(comp2_vars)$total$raw_alpha))
+
+# cat(sprintf(" component 1 raw alpha = " , psych::alpha(comp1_vars)$total$raw_alpha))
+
+#If you know that certain sections should be treated as groups, test these separately
+#Output Cronbach alpha values - use pysch::alpha
+
+# Compute Cronbach's Alpha for the entire dataset
+# psych::alpha(uxData)   
+#Note: You should break this out into components.
+
+```
+
+## Step 6a. Report the outcomes of the Reliability Analysis
+
+Internal consistency was evaluated for each of the two PCA-derived components using Cronbach’s alpha. Reliability was assessed to determine whether the variables loading on each component form a coherent measurement scale rather than merely a statistical grouping. This distinction is important because PCA identifies patterns of shared variance but does not guarantee that the resulting components represent reliable constructs.
+
+Component 1: Component 1 included items 'q1', 'q2', 'q3', 'q4' and 'q5' which related to navigation. Cronbach’s alpha for this set of variables was: α = .891. This indicates acceptable internal consistency. Inspection of the item-deleted statistics showed that all items correlated strongly with the underlying component. 
+
+Component 2 included items 'q17', 'q9', 'q15', 'q16' and 'q8' which related to typography, colour and interctivity. Cronbach’s alpha for this set of variables was: α = .846. This indicates acceptable internal consistency, and that the variables function together as a coherent measurement scale.
+
+In summary, both Component 1 and component 2 show good internal coherence and could be used as a reliable composite scale.
+
+
+# Step 7. Summary Conclusion on the PCA
+
+In this project we conducted Principal Component Analysis (PCA) on our 'uxData' dataset to dimension reduction to dertmine if ti could be reliably and meanginfully be achieved. The data set had '11' variables and '73' rows of data, and consisted of a set of website user experience questionairre responses. We performed the following  tasks.
+
+Firstly, we determined if the variables were suitable candidates for reduction and if they met the requirements for PCA. It confirmed that sufficient correlation existed across the variables without it leading to multicollinearity. Bartletts test was performed on the data and it proved to be statistically significant aswell as the Kaiser-Meyer-Olkin (KMO) test being performed which fell within the 'meritorious' range according to Kaiser and Rice’s (1974) criteria. The determinant value of '0.00116' was also obtained, all of which collectively, along with some manual and visual inspection determined the suitability of the variables for PCA.
+
+An initial unrotated PCA indicated that the first two components accounted fr a substantial proportion of total variance, and inspection of the eigenvalues and the scree plot helped determine taking a two component approach. We could have added and additional third component using Joliffe's criteria, but under the approach of variable parsimony this addition adding limited explanatory value it would have added, along with the weak and diffuse nature of the variable, it as decided not to include it and persist with a two component approach.
+
+A verimax (orthogonal) rotated PCA produced a clear, distinct two component structure. The first component being related to navigation and the second being related to typography, colour and interactivity. The aim of the rotation was to clarify the data structure, reallocating the variable variance across the factors, with both then contributing approcx 33% of variable for a total of 66%.
+
+Cronbach's alpha values indicated that both components showed reliability of scale and wre internally consistent, with values of 0.89 and 0.84, indicating that they could be used as a reliable composite scale in further analysis.
+
+Overall, the dataset under went dimension reduction from 11 variables to two components successfully, using PCA, retaining meaning and reliability, allowing for them to be used in any future analysis. The reduction from 11 variables tp 2 makes the dataset more manageable for staff to use and determine areas of focus for future development, maintenance etc.
+
+
