@@ -8,7 +8,7 @@ Usage:
 
 Output:
 
-    py-projects/<notebook-name>.qmd
+    notebooks/<notebook-name>.qmd
 """
 
 from pathlib import Path
@@ -16,7 +16,7 @@ from datetime import date
 import json
 import sys
 
-OUTPUT_DIR = Path(__file__).resolve().parent.parent / "py-projects"
+OUTPUT_DIR = Path(__file__).resolve().parent.parent / "notebooks"
 
 HEADER_TEMPLATE = """---
 title: "{title}"
