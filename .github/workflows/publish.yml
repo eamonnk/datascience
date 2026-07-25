@@ -15,6 +15,15 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
+      - name: Check for R file changes
+        uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            r:
+              - 'r-raw/**'
+              - 'r-projects/**'
+
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
 
@@ -31,12 +40,16 @@ jobs:
                       pandas numpy matplotlib seaborn scikit-learn nltk wordcloud umap-learn beautifulsoup4 ydata-profiling
 
       # --- R support, for rendering .qmd/.R files that use R code chunks ---
+      # Only runs when r-raw/ or r-projects/ actually changed in this push,
+      # to avoid paying the R setup + package install cost on Python-only commits.
       - name: Set up R
+        if: steps.filter.outputs.r == 'true'
         uses: r-lib/actions/setup-r@v2
         with:
           r-version: "4.4.1"
 
       - name: Install R dependencies
+        if: steps.filter.outputs.r == 'true'
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           packages: |
@@ -44,21 +57,23 @@ jobs:
             any::knitr
             any::tidyverse
             any::ggplot2
+            any::ggResidpanel
 
       ### Convert any R scripts into Quarto pages
       - name: Convert R scripts
+        if: steps.filter.outputs.r == 'true'
         run: |
           python scripts/convert_r_to_qmd.py r-raw
 
       ### Convert any Jupyter notebooks into Quarto pages
       - name: Convert notebooks
-        run: | 
+        run: |
           python scripts/convert_ipynb_to_qmd.py notebooks
 
       ### render site
       - name: Render site
         run: quarto render
-      
+
       - name: Publish to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
