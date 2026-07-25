@@ -6,15 +6,15 @@ project:
   output-dir: _site
 
 website:
-  title: "Your Name — MSc Portfolio"
-  description: "Data science, analytics and R/Python projects from my MSc coursework"
-  site-url: "https://YOUR-GH-USERNAME.github.io/YOUR-REPO-NAME"
+  title: "Data Science Interesting thigns site "
+  description: "Data science, analytics and R/Python projects and research"
+  site-url: "https://eamonnk.github.io/datascience"
   favicon: favicon.ico
   page-footer:
     left: "© 2026 Your Name"
     right:
       - icon: github
-        href: https://github.com/YOUR-GH-USERNAME
+        href: https://github.com/eamonnk
       - icon: linkedin
         href: https://linkedin.com/in/YOUR-LINKEDIN
   navbar:
@@ -28,7 +28,7 @@ website:
         text: About
     right:
       - icon: github
-        href: https://github.com/YOUR-GH-USERNAME/YOUR-REPO-NAME
+        href: https://github.com/eamonnk/datascience
         aria-label: GitHub repo
 
 format:

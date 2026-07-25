@@ -102,14 +102,30 @@ def main():
         sys.exit(1)
 
     for arg in sys.argv[1:]:
+
         p = Path(arg)
+
         if not p.exists():
             print(f"Skipping {p}: not found")
             continue
-        if p.suffix.lower() != ".r":
-            print(f"Skipping {p}: not a .R file")
-            continue
-        convert_file(p)
+
+        # Directory supplied - convert every .R file (including subfolders)
+        if p.is_dir():
+            rfiles = sorted(p.rglob("*.R"))
+
+            if not rfiles:
+                print(f"No R files found in {p}")
+                continue
+
+            for rfile in rfiles:
+                convert_file(rfile)
+
+        # Single .R file supplied
+        elif p.suffix.lower() == ".r":
+            convert_file(p)
+
+        else:
+            print(f"Skipping {p}: not an .R file or directory")
 
 
 if __name__ == "__main__":

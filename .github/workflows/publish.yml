@@ -45,9 +45,20 @@ jobs:
             any::tidyverse
             any::ggplot2
 
+      ### Convert any R scripts into Quarto pages
+      - name: Convert R scripts
+        run: |
+          python scripts/convert_r_to_qmd.py r-raw
+
+      ### Convert any Jupyter notebooks into Quarto pages
+      - name: Convert notebooks
+        run: | 
+          python scripts/convert_ipynb_to_qmd.py notebooks
+
+      ### render site
       - name: Render site
         run: quarto render
-
+      
       - name: Publish to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
