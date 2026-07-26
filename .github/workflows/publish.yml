@@ -15,14 +15,19 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Check for R file changes
-        uses: dorny/paths-filter@v3
+      # Checks whether R content EXISTS anywhere in the repo (not just whether
+      # it changed in this push). This matters because `quarto render` renders
+      # the WHOLE project every run, regardless of what triggered the push --
+      # so as soon as one R-based .qmd/.R file is committed, every future
+      # render (Python-only pushes included) needs R installed to process it.
+      - name: Check for R files
         id: filter
-        with:
-          filters: |
-            r:
-              - 'r-raw/**'
-              - 'r-projects/**'
+        run: |
+          if find r-raw r-projects -type f \( -name "*.R" -o -name "*.qmd" \) 2>/dev/null | grep -q .; then
+            echo "r=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "r=false" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
