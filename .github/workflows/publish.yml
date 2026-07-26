@@ -39,6 +39,7 @@ jobs:
           pip install jupyter nbclient nbformat ipykernel \
                       pandas numpy matplotlib seaborn scikit-learn nltk wordcloud umap-learn beautifulsoup4 ydata-profiling
 
+
       # --- R support, for rendering .qmd/.R files that use R code chunks ---
       # Only runs when r-raw/ or r-projects/ actually changed in this push,
       # to avoid paying the R setup + package install cost on Python-only commits.
