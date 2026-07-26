@@ -1,1 +1,1 @@
-Sitemap: https://YOUR-GH-USERNAME.github.io/YOUR-REPO-NAME/sitemap.xml
+Sitemap: https://eamonnk.github.io/datascience/sitemap.xml
