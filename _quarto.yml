@@ -4,12 +4,17 @@ project:
   # Local preview output. The GitHub Action renders to _site and
   # publishes that to the gh-pages branch — you never need to touch this folder.
   output-dir: _site
+  render: 
+    - "*.qmd"
+    - "*.R"
+    - "*.ipynb"
+    - "!files/"
 
 website:
   title: "Data Science Interesting thigns site "
   description: "Data science, analytics and R/Python projects and research"
   site-url: "https://eamonnk.github.io/datascience"
-  favicon: favicon.ico
+  # favicon: /favicon.ico
   page-footer:
     left: "© 2026 Your Name"
     right:
