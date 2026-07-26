@@ -58,7 +58,7 @@ jobs:
             any::knitr
             any::tidyverse
             any::ggplot2
-            any::ggResidpanel
+            goodekat/ggResidpanel
 
       ### Convert any R scripts into Quarto pages
       - name: Convert R scripts
