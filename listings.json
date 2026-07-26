@@ -2,6 +2,7 @@
   {
     "listing": "/projects.html",
     "items": [
+      "/r-projects/probability_and_statistics_1.html",
       "/notebooks/fast_food_sentient_analysis.html"
     ]
   }

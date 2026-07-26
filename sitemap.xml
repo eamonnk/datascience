@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://eamonnk.github.io/datascience/projects.html</loc>
-    <lastmod>2026-07-26T00:32:20.594Z</lastmod>
-  </url>
-  <url>
-    <loc>https://eamonnk.github.io/datascience/index.html</loc>
-    <lastmod>2026-07-26T00:32:20.555Z</lastmod>
-  </url>
-  <url>
-    <loc>https://eamonnk.github.io/datascience/about.html</loc>
-    <lastmod>2026-07-26T00:32:20.497Z</lastmod>
+    <loc>https://eamonnk.github.io/datascience/r-projects/probability_and_statistics_1.html</loc>
+    <lastmod>2026-07-26T09:26:02.998Z</lastmod>
   </url>
   <url>
     <loc>https://eamonnk.github.io/datascience/notebooks/fast_food_sentient_analysis.html</loc>
-    <lastmod>2026-07-26T00:33:11.743Z</lastmod>
+    <lastmod>2026-07-26T09:29:38.499Z</lastmod>
+  </url>
+  <url>
+    <loc>https://eamonnk.github.io/datascience/about.html</loc>
+    <lastmod>2026-07-26T09:26:02.878Z</lastmod>
+  </url>
+  <url>
+    <loc>https://eamonnk.github.io/datascience/index.html</loc>
+    <lastmod>2026-07-26T09:26:02.936Z</lastmod>
+  </url>
+  <url>
+    <loc>https://eamonnk.github.io/datascience/projects.html</loc>
+    <lastmod>2026-07-26T09:26:02.974Z</lastmod>
   </url>
 </urlset>
