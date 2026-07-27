@@ -42,7 +42,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install jupyter nbclient nbformat ipykernel \
-                      pandas numpy matplotlib seaborn scikit-learn nltk wordcloud umap-learn beautifulsoup4 ydata-profiling imbalance-learn scipy astropy Axes3D urlopen csv defaultdict Counter
+                      pandas numpy matplotlib seaborn scikit-learn nltk wordcloud umap-learn beautifulsoup4 ydata-profiling imbalanced-learn scipy astropy
 
 
       # --- R support, for rendering .qmd/.R files that use R code chunks ---
