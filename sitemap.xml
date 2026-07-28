@@ -2,22 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://eamonnk.github.io/datascience/r-projects/probability_and_statistics_1.html</loc>
-    <lastmod>2026-07-26T10:13:50.598Z</lastmod>
+    <lastmod>2026-07-28T08:01:25.384Z</lastmod>
   </url>
   <url>
     <loc>https://eamonnk.github.io/datascience/notebooks/fast_food_sentient_analysis.html</loc>
-    <lastmod>2026-07-26T10:15:53.316Z</lastmod>
+    <lastmod>2026-07-28T08:03:51.637Z</lastmod>
   </url>
   <url>
-    <loc>https://eamonnk.github.io/datascience/about.html</loc>
-    <lastmod>2026-07-26T10:13:50.479Z</lastmod>
+    <loc>https://eamonnk.github.io/datascience/notebooks/esg_text_mining_poc_final.html</loc>
+    <lastmod>2026-07-28T08:01:25.357Z</lastmod>
   </url>
   <url>
     <loc>https://eamonnk.github.io/datascience/index.html</loc>
-    <lastmod>2026-07-26T10:13:50.537Z</lastmod>
+    <lastmod>2026-07-28T08:01:25.325Z</lastmod>
+  </url>
+  <url>
+    <loc>https://eamonnk.github.io/datascience/about.html</loc>
+    <lastmod>2026-07-28T08:01:25.230Z</lastmod>
+  </url>
+  <url>
+    <loc>https://eamonnk.github.io/datascience/notebooks/UCI-bank-marketing-analysis.html</loc>
+    <lastmod>2026-07-28T08:03:51.630Z</lastmod>
+  </url>
+  <url>
+    <loc>https://eamonnk.github.io/datascience/notebooks/exoplanet-clustering.html</loc>
+    <lastmod>2026-07-28T08:01:25.357Z</lastmod>
   </url>
   <url>
     <loc>https://eamonnk.github.io/datascience/projects.html</loc>
-    <lastmod>2026-07-26T10:13:50.575Z</lastmod>
+    <lastmod>2026-07-28T08:01:25.366Z</lastmod>
   </url>
 </urlset>

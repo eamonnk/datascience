@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>ESG Analysis – Data Analysis Projects</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-dfb324f25d9b1687192fa8be62ac8f9c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
+
+
+</head>
+
+<body class="floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Data Analysis Projects</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../notebooks/esg_text_mining_poc_final.html" aria-current="page"> 
+<span class="menu-text">Eticheck</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../notebooks/exoplanet_id_clustering_final.html"> 
+<span class="menu-text">exoplanet ID</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/eamonnk"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#company-ethical-check" id="toc-company-ethical-check" class="nav-link active" data-scroll-target="#company-ethical-check"><span class="header-section-number">1</span> Company Ethical Check</a>
+  <ul class="collapse">
+  <li><a href="#file-structure" id="toc-file-structure" class="nav-link" data-scroll-target="#file-structure"><span class="header-section-number">1.1</span> File Structure:</a></li>
+  <li><a href="#step-1---data-identification" id="toc-step-1---data-identification" class="nav-link" data-scroll-target="#step-1---data-identification"><span class="header-section-number">1.2</span> Step 1 - Data Identification</a></li>
+  <li><a href="#step-2.-import-packages" id="toc-step-2.-import-packages" class="nav-link" data-scroll-target="#step-2.-import-packages"><span class="header-section-number">1.3</span> Step 2. Import packages</a></li>
+  <li><a href="#step-3---data-extraction-and-processing" id="toc-step-3---data-extraction-and-processing" class="nav-link" data-scroll-target="#step-3---data-extraction-and-processing"><span class="header-section-number">1.4</span> Step 3 - Data Extraction and Processing</a></li>
+  <li><a href="#step-4---data-exploration-and-analysis" id="toc-step-4---data-exploration-and-analysis" class="nav-link" data-scroll-target="#step-4---data-exploration-and-analysis"><span class="header-section-number">1.5</span> Step 4 - Data Exploration and Analysis</a></li>
+  </ul></li>
+  <li><a href="#step-5---classification-models" id="toc-step-5---classification-models" class="nav-link" data-scroll-target="#step-5---classification-models"><span class="header-section-number">2</span> Step 5 - Classification Models</a>
+  <ul class="collapse">
+  <li><a href="#step-6---conclusions-and-learnings" id="toc-step-6---conclusions-and-learnings" class="nav-link" data-scroll-target="#step-6---conclusions-and-learnings"><span class="header-section-number">2.1</span> Step 6 - Conclusions and Learnings</a></li>
+  <li><a href="#appendix---references" id="toc-appendix---references" class="nav-link" data-scroll-target="#appendix---references"><span class="header-section-number">2.2</span> Appendix - References</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">ESG Analysis</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="company-ethical-check" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="company-ethical-check"><span class="header-section-number">1</span> Company Ethical Check</h2>
+<p>Using Data Analysis and Data Classification to determine if a company’s values match your own.</p>
+<section id="problem-definition" class="level4" data-number="1.0.1">
+<h4 data-number="1.0.1" class="anchored" data-anchor-id="problem-definition"><span class="header-section-number">1.0.1</span> Problem Definition:</h4>
+<p>Ever increasingly people buy products and services off companies with whom they have no day to day dealings or relationship, and with supply chains being so diverse its ever harder to know if the company you are buying from has values which match your own.</p>
+<p>This project is a Proof of Concept (PoC) to try answer the following question:</p>
+<p><u>Question</u>: Can we perform Data Analysis and Classification on company reports to determine and predict how ethical a company is in relation to environmetal, social and governance (esg) criteria?</p>
+<p>In other words, Can we gain a trustworthy ethical insight, into companies esg values based off data they themselves provide in their reports?</p>
+</section>
+<section id="file-structure" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="file-structure"><span class="header-section-number">1.1</span> File Structure:</h3>
+<ol type="1">
+<li>Step1 - Data Identification
+<ul>
+<li>1.1 Reports</li>
+<li>1.2 Identifying which companies to use</li>
+<li>1.3 Obtaining pdf files</li>
+</ul></li>
+<li>Step 2 - Import packages</li>
+<li>Step 3 - Data Exploration and Processing
+<ul>
+<li>3.1 define variables</li>
+<li>3.2 try_extract_text function (try-except block to handle errors during pdf extraction)</li>
+<li>3.3 load_proc_file_csv function (to track files which have already been processed)</li>
+<li>3.4 save_proc_files_csv function (to track files which have already been processed)</li>
+<li>3.5 clean_pdf function: cleaning and tokenising pdf data</li>
+<li>3.6 process_file function (handle processing and csv file list and call clean_pdf per pdf file)</li>
+<li>3.7 Create per file data set i.e.&nbsp;data set stored a companyname, filename and exacted text on per file basis - used for model classification</li>
+</ul></li>
+<li>Step 4 - Data Exploration and Analysis
+<ul>
+<li>4.1 view data sample</li>
+<li>4.2 Create Profile report and quick check on data cleanliness i.e.&nbsp;duplicates, nulls values, unusual characters etc</li>
+<li>4.3 Remove empty text data row and verify its successful removal and remaining data integrity</li>
+<li>4.4 Export the data set to json for future re-use and backup and verify file created correctly</li>
+<li>4.5 Data aggregation per company function creation</li>
+<li>4.6 aggregate data on a per company basis - used for general analysis</li>
+<li>4.7 Display Data and Plot of word counts per company</li>
+<li>4.8 Plot - top 50 words with highest frequency per company</li>
+<li>4.9 Plot - wordcloud per word frequency per company</li>
+<li>4.10 Plot - positive ethical word count per company</li>
+<li>4.11 Plot - top 20 highest frequency words across all companies</li>
+<li>4.12 Plot - ethical words occurence per company - normalised per 100 words (as we do nto have even distribution of data for each company) -4.13 Data Exploration ansd Analysis - Conclusions</li>
+</ul></li>
+<li>Step 5 - Classification Models
+<ul>
+<li>5.1 - Split dataset into features and target labels</li>
+<li>5.2 - Verify variables are as expoected</li>
+<li>5.3 - Vectorize the text</li>
+<li>5.4 - Apply tf-idf transformation</li>
+<li>5.5 - Split data into train and test data and verify target variable data</li>
+<li>5.6 - Create Models, perform cross validation and plot ROC AUC</li>
+<li>5.7 - Plot Accuracy data</li>
+<li>5.8 - Apply SMOTE to data to oversample the minority class and verify target variable data</li>
+<li>5.9 - Create the Models using SMOTE data set</li>
+<li>5.10 - Evaluate Model Performance</li>
+</ul></li>
+<li>Step 6 - Conclusions andf Lerarnings
+<ul>
+<li>6.1 Challenges</li>
+<li>6.2 Improvements</li>
+</ul></li>
+<li>Appendix - References</li>
+</ol>
+</section>
+<section id="step-1---data-identification" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="step-1---data-identification"><span class="header-section-number">1.2</span> Step 1 - Data Identification</h3>
+<section id="reports" class="level4" data-number="1.2.1">
+<h4 data-number="1.2.1" class="anchored" data-anchor-id="reports"><span class="header-section-number">1.2.1</span> 1.1 Reports</h4>
+<ul>
+<li>Most readily available data from companies being company reports publihsed on their own websites. Hence decided to use that data.</li>
+<li>Most companies typically have pages on their sites in the form of the below, where reports can be downloaded
+<ul>
+<li></li>
+<li></li>
+</ul></li>
+<li>we did not include any ‘investor’ labelled reports as it they appear to be skewed in terms of financial terms occurrence as you would expect.</li>
+<li>Environment, Social and Governance (ESG) criteria are part of required reporting criteria for companies above a certain size. This is relatively recent requirement, but there should be sufficient data available.</li>
+<li>Issues:
+<ul>
+<li>reports are not standard or always in location or format you would expect.</li>
+<li>Some companies do not create single report but create different reports for different criteria and have multiple reports per year.</li>
+<li>Some companies embed esg details in graphics on website and only way to access is to scrape html. Decided not top scrape html to try standarise the sources from pdf only, to try make a level playing field in terms of types of sources.</li>
+<li>Some reports have reports going back several years readily available, some companies do not.</li>
+</ul></li>
+</ul>
+</section>
+<section id="identifying-which-companies-to-use" class="level4" data-number="1.2.2">
+<h4 data-number="1.2.2" class="anchored" data-anchor-id="identifying-which-companies-to-use"><span class="header-section-number">1.2.2</span> 1.2 Identifying which companies to use</h4>
+<ul>
+<li>Used Industry standard ESG ratings providers such as the below to help identify good and bad esg performers, as well as general web searches for good and bad stories and existing knowledge. There is no single source, rather multiple sources coming together to build a picture of a company.
+<ul>
+<li><a href="https://www.msci.com/">MCSI - Morgan Stanley</a></li>
+<li><a href="https://www.bcorporation.net/en-us/">BCorp</a></li>
+<li><a href="https://www.sustainalytics.com/">Susdtainanalytics</a></li>
+<li>others aswell</li>
+</ul></li>
+<li>ease of access to reports was also a factor</li>
+<li>Also tried to have an irish element and choose some companies close to home where possible to keep interesting.</li>
+<li>Also wanted spread of companies with good and bad reputations for spread of data and landed on the following companies.
+<ul>
+<li><a href="https://www.kerry.com/">Kerry group</a></li>
+<li><a href="https://www.crh.com/">CRH</a></li>
+<li><a href="https://www.kingspangroup.com/">Kingspan</a></li>
+<li><a href="https://www.smurfitkappa.com/">SmurfitKappa</a></li>
+<li><a href="https://www.aramco.com/">aramco</a></li>
+<li><a href="https://jbsesg.com/">JBS</a></li>
+<li><a href="https://corporate.exxonmobil.com/">exxonmobil</a></li>
+</ul></li>
+</ul>
+</section>
+<section id="obtaining-pdf-files" class="level4" data-number="1.2.3">
+<h4 data-number="1.2.3" class="anchored" data-anchor-id="obtaining-pdf-files"><span class="header-section-number">1.2.3</span> 1.3 Obtaining pdf Files</h4>
+<ul>
+<li><p>Tried to automate report downloading using the following</p>
+<ul>
+<li>duckduckgo_search &gt; method in package
+<ul>
+<li>this works and can specify sites to search but there are rate limits and could only use to limited affect</li>
+</ul></li>
+<li>Bing search - tried but has been deprecated, no new api keys being issued, need to use chatpgt search</li>
+<li>Ended up manually downloading pdf files as had more control over data sets and easier to eliminate noise in unrelated reports. Also quicker due to time constraints investigating how to automate.</li>
+<li>Robots.txt : checked <em>robots.txt</em> per company site to check allowable usage of data downloads from companies listed</li>
+</ul></li>
+<li><p>All obtained company reports were kept in a folder called <em><company name=""></company></em> in the same location as the script. i.e.</p>
+<pre><code>  - .scipt.ipynb
+  - \&lt;company_1_name&gt;
+      - report-1.PDF
+      - report-2.pdf
+  - \&lt;company_2_name&gt;
+      - report-1.PDF
+      - report-2.pdf
+  - etc. </code></pre></li>
+</ul>
+</section>
+</section>
+<section id="step-2.-import-packages" class="level3" data-number="1.3">
+<h3 data-number="1.3" class="anchored" data-anchor-id="step-2.-import-packages"><span class="header-section-number">1.3</span> Step 2. Import packages</h3>
+<div id="3317feeb" class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> csv</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.tokenize <span class="im">import</span> sent_tokenize, word_tokenize, RegexpTokenizer</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nltk</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> urllib.request <span class="im">import</span> urlopen</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.corpus <span class="im">import</span> stopwords</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> wordcloud <span class="im">import</span> WordCloud</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> defaultdict</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ydata_profiling <span class="im">import</span> ProfileReport</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> io </span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> io <span class="im">import</span> StringIO</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pprint <span class="im">import</span> pprint</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pdfminer.converter <span class="im">import</span> TextConverter</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pdfminer.pdfinterp <span class="im">import</span> PDFPageInterpreter</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pdfminer.ptest_test_df1st_df11interp <span class="im">import</span> PDFResourceManager</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pdfminer.pdfpage <span class="im">import</span> PDFPage</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pdfminer.layout <span class="im">import</span> LAParams</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pdfminer.high_level <span class="im">import</span> extract_text</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pdfminer.pdfdocument <span class="im">import</span> PDFDocument</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.stem <span class="im">import</span> WordNetLemmatizer</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> load_files</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> CountVectorizer</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> TfidfTransformer</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split, cross_validate, cross_val_predict,cross_val_score</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> StratifiedKFold, KFold</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="co">#from sklearn.model_selection import cross_validate</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> classification_report, confusion_matrix, accuracy_score</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> make_scorer, precision_score, recall_score, f1_score</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> roc_curve, auc</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.over_sampling <span class="im">import</span> SMOTE</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pickle</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> KNeighborsClassifier</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeClassifier</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.naive_bayes <span class="im">import</span> GaussianNB</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn <span class="im">import</span> neural_network <span class="im">as</span> nn</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> xgboost <span class="im">import</span> XGBClassifier</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.svm <span class="im">import</span> SVC</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">'ignore'</span>)</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a><span class="co"># added this to suppress pdfminer warning messages - gett a few processing pdfs</span></span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> logging</span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>logging.getLogger(<span class="st">"pdfminer"</span>).setLevel(logging.ERROR)</span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="step-3---data-extraction-and-processing" class="level3" data-number="1.4">
+<h3 data-number="1.4" class="anchored" data-anchor-id="step-3---data-extraction-and-processing"><span class="header-section-number">1.4</span> Step 3 - Data Extraction and Processing</h3>
+<p>3.1 Define variables variables which we will use throughout, placing them at the start so easy to find.</p>
+<div id="d421997b" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># path to company reports - they are all kept in their own folder called &lt;company name&gt; in the same location as the script.</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> Path.cwd() <span class="op">/</span> <span class="st">""</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># used later for data processing within a function. listed here ot make it globally available in the notebook as is called elsewhere outside of the function</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>full_proc_data <span class="op">=</span> []</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># csutom_stop words, we will add to stop words from here</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>cust_sw <span class="op">=</span> {<span class="st">'ireland'</span>, <span class="st">'irish'</span>, <span class="st">'need'</span>, <span class="st">'also'</span>, <span class="st">'set'</span>, <span class="st">'within'</span>, <span class="st">'use'</span>, <span class="st">'order'</span>, <span class="st">'would'</span>, <span class="st">'year'</span>, <span class="st">'kerry'</span>, <span class="st">'kerrys'</span>, <span class="st">'group'</span>, <span class="st">'in'</span>, <span class="st">'our'</span>, <span class="st">'c'</span>, <span class="st">'bps'</span>, <span class="st">'bn'</span>, <span class="st">'kingspan'</span>, <span class="st">'crh'</span>, <span class="st">'crhs'</span>, <span class="st">'smurfit'</span>, <span class="st">'kappa'</span>, <span class="st">'smurfitkappa'</span>, <span class="st">'eps'</span>, <span class="st">'exxonmobil'</span>, <span class="st">'exxonmobils'</span>,<span class="st">'jbs'</span>, <span class="st">'gri'</span>, <span class="st">'base'</span>, <span class="st">'e'</span>, <span class="st">'include'</span>, <span class="st">'pg'</span>, <span class="st">'see'</span>, <span class="st">'may'</span>, <span class="st">'passionatecommunitiesappendiceskingspan'</span>, <span class="st">'pv'</span>, <span class="st">'lec'</span>, <span class="st">'ghg'</span>, <span class="st">'sit'</span>, <span class="st">'cid'</span>, <span class="st">'n'</span>, <span class="st">'r'</span>, <span class="st">'l'</span>, <span class="st">'u'</span>, <span class="st">'g'</span>, <span class="st">'p'</span>, <span class="st">'b'</span>, <span class="st">'h'</span>, <span class="st">'f'</span>, <span class="st">'report'</span>, <span class="st">'aramco'</span> }</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>good_co_fold_names<span class="op">=</span> {<span class="st">'kerrygroup'</span>, <span class="st">'kingspan'</span>, <span class="st">'crh'</span>, <span class="st">'smurfitkappa'</span>}</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>bad_co_fold_names<span class="op">=</span> {<span class="st">'exonmobil'</span>, <span class="st">'jps'</span>, <span class="st">'aramco'</span>}</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># list of positive ethical words we will define ourselves. LIit ia based off common words and expectation on what should be present after reading/skimming through reports</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Potentially subjective, so something that was tweeaked/amended as we proceeded</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>pos_eti_words<span class="op">=</span> {<span class="st">'environment'</span>, <span class="st">'environmental'</span>, <span class="st">'climate'</span>, <span class="st">'change'</span>, <span class="st">'social'</span>, <span class="st">'socially'</span>,<span class="st">'govern'</span>, <span class="st">'governance'</span>, <span class="st">'sustainable'</span>, <span class="st">'child'</span>, <span class="st">'slave'</span>, <span class="st">'slavery'</span>, <span class="st">'people'</span>, <span class="st">'labour'</span>, <span class="st">'community'</span>, <span class="st">'communities'</span>, <span class="st">'local'</span>, <span class="st">'transparent'</span>, <span class="st">'planet'</span>, <span class="st">'renewable'</span>, <span class="st">'recycle'</span>}</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co"># negative words - tried using these to identify toidentify poor esg companies but decided to  go with approach of just positive words after trial and error.</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>neg_eti_words<span class="op">=</span>{<span class="st">'cash'</span>, <span class="st">'future'</span>, <span class="st">'business'</span>, <span class="st">'profit'</span>, <span class="st">'earnings'</span>, <span class="st">'assets'</span>, <span class="st">'capture'</span>}</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co"># good words = planet</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>3.2 try_extract_text function (try-except block to handle errors during pdf extraction)</p>
+<div id="6a85eb4b" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># need to include try except funtion on extract text call as getting errors on extracting some pdfs</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># difficult to troubleshoot them and address, so including this </span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> try_extract_text(pdf_path):</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> extract_text(pdf_path)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Failed to extract from </span><span class="sc">{</span>pdf_path<span class="sc">.</span>name<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">""</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>3.3 load_proc_file_csv function (to track files which have already been proecessed)</p>
+<div id="2e7301e5" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Takign so long to process additional pdf files need a way jusyt process new files, i.e. the delta,  only new files thatare added to dataset</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># if file exists, opens it and reads its content into dictioary list</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># if doesn't exist on firstrun will return an empty list</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> load_proc_file_csv(csv_path):</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> Path(csv_path).exists():</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(csv_path, <span class="st">"r"</span>, encoding<span class="op">=</span><span class="st">"utf-8"</span>) <span class="im">as</span> f:</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>            reader <span class="op">=</span> csv.DictReader(f)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> [row <span class="cf">for</span> row <span class="kw">in</span> reader]</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> []</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>3.4 save_proc_files_csv function (to track files which have already been proecessed)</p>
+<div id="d81eae6d" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the combined data to csv file</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> save_proc_files_csv(records, csv_path):</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(csv_path, <span class="st">"w"</span>, newline<span class="op">=</span><span class="st">''</span>, encoding<span class="op">=</span><span class="st">"utf-8"</span>) <span class="im">as</span> f:</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        writer <span class="op">=</span> csv.DictWriter(f, fieldnames<span class="op">=</span>[<span class="st">"company"</span>, <span class="st">"filename"</span>])</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        writer.writeheader()</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        writer.writerows(records)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>3.5 clean_pdf function: cleanifgn and tokenising pdf data</p>
+<div id="b4436995" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># function to clean pdf file, parameters are the pdf file path and the stoppword list</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> clean_pdf(pdf_path, custom_stopwords<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># call out rtry-except funtcion to handle errors</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> try_extract_text(pdf_path)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"--- processing file - </span><span class="sc">{</span>pdf_path<span class="sc">.</span>name<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">#fix hyphenated line breaks some words wrapping half way through and continue on next line</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> re.sub(<span class="vs">r'-</span><span class="ch">\n</span><span class="vs">'</span>, <span class="st">''</span>, text)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">#remove line breaks, merge lines, any newline characters are replaced with spaces to convert text into a single string</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> re.sub(<span class="vs">r'</span><span class="ch">\n</span><span class="op">+</span><span class="vs">'</span>, <span class="st">' '</span>, text)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">#remove multiple whitespaces and leading or trailing ones</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> re.sub(<span class="vs">r'</span><span class="dv">\s</span><span class="op">+</span><span class="vs">'</span>, <span class="st">' '</span>, text).strip()</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">#convert all to lower case to standardise the words</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> text.lower()</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># removes punctuation ., ;:?"" etc</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> re.sub(<span class="vs">r'</span><span class="pp">[^</span><span class="dv">\w\s</span><span class="pp">]</span><span class="vs">'</span>, <span class="st">''</span>, text)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># remove all digits appearing as page numbers, years and verious stats and metrics</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> re.sub(<span class="vs">r'</span><span class="dv">\d</span><span class="op">+</span><span class="vs">'</span>, <span class="st">''</span>, text)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    <span class="co">#tokenise using nltks tokeniser method and apply stop words</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    tokens <span class="op">=</span> word_tokenize(text)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    stop_words <span class="op">=</span> <span class="bu">set</span>(stopwords.words(<span class="st">'english'</span>))</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    <span class="co">#update stopw words list to include cust_sw list which wer call when calling function</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> custom_stopwords:</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>        stop_words.update(custom_stopwords)</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># make sure only alpha characters and words not iun stop words</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>    tokens <span class="op">=</span> [word <span class="cf">for</span> word <span class="kw">in</span> tokens <span class="cf">if</span> word.isalpha() <span class="kw">and</span> word <span class="kw">not</span> <span class="kw">in</span> stop_words]</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># convert words to base form, tried porterstemmer but this seems to be easier and give betetr results????</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># using the verb form by defining 'v'</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>    lemmatizer <span class="op">=</span> WordNetLemmatizer()</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>    tokens <span class="op">=</span> [lemmatizer.lemmatize(word, pos<span class="op">=</span><span class="st">'v'</span>) <span class="cf">for</span> word <span class="kw">in</span> tokens]</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">' '</span>.join(tokens)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>3.6 process_file function (handle processing and csv file list and call clean_pdf per pdf file)</p>
+<div id="ba73311a" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load the processed   file list csv and track as we clean_pdf function runs</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> process_files(path, csv_path<span class="op">=</span><span class="st">"proc_files_list.csv"</span>, custom_stopwords<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># making vraible global so cna access otuside of function</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">global</span> full_proc_data</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    existing_proc_file_list <span class="op">=</span> load_proc_file_csv(csv_path)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># create a tuple of company and filename in existing list to alow us check against if already processed</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    processed_files <span class="op">=</span> {(entry[<span class="st">'company'</span>], entry[<span class="st">'filename'</span>]) <span class="cf">for</span> entry <span class="kw">in</span> existing_proc_file_list}</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># create list to call later and store pdf data </span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># issue overwriting existing dataset when new pdf added and re-run on dataset</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># this was required as we had an issue of having to re-exact files we have already extracted</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># this was a duplication of a task already completed and weas taking a lot of time torun the notebook as a result</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># rather than just extracting the delta</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    full_proc_append_data <span class="op">=</span> []</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># get all folders inside the path, which we defined earlier i.e. in same folder as .ipynb script</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> company_dir <span class="kw">in</span> Path(path).iterdir():</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> company_dir.is_dir():</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>            <span class="cf">continue</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>        company <span class="op">=</span> company_dir.name.lower()</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss"> Processing: </span><span class="sc">{</span>company<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> pdf_file <span class="kw">in</span> company_dir.glob(<span class="st">"*.pdf"</span>):</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>            <span class="co"># skip pdf if exists in the list as already processed</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> (company, pdf_file.name) <span class="kw">in</span> processed_files:</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="ss">f"Skipping: </span><span class="sc">{</span>company<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>pdf_file<span class="sc">.</span>name<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>                <span class="cf">continue</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>            <span class="co">#call the clean pdf function to clean tyhe pdf apend to the cleaned </span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>            <span class="co"># we'll store 3 pieces of data, company name, file name and the cleaned textin a list of dictioaries each 3 key value pairs</span></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>            <span class="co"># which we can then manipulate as we need to craete new data structures  </span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>            cleaned <span class="op">=</span> clean_pdf(pdf_file, custom_stopwords<span class="op">=</span>custom_stopwords)</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>            full_proc_append_data.append({</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>                <span class="st">"company"</span>: company,</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>                <span class="st">"filename"</span>: pdf_file.name,</span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>                <span class="st">"text"</span>: cleaned</span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>            })</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Combine and save the dertails for processed files list - it onyl writes this file after processing all pdfs</span></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>    new_proc_files<span class="op">=</span> [{<span class="st">"company"</span>: r[<span class="st">"company"</span>], <span class="st">"filename"</span>: r[<span class="st">"filename"</span>]} <span class="cf">for</span> r <span class="kw">in</span> full_proc_append_data]</span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>    combined_proc_files <span class="op">=</span> existing_proc_file_list <span class="op">+</span> new_proc_files</span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>    save_proc_files_csv(combined_proc_files, csv_path)</span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>    full_proc_data.extend(full_proc_append_data)</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss"> Added </span><span class="sc">{</span><span class="bu">len</span>(full_proc_append_data)<span class="sc">}</span><span class="ss"> new files. Total: </span><span class="sc">{</span><span class="bu">len</span>(combined_proc_files)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> full_proc_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>3.7 Create per file data set i.e.&nbsp;data set stored a companyname, filename and exacted text on per file basis - used for model classification</p>
+<div id="ce30e46d" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract pdf data and put it in dictionary - initial cleaning and storing of data for subsequent use</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>processed_per_file_data <span class="op">=</span> process_files(path, custom_stopwords<span class="op">=</span>cust_sw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ Processing: smurfitkappa
+--- processing file - smurfit_westrock_sustainability_report_2024.pdf
+--- processing file - Smurfit_Kappa_Sustainable_Development_Report_2021.pdf
+--- processing file - Smurfit_Kappa_Sustainable_Development_Report_2022.pdf
+--- processing file - Smurfit_Kappa_Sustainable_Development_Report_2023.pdf
+--- processing file - our-open-community-2023.pdf
+--- processing file - sk_greenfinanceframework_2021.pdf
+--- processing file - smurfit_kappa_annual_report_2023.pdf
+--- processing file - smurfit_westrock_sustainability_report_highlights_2024.pdf
+--- processing file - Smurfit-Kappa-Green-Bond-Report-2024.pdf
+--- processing file - Smurfit-Kappa-UN-SDG-Report-2022.pdf
+--- processing file - Second-Party-Opinion-20240320-smurfit kappa.pdf
+
+ Processing: aramco
+--- processing file - 2023-saudi-aramco-sustainability-report-full-en.pdf
+--- processing file - saudi-aramco-sustainability-report-2021-en.pdf
+--- processing file - 2022-sustainability-report-en.pdf
+--- processing file - 2023-a-leader-in-lower-upstream-carbon-intensity-ops-en.pdf
+--- processing file - 2023-climate-change-and-the-energy-transition-en.pdf
+
+ Processing: crh
+--- processing file - crh-2021-sustainability-report_interactive.pdf
+--- processing file - crh-2022-sustainability-performance-report_interactive.pdf
+--- processing file - crh-2024-sustainability-performance-report_final_interactive.pdf
+--- processing file - crh-sustainability-report-2023_interactive_vhr.pdf
+--- processing file - media-factsheet.pdf
+--- processing file - modern-slavery-statement-2023.pdf
+
+ Processing: exxonmobil
+--- processing file - acs-report-executive-summary.pdf
+--- processing file - Corporate_Plan_Update_and_Upstream_Spotlight_Press_Release_Final.pdf
+--- processing file - sustainability-report-executive-summary.pdf
+
+ Processing: jbs
+--- processing file - JBS-2022-sumario-executivo_EN-v2-Updated-3.pdf
+--- processing file - sustainability-in-report-jbs-2020.pdf
+Failed to extract from sustainability-in-report-jbs-2021.pdf: safe_rgb() missing 2 required positional arguments: 'g' and 'b'
+--- processing file - sustainability-in-report-jbs-2021.pdf
+
+ Processing: kerrygroup
+--- processing file - KerryGroup_AR24_StrategicReport.pdf
+--- processing file - KerryGroup_AR24_SustainabilityReview.pdf
+--- processing file - sustainability-assurance-statement-2023.pdf
+--- processing file - KerryGroup_AR24_SustainabilityStatement.pdf
+--- processing file - KGAR21_Sustainability_Review.pdf
+--- processing file - sustainability-assurance-statement-2022.pdf
+--- processing file - kerry-beyond-the-horizon-sustainability-strategy-13-10-2021.pdf
+--- processing file - kerry-climate-transition-plan.pdf
+
+ Processing: kingspan
+--- processing file - kgr-planet-passionate-report-2024.pdf
+--- processing file - kingspan-2022-planet-passionate-report.pdf
+--- processing file - planet-passionate-report-2023.pdf
+--- processing file - planet-passionate-annual-report-2021.pdf
+--- processing file - kingspan-2023-planet-passionate-press-release.pdf
+--- processing file - kingspan-full-year-results-presentation-2022.pdf
+--- processing file - kingspan-planet-passionate-report-2023-press-release.pdf
+--- processing file - planet-passionate-annual-report-press-release-2021.pdf
+
+ Added 44 new files. Total: 44</code></pre>
+</div>
+</div>
+</section>
+<section id="step-4---data-exploration-and-analysis" class="level3" data-number="1.5">
+<h3 data-number="1.5" class="anchored" data-anchor-id="step-4---data-exploration-and-analysis"><span class="header-section-number">1.5</span> Step 4 - Data Exploration and Analysis</h3>
+<p>4.1 view data sample</p>
+<div id="98e713e1" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># view some data from the data set, which is a list of dictionaries</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># we do not need to convert to dataframe  for our purposes, list is fine</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># we note the failed extraction error displyed earlier during extraction and look to see if tis an issue and deall with that</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> record <span class="kw">in</span> processed_per_file_data[:<span class="dv">5</span>]:</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    company <span class="op">=</span> record[<span class="st">'company'</span>]</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    filename <span class="op">=</span> record[<span class="st">'filename'</span>]</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># split out the first 10 words of 'text column</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    text_snippet <span class="op">=</span> <span class="st">' '</span>.join(record[<span class="st">'text'</span>].split()[:<span class="dv">10</span>]) </span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Company: </span><span class="sc">{</span>company<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Filename: </span><span class="sc">{</span>filename<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"First 10 words: </span><span class="sc">{</span>text_snippet<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"-----"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Company: smurfitkappa
+Filename: smurfit_westrock_sustainability_report_2024.pdf
+First 10 words: sustainability ii westrock sustainability overview planet people communities impactful business
+-----
+Company: smurfitkappa
+Filename: Smurfit_Kappa_Sustainable_Development_Report_2021.pdf
+First 10 words: continue delivery better tomorrow sustainable development one lead global providers
+-----
+Company: smurfitkappa
+Filename: Smurfit_Kappa_Sustainable_Development_Report_2022.pdf
+First 10 words: deliver future together sustainable development one lead global providers sustainable
+-----
+Company: smurfitkappa
+Filename: Smurfit_Kappa_Sustainable_Development_Report_2023.pdf
+First 10 words: deliver sustainable future sustainable development content innovative solutions chief executive
+-----
+Company: smurfitkappa
+Filename: our-open-community-2023.pdf
+First 10 words: open community open community immense pride share open community brochure
+-----</code></pre>
+</div>
+</div>
+<p>4.2 Create Profile report and quick check on data cleanliness i.e.&nbsp;duplicates, nulls values, unusual characters etc</p>
+<div id="c57b0630" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create prilfe report</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>df<span class="op">=</span>pd.DataFrame(processed_per_file_data)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>profile<span class="op">=</span>ProfileReport(df)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>profile</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>file_path <span class="op">=</span> os.path.join(path,<span class="st">'Report-new-22222.html'</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>profile.to_file(file_path)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"a54bfee94d924fa5a03b547ab35f36fb","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"562bfe304cee45fd971e7807f9642bc8","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"cdf924f485dc4e55aade124c07aa082a","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"943dc2c13dfe4d7193c98389fbdde061","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+</div>
+<p>4.3 Remove empty ‘text’ data for ‘jbs’ row and verify its successful removal and remaining data integrity</p>
+<div id="ab0181e9" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># have missing 'text' data where 'company' = jbs and 'Filename' = 'sustainability-in-report-jbs-2021.pdf'</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># this came from error during extraction process</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># remove this row</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>processed_per_file_data <span class="op">=</span> [d <span class="cf">for</span> d <span class="kw">in</span> processed_per_file_data <span class="cf">if</span> <span class="kw">not</span> (d[<span class="st">'company'</span>] <span class="op">==</span> <span class="st">'jbs'</span> <span class="kw">and</span> d[<span class="st">'filename'</span>] <span class="op">==</span> <span class="st">'sustainability-in-report-jbs-2021.pdf'</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="43a5fa79" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> record <span class="kw">in</span> processed_per_file_data:</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    company <span class="op">=</span> record[<span class="st">'company'</span>]</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    filename <span class="op">=</span> record[<span class="st">'filename'</span>]</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># split out the first 10 words</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    text_snippet <span class="op">=</span> <span class="st">' '</span>.join(record[<span class="st">'text'</span>].split()[:<span class="dv">5</span>]) </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Company: </span><span class="sc">{</span>company<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Filename: </span><span class="sc">{</span>filename<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"First 10 words: </span><span class="sc">{</span>text_snippet<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"-----"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Company: smurfitkappa
+Filename: smurfit_westrock_sustainability_report_2024.pdf
+First 10 words: sustainability ii westrock sustainability overview
+-----
+Company: smurfitkappa
+Filename: Smurfit_Kappa_Sustainable_Development_Report_2021.pdf
+First 10 words: continue delivery better tomorrow sustainable
+-----
+Company: smurfitkappa
+Filename: Smurfit_Kappa_Sustainable_Development_Report_2022.pdf
+First 10 words: deliver future together sustainable development
+-----
+Company: smurfitkappa
+Filename: Smurfit_Kappa_Sustainable_Development_Report_2023.pdf
+First 10 words: deliver sustainable future sustainable development
+-----
+Company: smurfitkappa
+Filename: our-open-community-2023.pdf
+First 10 words: open community open community immense
+-----
+Company: smurfitkappa
+Filename: sk_greenfinanceframework_2021.pdf
+First 10 words: green finance framework september green
+-----
+Company: smurfitkappa
+Filename: smurfit_kappa_annual_report_2023.pdf
+First 10 words: dynamically sustainably deliver annual content
+-----
+Company: smurfitkappa
+Filename: smurfit_westrock_sustainability_report_highlights_2024.pdf
+First 10 words: sustainability highlight westrock sustainability highlight
+-----
+Company: smurfitkappa
+Filename: Smurfit-Kappa-Green-Bond-Report-2024.pdf
+First 10 words: green bond allocation impact march
+-----
+Company: smurfitkappa
+Filename: Smurfit-Kappa-UN-SDG-Report-2022.pdf
+First 10 words: deliver sdgs v introduction purpose
+-----
+Company: smurfitkappa
+Filename: Second-Party-Opinion-20240320-smurfit kappa.pdf
+First 10 words: issuer green finance sustainability quality
+-----
+Company: aramco
+Filename: 2023-saudi-aramco-sustainability-report-full-en.pdf
+First 10 words: invest growth innovate sustainability sustainability
+-----
+Company: aramco
+Filename: saudi-aramco-sustainability-report-2021-en.pdf
+First 10 words: saudi sustainability energy security sustainable
+-----
+Company: aramco
+Filename: 2022-sustainability-report-en.pdf
+First 10 words: sustainability invest growth innovate sustainability
+-----
+Company: aramco
+Filename: 2023-a-leader-in-lower-upstream-carbon-intensity-ops-en.pdf
+First 10 words: differentiate sustain diversify enable leader
+-----
+Company: aramco
+Filename: 2023-climate-change-and-the-energy-transition-en.pdf
+First 10 words: rock understand subsurface key find
+-----
+Company: crh
+Filename: crh-2021-sustainability-report_interactive.pdf
+First 10 words: empower sustainability build solutions sustainability
+-----
+Company: crh
+Filename: crh-2022-sustainability-performance-report_interactive.pdf
+First 10 words: solutions sustainable future sustainability performance
+-----
+Company: crh
+Filename: crh-2024-sustainability-performance-report_final_interactive.pdf
+First 10 words: build world shape future sustainability
+-----
+Company: crh
+Filename: crh-sustainability-report-2023_interactive_vhr.pdf
+First 10 words: solutions sustainable future sustainability performance
+-----
+Company: crh
+Filename: media-factsheet.pdf
+First 10 words: wwwcrhcom media factsheet stand together
+-----
+Company: crh
+Filename: modern-slavery-statement-2023.pdf
+First 10 words: commitment human right modern slavery
+-----
+Company: exxonmobil
+Filename: acs-report-executive-summary.pdf
+First 10 words: advance climate solutions executive summary
+-----
+Company: exxonmobil
+Filename: Corporate_Plan_Update_and_Upstream_Spotlight_Press_Release_Final.pdf
+First 10 words: news release contact media relations
+-----
+Company: exxonmobil
+Filename: sustainability-report-executive-summary.pdf
+First 10 words: sustainability executive summary april x
+-----
+Company: jbs
+Filename: JBS-2022-sumario-executivo_EN-v2-Updated-3.pdf
+First 10 words: sustainability introduction table content introduction
+-----
+Company: jbs
+Filename: sustainability-in-report-jbs-2020.pdf
+First 10 words: sustainability environmental social governance alberice
+-----
+Company: kerrygroup
+Filename: KerryGroup_AR24_StrategicReport.pdf
+First 10 words: strategic performance performance financial performance
+-----
+Company: kerrygroup
+Filename: KerryGroup_AR24_SustainabilityReview.pdf
+First 10 words: strategic sustainability review sustainability review
+-----
+Company: kerrygroup
+Filename: sustainability-assurance-statement-2023.pdf
+First 10 words: plc sustainability assurance statement kerrycom
+-----
+Company: kerrygroup
+Filename: KerryGroup_AR24_SustainabilityStatement.pdf
+First 10 words: sustainability statement general sustainability statement
+-----
+Company: kerrygroup
+Filename: KGAR21_Sustainability_Review.pdf
+First 10 words: sustainability review beyond horizon worlds
+-----
+Company: kerrygroup
+Filename: sustainability-assurance-statement-2022.pdf
+First 10 words: plc sustainability assurance statement kerrycom
+-----
+Company: kerrygroup
+Filename: kerry-beyond-the-horizon-sustainability-strategy-13-10-2021.pdf
+First 10 words: beyond horizon kerrygroupcom beyond horizon
+-----
+Company: kerrygroup
+Filename: kerry-climate-transition-plan.pdf
+First 10 words: future sustainable nutrition create world
+-----
+Company: kingspan
+Filename: kgr-planet-passionate-report-2024.pdf
+First 10 words: planet passionate planet passionate content
+-----
+Company: kingspan
+Filename: kingspan-2022-planet-passionate-report.pdf
+First 10 words: planet passionate planet passionate governance
+-----
+Company: kingspan
+Filename: planet-passionate-report-2023.pdf
+First 10 words: planet passionate planet passionate content
+-----
+Company: kingspan
+Filename: planet-passionate-annual-report-2021.pdf
+First 10 words: kingspancom planetpassionatereport approach sustainability carbon
+-----
+Company: kingspan
+Filename: kingspan-2023-planet-passionate-press-release.pdf
+First 10 words: achieve reduction absolute scope emissions
+-----
+Company: kingspan
+Filename: kingspan-full-year-results-presentation-2022.pdf
+First 10 words: full result february disclaimer forward
+-----
+Company: kingspan
+Filename: kingspan-planet-passionate-report-2023-press-release.pdf
+First 10 words: reduce scope greenhouse gas emissions
+-----
+Company: kingspan
+Filename: planet-passionate-annual-report-press-release-2021.pdf
+First 10 words: reduce absolute scope emissions achieve
+-----</code></pre>
+</div>
+</div>
+<div id="aae74085" class="cell" data-execution_count="45">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># quick look at data to see if its clean, no duplicates, null values unusual characters etc</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># convert it to d first so can easily run some checks over it</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>test_df1<span class="op">=</span>pd.DataFrame(processed_per_file_data)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># view various dataframe details</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"># checking for null values and specific unknown values</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">"Rows     : "</span> , test_df1.shape[<span class="dv">0</span>])</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">"Columns  : "</span> , test_df1.shape[<span class="dv">1</span>])</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'------'</span>)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">"</span><span class="ch">\n</span><span class="st">Features : </span><span class="ch">\n</span><span class="st">"</span> , test_df1.columns.tolist())</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'------'</span>)</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">"</span><span class="ch">\n</span><span class="st">Missing values :  "</span>, test_df1.isnull().<span class="bu">sum</span>().values.<span class="bu">sum</span>())</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'------'</span>)</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">"</span><span class="ch">\n</span><span class="st">Missing values per column:  "</span>, test_df1.isnull().<span class="bu">sum</span>())</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'------'</span>)</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'</span><span class="ch">\n</span><span class="st">num of dups in df   =   </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(test_df1.duplicated().<span class="bu">sum</span>()))</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'------'</span>)</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">"</span><span class="ch">\n</span><span class="st">Unique values :  </span><span class="ch">\n</span><span class="st">"</span>, test_df1.nunique())</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'------'</span>)</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'</span><span class="ch">\n</span><span class="st"> null values = '</span>, test_df1.isnull().values.<span class="bu">any</span>())</span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'------'</span>)</span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>test_df1_missing <span class="op">=</span> (df<span class="op">==</span><span class="st">'?'</span>).<span class="bu">sum</span>()</span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'</span><span class="ch">\"</span><span class="st">  ?   </span><span class="ch">\"</span><span class="st"> values present =  </span><span class="ch">\n</span><span class="st">'</span>,test_df1_missing)</span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'------'</span>)</span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>test_df1_unknown <span class="op">=</span> (test_df1<span class="op">==</span><span class="st">'unknown'</span>).<span class="bu">sum</span>()</span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'</span><span class="ch">\"</span><span class="st">   unknown   </span><span class="ch">\"</span><span class="st"> values present =  </span><span class="ch">\n</span><span class="st">'</span>,test_df1_unknown)</span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'------'</span>)</span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>test_df1_na <span class="op">=</span> test_df1.isin([<span class="st">'N/A'</span>, <span class="st">'N</span><span class="ch">\\</span><span class="st">A'</span>, <span class="st">'NA'</span>, <span class="st">'n/a'</span>, <span class="st">'n</span><span class="ch">\\</span><span class="st">A'</span>, <span class="st">'na'</span>, <span class="st">'N_A'</span>]).<span class="bu">sum</span>()</span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'    NA     values present = </span><span class="ch">\n</span><span class="st">'</span>, test_df1_na)</span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'------'</span>)</span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a>test_df1_none <span class="op">=</span> test_df1.isin([<span class="st">'None'</span>, <span class="st">'none'</span>]).<span class="bu">sum</span>()</span>
+<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'    none    values present = </span><span class="ch">\n</span><span class="st">'</span>, test_df1_none)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows     :  43
+Columns  :  3
+------
+
+Features : 
+ ['company', 'filename', 'text']
+------
+
+Missing values :   0
+------
+
+Missing values per column:   company     0
+filename    0
+text        0
+dtype: int64
+------
+
+num of dups in df   =   0
+------
+
+Unique values :  
+ company      7
+filename    43
+text        43
+dtype: int64
+------
+
+ null values =  False
+------
+"  ?   " values present =  
+ company     0
+filename    0
+text        0
+dtype: int64
+------
+"   unknown   " values present =  
+ company     0
+filename    0
+text        0
+dtype: int64
+------
+    NA     values present = 
+ company     0
+filename    0
+text        0
+dtype: int64
+------
+    none    values present = 
+ company     0
+filename    0
+text        0
+dtype: int64</code></pre>
+</div>
+</div>
+<p>4.4 Export the data set to json for future re-use and backup and verify file created correctly</p>
+<div id="9b731599" class="cell" data-execution_count="46">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># export data set to a json file </span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ref https://www.geeksforgeeks.org/python-convert-list-of-dictionaries-to-json/</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'company_sust_reports_exported_v2.json'</span>, <span class="st">'w'</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    json.dump(processed_per_file_data, <span class="bu">file</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="deaa562f" class="cell" data-execution_count="47">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read json back in to a datafram and verify strutcure is fine, as we expect to ensure export was successful</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>exp_file_df<span class="op">=</span>pd.read_json(<span class="st">'company_sust_reports_exported_v2.json'</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>exp_file_df.head(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="47">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">company</th>
+<th data-quarto-table-cell-role="th">filename</th>
+<th data-quarto-table-cell-role="th">text</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>smurfitkappa</td>
+<td>smurfit_westrock_sustainability_report_2024.pdf</td>
+<td>sustainability ii westrock sustainability over...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>smurfitkappa</td>
+<td>Smurfit_Kappa_Sustainable_Development_Report_2...</td>
+<td>continue delivery better tomorrow sustainable ...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>smurfitkappa</td>
+<td>Smurfit_Kappa_Sustainable_Development_Report_2...</td>
+<td>deliver future together sustainable developmen...</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="0c4b6923" class="cell" data-execution_count="48">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># just verify the number of  rows and columnsin the df craeted off the json to ensure all is present and correct</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(exp_file_df.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(43, 3)</code></pre>
+</div>
+</div>
+<p>4.5 Data aggregation per company function creation</p>
+<div id="44537bbb" class="cell" data-execution_count="49">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># aggregate data function for per company basis for cumulative data analysis</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co"># just taking compan name and text tokens</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> aggregate_by_company(file_data):</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    aggregated <span class="op">=</span> defaultdict(<span class="bu">str</span>)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> record <span class="kw">in</span> file_data:</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>        aggregated[record[<span class="st">"company"</span>]] <span class="op">+=</span> <span class="st">" "</span> <span class="op">+</span> record[<span class="st">"text"</span>]</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> aggregated</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>4.6 aggregate data on a per company basis - used for general analysis</p>
+<div id="8086a8d1" class="cell" data-execution_count="50">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># aggregate the data at company level, whcih we will then manipulate and analysed</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>combined_per_comp_text <span class="op">=</span> aggregate_by_company(processed_per_file_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>4.7 Display Data and Plot of word counts per company</p>
+<div id="78a2905c" class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print cleaned word count we have for each company</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co"># we're usign the agregated words per company</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> company, text <span class="kw">in</span> combined_per_comp_text.items():</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"----- "</span>)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>company<span class="sc">.</span>lower()<span class="sc">}</span><span class="ss"> - Total words:  </span><span class="sc">{</span><span class="bu">len</span>(text.split())<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># print(text[:1000])  # print first 1000 characters to avoid overflow</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># print(f"\n[Total words: {len(text.split())}]")</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>word_counts <span class="op">=</span> {company: <span class="bu">len</span>(text.split()) <span class="cf">for</span> company, text <span class="kw">in</span> combined_per_comp_text.items()}</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="co"># PLot the word count per company so we have an easier visualization</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>plt.bar(word_counts.keys(), word_counts.values())</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Total Word Count per Company"</span>)</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Company"</span>)</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Word Count"</span>)</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">45</span>)</span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>----- 
+smurfitkappa - Total words:  244346
+----- 
+aramco - Total words:  78764
+----- 
+crh - Total words:  126164
+----- 
+exxonmobil - Total words:  11001
+----- 
+jbs - Total words:  58757
+----- 
+kerrygroup - Total words:  60488
+----- 
+kingspan - Total words:  68105</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="esg_text_mining_poc_final_files/figure-html/cell-20-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>4.8 Plot - top 50 words with highest frequency per company</p>
+<div id="5906e9ea" class="cell" data-execution_count="57">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the 50 words with the highest frequency from each company</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> company, text <span class="kw">in</span> combined_per_comp_text.items():</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    tokens <span class="op">=</span> text.split()</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    word_freq <span class="op">=</span> Counter(tokens)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    top_words <span class="op">=</span> word_freq.most_common(<span class="dv">50</span>)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>    words, counts <span class="op">=</span> <span class="bu">zip</span>(<span class="op">*</span>top_words)</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>    plt.figure(figsize<span class="op">=</span>(<span class="dv">11</span>, <span class="dv">5</span>))</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>    plt.bar(words, counts)</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>    plt.xticks(rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">'right'</span>)</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="ss">f"Top 50 Keywords – </span><span class="sc">{</span>company<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">"Words"</span>)</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">"Frequency"</span>)</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># plt.gca().invert_yaxis()</span></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ax=plt.gca()</span></span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ax.xaxis.set_ticks_position('both')</span></span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ax.xaxis.set_label_position('top')</span></span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>    plt.tight_layout()</span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Save to file instead of displaying</span></span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>    plt.savefig(<span class="ss">f"</span><span class="sc">{</span>company<span class="sc">}</span><span class="ss">_top50_keywords.png"</span>)</span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>    plt.tight_layout()</span>
+<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a>    plt.close()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="esg_text_mining_poc_final_files/figure-html/cell-21-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="esg_text_mining_poc_final_files/figure-html/cell-21-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="esg_text_mining_poc_final_files/figure-html/cell-21-output-3.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="esg_text_mining_poc_final_files/figure-html/cell-21-output-4.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="esg_text_mining_poc_final_files/figure-html/cell-21-output-5.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="esg_text_mining_poc_final_files/figure-html/cell-21-output-6.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="esg_text_mining_poc_final_files/figure-html/cell-21-output-7.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>4.9 Plot - wordcloud per word frequency per company</p>
+<div id="53eec83e" class="cell" data-execution_count="58">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Create wnrd cloud based of word frequency</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> company, text <span class="kw">in</span> combined_per_comp_text.items():</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    filtered_words <span class="op">=</span> text.split()</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    cnt <span class="op">=</span> Counter(filtered_words)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>    wc <span class="op">=</span> WordCloud(max_words<span class="op">=</span><span class="dv">1000</span>, margin<span class="op">=</span><span class="dv">10</span>, background_color<span class="op">=</span><span class="st">'white'</span>, </span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>                    scale<span class="op">=</span><span class="dv">3</span>, relative_scaling<span class="op">=</span><span class="fl">0.5</span>, width<span class="op">=</span><span class="dv">500</span>,height<span class="op">=</span><span class="dv">400</span>,</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>                    random_state<span class="op">=</span><span class="dv">1</span>).generate_from_frequencies(cnt)</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>    plt.figure(figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">10</span>))</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>    plt.imshow(wc, interpolation<span class="op">=</span><span class="st">'bilinear'</span>)</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>    plt.axis(<span class="st">"off"</span>)</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="ss">f"WordCloud --- </span><span class="sc">{</span>company<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>    plt.tight_layout()</span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>    plt.savefig(<span class="ss">f"</span><span class="sc">{</span>company<span class="sc">}</span><span class="ss">_wordcloud_word-req.png"</span>)</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="esg_text_mining_poc_final_files/figure-html/cell-22-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="esg_text_mining_poc_final_files/figure-html/cell-22-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="esg_text_mining_poc_final_files/figure-html/cell-22-output-3.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="esg_text_mining_poc_final_files/figure-html/cell-22-output-4.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="esg_text_mining_poc_final_files/figure-html/cell-22-output-5.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="esg_text_mining_poc_final_files/figure-html/cell-22-output-6.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="esg_text_mining_poc_final_files/figure-html/cell-22-output-7.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>4.10 Plot - positive ethical word count per company</p>
+<div id="30a6d13f" class="cell" data-execution_count="59">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Positive ethical word list count -  this is a list we defined earlier in pos_eti_words</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Get nbumber os times key positive words appear per company and plot the result</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>company_names <span class="op">=</span> <span class="bu">list</span>(combined_per_comp_text.keys())</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>word_counts <span class="op">=</span> {word: [] <span class="cf">for</span> word <span class="kw">in</span> pos_eti_words}</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> word <span class="kw">in</span> pos_eti_words:</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> company <span class="kw">in</span> company_names:</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>        tokens <span class="op">=</span> combined_per_comp_text[company].split()</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>        freq <span class="op">=</span> Counter(tokens)</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>        word_counts[word].append(freq.get(word, <span class="dv">0</span>))</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot grouped bar chart</span></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(<span class="bu">len</span>(pos_eti_words))  <span class="co"># words on x-axis</span></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>bar_width <span class="op">=</span> <span class="fl">0.13</span></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">5</span>))</span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx, company <span class="kw">in</span> <span class="bu">enumerate</span>(company_names):</span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>    counts <span class="op">=</span> [word_counts[word][idx] <span class="cf">for</span> word <span class="kw">in</span> pos_eti_words]</span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>    plt.bar(x <span class="op">+</span> idx <span class="op">*</span> bar_width, counts, width<span class="op">=</span>bar_width, label<span class="op">=</span>company)</span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>plt.xticks(x <span class="op">+</span> bar_width <span class="op">*</span> (<span class="bu">len</span>(company_names) <span class="op">/</span> <span class="dv">2</span>), pos_eti_words, rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">'right'</span>)</span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Keywords"</span>)</span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Count"</span>)</span>
+<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Positive Ethical Word Count - per company"</span>)</span>
+<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="esg_text_mining_poc_final_files/figure-html/cell-23-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>4.11 Plot - top 20 highest frequency words across all companies</p>
+<div id="e5880bd6" class="cell" data-execution_count="60">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine all words from all companies into one list to get top 20 istr of words</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Total Cumulative list or word occurence</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>all_tokens <span class="op">=</span> []</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> text <span class="kw">in</span> combined_per_comp_text.values():</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    all_tokens.extend(text.split())</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Count total frequency across all companies</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>total_freq <span class="op">=</span> Counter(all_tokens)</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Get top 20 most common words</span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>top_20 <span class="op">=</span> total_freq.most_common(<span class="dv">20</span>)</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>words, counts <span class="op">=</span> <span class="bu">zip</span>(<span class="op">*</span>top_20)</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the words vs frequency</span></span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">6</span>))</span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>plt.bar(words, counts, color<span class="op">=</span><span class="st">'steelblue'</span>)</span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">'right'</span>)</span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Top 20 Most Frequent Words Across All Companies"</span>)</span>
+<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Words"</span>)</span>
+<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Frequency"</span>)</span>
+<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="esg_text_mining_poc_final_files/figure-html/cell-24-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>4.12 Plot - ethical words occurence per company - normalised per 1000 words (as we do not have even distribution of data for each company)</p>
+<div id="e4b8a07b" class="cell" data-execution_count="61">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count normalized keyword mentions per company - we wil use a sample rate of 1000 words to normalise</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>normalized_counts <span class="op">=</span> {}</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> company, text <span class="kw">in</span> combined_per_comp_text.items():</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    tokens <span class="op">=</span> text.split()</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    total_words <span class="op">=</span> <span class="bu">len</span>(tokens)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    word_freq <span class="op">=</span> Counter(tokens)</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    keyword_mentions <span class="op">=</span> <span class="bu">sum</span>(word_freq[word] <span class="cf">for</span> word <span class="kw">in</span> pos_eti_words <span class="cf">if</span> word <span class="kw">in</span> word_freq)</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    mentions_per_1000 <span class="op">=</span> (keyword_mentions <span class="op">/</span> total_words) <span class="op">*</span> <span class="dv">1000</span> <span class="cf">if</span> total_words <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> <span class="dv">0</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>    normalized_counts[company] <span class="op">=</span> <span class="bu">round</span>(mentions_per_1000, <span class="dv">2</span>)</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort by fewest mentions per 1000 words</span></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>sorted_normalized <span class="op">=</span> <span class="bu">sorted</span>(normalized_counts.items(), key<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="dv">1</span>])</span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>companies, rates <span class="op">=</span> <span class="bu">zip</span>(<span class="op">*</span>sorted_normalized)</span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the results</span></span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Companies with fewest ethical keyword mentions per 1,000 words:"</span>)</span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> company, rate <span class="kw">in</span> sorted_normalized:</span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>company<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>rate<span class="sc">}</span><span class="ss"> mentions per 1000 words"</span>)</span>
+<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
+<span id="cb31-24"><a href="#cb31-24" aria-hidden="true" tabindex="-1"></a>plt.bar(companies, rates)</span>
+<span id="cb31-25"><a href="#cb31-25" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Mentions per 1,000 Words"</span>)</span>
+<span id="cb31-26"><a href="#cb31-26" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Normalized  - Positive Ethical Keyword Count per Company i.e. Least Ethical with Lowest Counts per 1000 words"</span>)</span>
+<span id="cb31-27"><a href="#cb31-27" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb31-28"><a href="#cb31-28" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Companies with fewest ethical keyword mentions per 1,000 words:
+exxonmobil: 18.09 mentions per 1000 words
+jbs: 20.01 mentions per 1000 words
+aramco: 28.77 mentions per 1000 words
+kerrygroup: 30.98 mentions per 1000 words
+crh: 39.19 mentions per 1000 words
+smurfitkappa: 40.3 mentions per 1000 words
+kingspan: 42.42 mentions per 1000 words</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="esg_text_mining_poc_final_files/figure-html/cell-25-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>4.13 Data Exploration and Analysis - Conclusions</p>
+<ul>
+<li>The word that appears the most across all companies = ‘sustainability’</li>
+<li>words such as ‘child’, ‘slave’, ‘labour’ do not appear in the list of top 20 words across all companies, even the higher esg rated companies.</li>
+<li>Only ‘crh’ and ‘smurfitKappa’ mention slavery in their report</li>
+<li><em>smurfitkappa</em>, <em>kerrygroup</em> and <em>crh</em> all mention ‘labour’ which may be an indication their position, or at least awareness, on labour practices. poorer rated esg companies do not mention ‘labour’</li>
+<li>‘social’ and ‘governance’ terms or their derivatives, while present, do not appear in huge frequencies. Perhaps an indication of the prioritization on environmental aspect of esg.</li>
+<li>‘transparency’ also does not appear frequently.</li>
+<li>The term ‘governance’ and possibly ‘transparency’ could appear more in the investor reports as it may have an emphasis there in relation to management, but the other two terms would be expected to appear, perhaps more, in the sustainability reports.</li>
+</ul>
+<p>The final plot or ethical words per company normalised per 1000 words shows promise for our proof of concept. - three companies who were chosen for their poor esg ratings, namely <em>exxonmobil</em>, <em>jbs</em> and <em>aramco</em>, all appeared bottom of the list of - positive ethical word counts per 100 words. - four companies who were chosen for their high esg ratings,= <em>kerrygroup</em>, <em>crh</em>, <em>snmufitkappa</em> and <em>kingspan</em> all appear at the top of the graph. - It would require more investigation but could be an indication of an potentially usable approach to differentiate between good and bad esg companies. This was the first indication of possibility of this being a viable approach. - we tried different values for the positive ethical words and settled on the existing list. We wanted to avoid business related terms and focus on key esg values as this is proof of concept focus.</p>
+</section>
+</section>
+<section id="step-5---classification-models" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="step-5---classification-models"><span class="header-section-number">2</span> Step 5 - Classification Models</h2>
+<p>5.1 - Split dataset into features and target labels</p>
+<div id="1ef192ea" class="cell" data-execution_count="75">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define good companies and bad companies#</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co"># sorting into positive and negative companies based off existing industry esg ratings</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="co"># as have fata already extracted froim files will just assign exisint gdat based ont hen company key in the data</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co"># won't use load_files method as haver dat already extracted</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>good_companies <span class="op">=</span> {<span class="st">"kerrygroup"</span>, <span class="st">"crh"</span>, <span class="st">"smurfitkappa"</span>, <span class="st">"kingspan"</span>}</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>bad_companies <span class="op">=</span> {<span class="st">"exxonmobil"</span>, <span class="st">"jbs"</span>, <span class="st">'aramco'</span>}</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="co">#contains processed cleaned report text from </span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>X_texts <span class="op">=</span> []</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>y_labels <span class="op">=</span> []</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a><span class="co"># assign positive y label to good companies</span></span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 1 is positive &gt; 0 is negative</span></span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a><span class="co"># we have two data set_matplotlib_closeprocessed_per_file_data = contains &gt; "company": company,  "filename": pdf_file.name,  "text": cleaned &gt;&gt;&gt; all data is separate dout per file and company key-value pairs</span></span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a><span class="co"># combined_per_comp_text = contains &gt; [record["company"]] += " " + record["text"] &gt;&gt;&gt; all data is combined across companies</span></span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a><span class="co"># we'll use the first as we have it separated out at file level giving us more elements to train with</span></span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> record <span class="kw">in</span> processed_per_file_data:</span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>    company <span class="op">=</span> record[<span class="st">'company'</span>].lower()</span>
+<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> record[<span class="st">'text'</span>]</span>
+<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> company.lower() <span class="kw">in</span> good_companies:</span>
+<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a>        X_texts.append(text)</span>
+<span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a>        y_labels.append(<span class="dv">1</span>)</span>
+<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-28"><a href="#cb33-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> company.lower() <span class="kw">in</span> bad_companies:</span>
+<span id="cb33-29"><a href="#cb33-29" aria-hidden="true" tabindex="-1"></a>        X_texts.append(text)</span>
+<span id="cb33-30"><a href="#cb33-30" aria-hidden="true" tabindex="-1"></a>        y_labels.append(<span class="dv">0</span>)</span>
+<span id="cb33-31"><a href="#cb33-31" aria-hidden="true" tabindex="-1"></a>    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>5.2 - Verify variables are as expoected</p>
+<div id="65e48cda" class="cell" data-execution_count="76">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># quick check tomake sure we're using the right variables and they are what we expect going into the models</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Total documents:"</span>, <span class="bu">len</span>(X_texts))  <span class="co"># Should be 43</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Good ESG count:"</span>, y_labels.count(<span class="dv">1</span>))  <span class="co"># Should be 33</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Bad ESG count:"</span>, y_labels.count(<span class="dv">0</span>))  <span class="co"># Should be 10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Total documents: 43
+Good ESG count: 33
+Bad ESG count: 10</code></pre>
+</div>
+</div>
+<p>5.3 - Vectorize the text</p>
+<div id="3e9ff91c" class="cell" data-execution_count="77">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>vectorizer <span class="op">=</span> CountVectorizer(max_features<span class="op">=</span><span class="dv">1000</span>, min_df<span class="op">=</span><span class="dv">5</span>, max_df<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Uses vectorization – takes all those words, getting into AI agent approach, rather than a single variable, converts variable into whole load of different dimensions</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>X_counts <span class="op">=</span> vectorizer.fit_transform(X_texts).toarray()</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>5.4 - Apply tf-idf transformation</p>
+<div id="45e35cc1" class="cell" data-execution_count="78">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># normalise the term frequency across the documents</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>tfidfconverter <span class="op">=</span> TfidfTransformer()</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> tfidfconverter.fit_transform(X_counts).toarray()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>5.5 - Split data into train and test data and verify target variable data</p>
+<div id="449d42c1" class="cell" data-execution_count="79">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># spliut intotrain and test</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y_labels, test_size<span class="op">=</span><span class="fl">0.3</span>, random_state<span class="op">=</span><span class="dv">42</span>, stratify<span class="op">=</span>y_labels)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(X_train))</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(y_train))</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(X_test))</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(y_test))</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(X_train)<span class="op">/</span>(<span class="bu">len</span>(X_train)<span class="op">+</span><span class="bu">len</span>(X_test)))</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(X_test)<span class="op">/</span>(<span class="bu">len</span>(X_train)<span class="op">+</span><span class="bu">len</span>(X_test)))</span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>pd.Series(y_train).value_counts().plot(kind<span class="op">=</span><span class="st">'bar'</span>, title<span class="op">=</span><span class="st">'Count (Pre-SMOTE - Target Variable in y_train dataset)'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>30
+30
+13
+13
+0.6976744186046512
+0.3023255813953488</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="esg_text_mining_poc_final_files/figure-html/cell-30-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>5.6 - Create Models, perform cross validation and plot ROC AUC</p>
+<div id="87053863" class="cell" data-execution_count="81">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># perform cross validation and plot the output</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>classifiers <span class="op">=</span> [</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>   (<span class="st">'NB'</span>, GaussianNB()),</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>   (<span class="st">'DT'</span>, DecisionTreeClassifier()),</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>   (<span class="st">'RF'</span>, RandomForestClassifier()),</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>   (<span class="st">'LR'</span>, LogisticRegression()),</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>   (<span class="st">'NN'</span>, nn.MLPClassifier()),</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>   (<span class="st">'XGB'</span>, XGBClassifier(n_estimators<span class="op">=</span><span class="dv">100</span>)),</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>   (<span class="st">'SVC'</span>, SVC(probability<span class="op">=</span><span class="va">True</span>))]</span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Logging setup</span></span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>log_cols <span class="op">=</span> [<span class="st">"Classifier"</span>, <span class="st">"Accuracy (CV Mean)"</span>]</span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>log <span class="op">=</span> pd.DataFrame(columns<span class="op">=</span>log_cols)</span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(log)</span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot ROC curve for K-fold, cross-validated predictions</span></span>
+<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a>plt.clf()</span>
+<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">8</span>))</span>
+<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-20"><a href="#cb40-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the cross-validation strategy, we tried different numbers 3, 5, 10, 20 and 30,can't exceed the number of samples. The data set is small so it doesn't take too long. Set at 3 for now to keep runtime low for demo purposes.</span></span>
+<span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a>cv <span class="op">=</span> KFold(n_splits<span class="op">=</span><span class="dv">5</span>, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb40-22"><a href="#cb40-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cv)</span>
+<span id="cb40-23"><a href="#cb40-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-24"><a href="#cb40-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop through classifiers </span></span>
+<span id="cb40-25"><a href="#cb40-25" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> name, model <span class="kw">in</span> classifiers:</span>
+<span id="cb40-26"><a href="#cb40-26" aria-hidden="true" tabindex="-1"></a>    name <span class="op">=</span> model.<span class="va">__class__</span>.<span class="va">__name__</span></span>
+<span id="cb40-27"><a href="#cb40-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-28"><a href="#cb40-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get cross validation prediction and probability</span></span>
+<span id="cb40-29"><a href="#cb40-29" aria-hidden="true" tabindex="-1"></a>    y_pred_cv <span class="op">=</span> cross_val_predict(model, X_train, y_train, cv<span class="op">=</span>cv, method<span class="op">=</span><span class="st">'predict'</span>)</span>
+<span id="cb40-30"><a href="#cb40-30" aria-hidden="true" tabindex="-1"></a>    y_pred_proba <span class="op">=</span> cross_val_predict(model, X_train, y_train, cv<span class="op">=</span>cv, method<span class="op">=</span><span class="st">'predict_proba'</span>)[:, <span class="dv">1</span>]</span>
+<span id="cb40-31"><a href="#cb40-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-32"><a href="#cb40-32" aria-hidden="true" tabindex="-1"></a>    <span class="co">#  cross-validation accuracy scores and mean accuracy</span></span>
+<span id="cb40-33"><a href="#cb40-33" aria-hidden="true" tabindex="-1"></a>    cv_scores <span class="op">=</span> cross_val_score(model, X_train, y_train, scoring<span class="op">=</span><span class="st">'accuracy'</span>, cv<span class="op">=</span>cv, n_jobs<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb40-34"><a href="#cb40-34" aria-hidden="true" tabindex="-1"></a>    cv_mean <span class="op">=</span> np.mean(cv_scores)</span>
+<span id="cb40-35"><a href="#cb40-35" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Cross-validation accuracy for </span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>cv_mean<span class="sc">}</span><span class="ss">"</span>) </span>
+<span id="cb40-36"><a href="#cb40-36" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb40-37"><a href="#cb40-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ROC curve and AUC for cross-validated model</span></span>
+<span id="cb40-38"><a href="#cb40-38" aria-hidden="true" tabindex="-1"></a>    <span class="co">## here we using cross_val_predict : https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_val_predict.html</span></span>
+<span id="cb40-39"><a href="#cb40-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-40"><a href="#cb40-40" aria-hidden="true" tabindex="-1"></a>    <span class="co">#sklearn.model_selection.cross_val_predict(estimator, X, y=None, *, groups=None, cv=None, n_jobs=None, verbose=0, </span></span>
+<span id="cb40-41"><a href="#cb40-41" aria-hidden="true" tabindex="-1"></a>    <span class="co">#params=None, pre_dispatch='2*n_jobs', method='predict')</span></span>
+<span id="cb40-42"><a href="#cb40-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-43"><a href="#cb40-43" aria-hidden="true" tabindex="-1"></a>    <span class="co">## basically getting model.predict_proba but for the cross validation figures. </span></span>
+<span id="cb40-44"><a href="#cb40-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-45"><a href="#cb40-45" aria-hidden="true" tabindex="-1"></a>    <span class="co">#### Note we aren't comparing these directly, but just seeing if there are large differences between them more so. between cross validation </span></span>
+<span id="cb40-46"><a href="#cb40-46" aria-hidden="true" tabindex="-1"></a>    <span class="co">#### and the actual model evaluations below</span></span>
+<span id="cb40-47"><a href="#cb40-47" aria-hidden="true" tabindex="-1"></a>    <span class="co">####### Note also this is all done on x_train and y_train. </span></span>
+<span id="cb40-48"><a href="#cb40-48" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb40-49"><a href="#cb40-49" aria-hidden="true" tabindex="-1"></a>    fpr_cv, tpr_cv, _ <span class="op">=</span> roc_curve(y_train, y_pred_proba)</span>
+<span id="cb40-50"><a href="#cb40-50" aria-hidden="true" tabindex="-1"></a>    roc_auc_cv <span class="op">=</span> auc(fpr_cv, tpr_cv)</span>
+<span id="cb40-51"><a href="#cb40-51" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"true pos and fal pos </span><span class="sc">{</span>fpr_cv<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span>tpr_cv<span class="sc">}</span><span class="ss">:"</span>)</span>
+<span id="cb40-52"><a href="#cb40-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-53"><a href="#cb40-53" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Log results</span></span>
+<span id="cb40-54"><a href="#cb40-54" aria-hidden="true" tabindex="-1"></a>    log_entry <span class="op">=</span> pd.DataFrame([[name, cv_mean]], columns<span class="op">=</span>log_cols)</span>
+<span id="cb40-55"><a href="#cb40-55" aria-hidden="true" tabindex="-1"></a>    log <span class="op">=</span> pd.concat([log, log_entry])</span>
+<span id="cb40-56"><a href="#cb40-56" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb40-57"><a href="#cb40-57" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Plot ROC curves for cross-validation model</span></span>
+<span id="cb40-58"><a href="#cb40-58" aria-hidden="true" tabindex="-1"></a>    plt.plot(fpr_cv, tpr_cv, linestyle<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="st">'</span><span class="sc">%s</span><span class="st"> CV ROC (area = </span><span class="sc">%0.2f</span><span class="st">)'</span> <span class="op">%</span> (name, roc_auc_cv))</span>
+<span id="cb40-59"><a href="#cb40-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-60"><a href="#cb40-60" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Print confusion matrix for cross-validated predictions</span></span>
+<span id="cb40-61"><a href="#cb40-61" aria-hidden="true" tabindex="-1"></a>    cm_cv <span class="op">=</span> confusion_matrix(y_train, y_pred_cv)</span>
+<span id="cb40-62"><a href="#cb40-62" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Confusion Matrix for </span><span class="sc">{</span>name<span class="sc">}</span><span class="ss"> (Cross-Validation):"</span>)</span>
+<span id="cb40-63"><a href="#cb40-63" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(cm_cv)</span>
+<span id="cb40-64"><a href="#cb40-64" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">''</span>)</span>
+<span id="cb40-65"><a href="#cb40-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-66"><a href="#cb40-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-67"><a href="#cb40-67" aria-hidden="true" tabindex="-1"></a><span class="co"># Finalize ROC plot</span></span>
+<span id="cb40-68"><a href="#cb40-68" aria-hidden="true" tabindex="-1"></a>plt.plot([<span class="dv">0</span>, <span class="dv">1</span>], [<span class="dv">0</span>, <span class="dv">1</span>], <span class="st">'k--'</span>)</span>
+<span id="cb40-69"><a href="#cb40-69" aria-hidden="true" tabindex="-1"></a>plt.xlim([<span class="fl">0.0</span>, <span class="fl">1.0</span>])</span>
+<span id="cb40-70"><a href="#cb40-70" aria-hidden="true" tabindex="-1"></a>plt.ylim([<span class="fl">0.0</span>, <span class="fl">1.0</span>])</span>
+<span id="cb40-71"><a href="#cb40-71" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'False Positive Rate'</span>)</span>
+<span id="cb40-72"><a href="#cb40-72" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'True Positive Rate'</span>)</span>
+<span id="cb40-73"><a href="#cb40-73" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'ROC Curve (Cross-Validation) - Pre-SMOTE Data - kfold nsplits = 5 '</span>)</span>
+<span id="cb40-74"><a href="#cb40-74" aria-hidden="true" tabindex="-1"></a>plt.legend(loc<span class="op">=</span><span class="dv">0</span>, fontsize<span class="op">=</span><span class="st">'small'</span>)</span>
+<span id="cb40-75"><a href="#cb40-75" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb40-76"><a href="#cb40-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-77"><a href="#cb40-77" aria-hidden="true" tabindex="-1"></a><span class="co"># Print log of results</span></span>
+<span id="cb40-78"><a href="#cb40-78" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(log)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Empty DataFrame
+Columns: [Classifier, Accuracy (CV Mean)]
+Index: []
+KFold(n_splits=5, random_state=42, shuffle=True)
+Cross-validation accuracy for GaussianNB: 0.9333333333333333
+true pos and fal pos [0.         0.28571429 1.        ] [0. 1. 1.]:
+Confusion Matrix for GaussianNB (Cross-Validation):
+[[ 5  2]
+ [ 0 23]]
+
+Cross-validation accuracy for DecisionTreeClassifier: 0.7333333333333333
+true pos and fal pos [0.         0.85714286 1.        ] [0.         0.91304348 1.        ]:
+Confusion Matrix for DecisionTreeClassifier (Cross-Validation):
+[[ 2  5]
+ [ 1 22]]
+
+Cross-validation accuracy for RandomForestClassifier: 0.8333333333333334
+true pos and fal pos [0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.14285714 0.14285714 0.14285714
+ 1.        ] [0.         0.04347826 0.13043478 0.2173913  0.30434783 0.47826087
+ 0.60869565 0.69565217 0.73913043 0.7826087  0.91304348 1.
+ 1.        ]:
+Confusion Matrix for RandomForestClassifier (Cross-Validation):
+[[ 1  6]
+ [ 0 23]]
+
+Cross-validation accuracy for LogisticRegression: 0.7666666666666666
+true pos and fal pos [0.         0.         0.         0.14285714 0.14285714 0.28571429
+ 0.28571429 0.42857143 0.42857143 1.        ] [0.         0.04347826 0.7826087  0.7826087  0.86956522 0.86956522
+ 0.95652174 0.95652174 1.         1.        ]:
+Confusion Matrix for LogisticRegression (Cross-Validation):
+[[ 0  7]
+ [ 0 23]]
+
+Cross-validation accuracy for MLPClassifier: 0.9666666666666668
+true pos and fal pos [0. 0. 0. 1.] [0.         0.04347826 1.         1.        ]:
+Confusion Matrix for MLPClassifier (Cross-Validation):
+[[ 6  1]
+ [ 0 23]]
+
+Cross-validation accuracy for XGBClassifier: 0.8
+true pos and fal pos [0.         0.         0.         0.         0.28571429 0.28571429
+ 0.42857143 0.42857143 0.57142857 0.57142857 0.71428571 0.71428571
+ 0.85714286 0.85714286 1.        ] [0.         0.04347826 0.13043478 0.30434783 0.47826087 0.69565217
+ 0.69565217 0.7826087  0.7826087  0.82608696 0.82608696 0.95652174
+ 0.95652174 1.         1.        ]:
+Confusion Matrix for XGBClassifier (Cross-Validation):
+[[ 1  6]
+ [ 0 23]]
+
+Cross-validation accuracy for SVC: 0.8333333333333334
+true pos and fal pos [0.         0.         0.         0.14285714 0.14285714 0.28571429
+ 0.28571429 1.        ] [0.         0.04347826 0.82608696 0.82608696 0.95652174 0.95652174
+ 1.         1.        ]:
+Confusion Matrix for SVC (Cross-Validation):
+[[ 2  5]
+ [ 0 23]]
+</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>&lt;Figure size 640x480 with 0 Axes&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="esg_text_mining_poc_final_files/figure-html/cell-31-output-3.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               Classifier  Accuracy (CV Mean)
+0              GaussianNB            0.933333
+0  DecisionTreeClassifier            0.733333
+0  RandomForestClassifier            0.833333
+0      LogisticRegression            0.766667
+0           MLPClassifier            0.966667
+0           XGBClassifier            0.800000
+0                     SVC            0.833333</code></pre>
+</div>
+</div>
+<p>5.7 - Plot Accuracy data</p>
+<div id="d6e2cb17" class="cell" data-execution_count="82">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>sns.set_color_codes(<span class="st">"muted"</span>)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>sns.barplot(x<span class="op">=</span><span class="st">'Accuracy (CV Mean)'</span>, y<span class="op">=</span><span class="st">'Classifier'</span>, data<span class="op">=</span>log, color<span class="op">=</span><span class="st">"b"</span>)</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Accuracy %'</span>)</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Classifier Accuracy Normal Models'</span>)</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="esg_text_mining_poc_final_files/figure-html/cell-32-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>5.8 - Apply SMOTE to data to oversample the minority class and verify target variable data</p>
+<div id="5d71825f" class="cell" data-execution_count="83">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ---SMOTE----</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply SMOTE only to training data</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>sm <span class="op">=</span> SMOTE(random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>X_train_ps, y_train_ps <span class="op">=</span> sm.fit_resample(X_train, y_train)</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'SMOTE over-sampling:'</span>)</span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'-----'</span>)</span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'length of </span><span class="ch">\'</span><span class="st">X_train</span><span class="ch">\'</span><span class="st"> = </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(<span class="bu">len</span>(X_train_ps)))</span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'length of </span><span class="ch">\'</span><span class="st">y_train</span><span class="ch">\'</span><span class="st"> = </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(<span class="bu">len</span>(y_train_ps)))</span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'-----'</span>)</span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a><span class="co">#plot post SMOTE of just the target variable</span></span>
+<span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a><span class="co"># y_train_ps['Target'].value_counts().plot(kind='bar', title='Count (Post-SMOTE - Target Variable in y_train dataset')</span></span>
+<span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a><span class="co"># y_train_ps.value_counts().plot(kind='bar', title='Count (Post-SMOTE - Target Variable in y_train dataset)')</span></span>
+<span id="cb45-18"><a href="#cb45-18" aria-hidden="true" tabindex="-1"></a>pd.Series(y_train_ps).value_counts().plot(kind<span class="op">=</span><span class="st">'bar'</span>, title<span class="op">=</span><span class="st">'Count (Post-SMOTE - Target Variable in y_train dataset)'</span>)</span>
+<span id="cb45-19"><a href="#cb45-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-20"><a href="#cb45-20" aria-hidden="true" tabindex="-1"></a><span class="co"># re-associate the '_ps' naming with the standard X_train and y_train naming, as it it used through modelling process below</span></span>
+<span id="cb45-21"><a href="#cb45-21" aria-hidden="true" tabindex="-1"></a>X_train<span class="op">=</span>X_train_ps</span>
+<span id="cb45-22"><a href="#cb45-22" aria-hidden="true" tabindex="-1"></a>y_train<span class="op">=</span>y_train_ps</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>SMOTE over-sampling:
+-----
+length of 'X_train' = 46
+length of 'y_train' = 46
+-----</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="esg_text_mining_poc_final_files/figure-html/cell-33-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>5.9 - Create the Models using SMOTE data set</p>
+<div id="7016a36b" class="cell" data-execution_count="84">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># perform cross validation and plot the output</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>classifiers <span class="op">=</span> [</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>   (<span class="st">'NB'</span>, GaussianNB()),</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>   (<span class="st">'DT'</span>, DecisionTreeClassifier()),</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>   (<span class="st">'RF'</span>, RandomForestClassifier()),</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>   (<span class="st">'LR'</span>, LogisticRegression()),</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>   (<span class="st">'NN'</span>, nn.MLPClassifier()),</span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>   (<span class="st">'XGB'</span>, XGBClassifier(n_estimators<span class="op">=</span><span class="dv">100</span>)),</span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>   (<span class="st">'SVC'</span>, SVC(probability<span class="op">=</span><span class="va">True</span>))]</span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Logging setup</span></span>
+<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a>log_cols <span class="op">=</span> [<span class="st">"Classifier"</span>, <span class="st">"Accuracy (CV Mean)"</span>]</span>
+<span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a>log <span class="op">=</span> pd.DataFrame(columns<span class="op">=</span>log_cols)</span>
+<span id="cb47-14"><a href="#cb47-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(log)</span>
+<span id="cb47-15"><a href="#cb47-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-16"><a href="#cb47-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot ROC curve for K-fold, cross-validated predictions</span></span>
+<span id="cb47-17"><a href="#cb47-17" aria-hidden="true" tabindex="-1"></a>plt.clf()</span>
+<span id="cb47-18"><a href="#cb47-18" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">8</span>))</span>
+<span id="cb47-19"><a href="#cb47-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-20"><a href="#cb47-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the cross-validation strategy, we tried different numbers 3, 5, 10, 20 and 30,can't exceed the number of samples. 20 appeears to be close ot the sweet spot for number of kfolds. The data set is small so it doesn't take too long. Set at 3 for now to keep runtime low for demo purposes.</span></span>
+<span id="cb47-21"><a href="#cb47-21" aria-hidden="true" tabindex="-1"></a>cv <span class="op">=</span> KFold(n_splits<span class="op">=</span><span class="dv">5</span>, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb47-22"><a href="#cb47-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cv)</span>
+<span id="cb47-23"><a href="#cb47-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-24"><a href="#cb47-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop through classifiers </span></span>
+<span id="cb47-25"><a href="#cb47-25" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> name, model <span class="kw">in</span> classifiers:</span>
+<span id="cb47-26"><a href="#cb47-26" aria-hidden="true" tabindex="-1"></a>    name <span class="op">=</span> model.<span class="va">__class__</span>.<span class="va">__name__</span></span>
+<span id="cb47-27"><a href="#cb47-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-28"><a href="#cb47-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get cross validation prediction and probability</span></span>
+<span id="cb47-29"><a href="#cb47-29" aria-hidden="true" tabindex="-1"></a>    y_pred_cv <span class="op">=</span> cross_val_predict(model, X_train, y_train, cv<span class="op">=</span>cv, method<span class="op">=</span><span class="st">'predict'</span>)</span>
+<span id="cb47-30"><a href="#cb47-30" aria-hidden="true" tabindex="-1"></a>    y_pred_proba <span class="op">=</span> cross_val_predict(model, X_train, y_train, cv<span class="op">=</span>cv, method<span class="op">=</span><span class="st">'predict_proba'</span>)[:, <span class="dv">1</span>]</span>
+<span id="cb47-31"><a href="#cb47-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-32"><a href="#cb47-32" aria-hidden="true" tabindex="-1"></a>    <span class="co">#  cross-validation accuracy scores and mean accuracy</span></span>
+<span id="cb47-33"><a href="#cb47-33" aria-hidden="true" tabindex="-1"></a>    cv_scores <span class="op">=</span> cross_val_score(model, X_train, y_train, scoring<span class="op">=</span><span class="st">'accuracy'</span>, cv<span class="op">=</span>cv, n_jobs<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb47-34"><a href="#cb47-34" aria-hidden="true" tabindex="-1"></a>    cv_mean <span class="op">=</span> np.mean(cv_scores)</span>
+<span id="cb47-35"><a href="#cb47-35" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Cross-validation accuracy for </span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>cv_mean<span class="sc">}</span><span class="ss">"</span>) </span>
+<span id="cb47-36"><a href="#cb47-36" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb47-37"><a href="#cb47-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ROC curve and AUC for cross-validated model</span></span>
+<span id="cb47-38"><a href="#cb47-38" aria-hidden="true" tabindex="-1"></a>    <span class="co">## here we using cross_val_predict : https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_val_predict.html</span></span>
+<span id="cb47-39"><a href="#cb47-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-40"><a href="#cb47-40" aria-hidden="true" tabindex="-1"></a>    <span class="co">#sklearn.model_selection.cross_val_predict(estimator, X, y=None, *, groups=None, cv=None, n_jobs=None, verbose=0, </span></span>
+<span id="cb47-41"><a href="#cb47-41" aria-hidden="true" tabindex="-1"></a>    <span class="co">#params=None, pre_dispatch='2*n_jobs', method='predict')</span></span>
+<span id="cb47-42"><a href="#cb47-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-43"><a href="#cb47-43" aria-hidden="true" tabindex="-1"></a>    <span class="co">## basically getting model.predict_proba but for the cross validation figures. </span></span>
+<span id="cb47-44"><a href="#cb47-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-45"><a href="#cb47-45" aria-hidden="true" tabindex="-1"></a>    <span class="co">#### Note we aren't comparing these directly, but just seeing if there are large differences between them more so. between cross validation </span></span>
+<span id="cb47-46"><a href="#cb47-46" aria-hidden="true" tabindex="-1"></a>    <span class="co">#### and the actual model evaluations below</span></span>
+<span id="cb47-47"><a href="#cb47-47" aria-hidden="true" tabindex="-1"></a>    <span class="co">####### Note also this is all done on x_train and y_train. </span></span>
+<span id="cb47-48"><a href="#cb47-48" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb47-49"><a href="#cb47-49" aria-hidden="true" tabindex="-1"></a>    fpr_cv, tpr_cv, _ <span class="op">=</span> roc_curve(y_train, y_pred_proba)</span>
+<span id="cb47-50"><a href="#cb47-50" aria-hidden="true" tabindex="-1"></a>    roc_auc_cv <span class="op">=</span> auc(fpr_cv, tpr_cv)</span>
+<span id="cb47-51"><a href="#cb47-51" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"true pos and fal pos </span><span class="sc">{</span>fpr_cv<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span>tpr_cv<span class="sc">}</span><span class="ss">:"</span>)</span>
+<span id="cb47-52"><a href="#cb47-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-53"><a href="#cb47-53" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Log results</span></span>
+<span id="cb47-54"><a href="#cb47-54" aria-hidden="true" tabindex="-1"></a>    log_entry <span class="op">=</span> pd.DataFrame([[name, cv_mean]], columns<span class="op">=</span>log_cols)</span>
+<span id="cb47-55"><a href="#cb47-55" aria-hidden="true" tabindex="-1"></a>    log <span class="op">=</span> pd.concat([log, log_entry])</span>
+<span id="cb47-56"><a href="#cb47-56" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb47-57"><a href="#cb47-57" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Plot ROC curves for cross-validation model</span></span>
+<span id="cb47-58"><a href="#cb47-58" aria-hidden="true" tabindex="-1"></a>    plt.plot(fpr_cv, tpr_cv, linestyle<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="st">'</span><span class="sc">%s</span><span class="st"> CV ROC (area = </span><span class="sc">%0.2f</span><span class="st">)'</span> <span class="op">%</span> (name, roc_auc_cv))</span>
+<span id="cb47-59"><a href="#cb47-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-60"><a href="#cb47-60" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Print confusion matrix for cross-validated predictions</span></span>
+<span id="cb47-61"><a href="#cb47-61" aria-hidden="true" tabindex="-1"></a>    cm_cv <span class="op">=</span> confusion_matrix(y_train, y_pred_cv)</span>
+<span id="cb47-62"><a href="#cb47-62" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Confusion Matrix for </span><span class="sc">{</span>name<span class="sc">}</span><span class="ss"> (Cross-Validation):"</span>)</span>
+<span id="cb47-63"><a href="#cb47-63" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(cm_cv)</span>
+<span id="cb47-64"><a href="#cb47-64" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">''</span>)</span>
+<span id="cb47-65"><a href="#cb47-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-66"><a href="#cb47-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-67"><a href="#cb47-67" aria-hidden="true" tabindex="-1"></a><span class="co"># Finalize ROC plot</span></span>
+<span id="cb47-68"><a href="#cb47-68" aria-hidden="true" tabindex="-1"></a>plt.plot([<span class="dv">0</span>, <span class="dv">1</span>], [<span class="dv">0</span>, <span class="dv">1</span>], <span class="st">'k--'</span>)</span>
+<span id="cb47-69"><a href="#cb47-69" aria-hidden="true" tabindex="-1"></a>plt.xlim([<span class="fl">0.0</span>, <span class="fl">1.0</span>])</span>
+<span id="cb47-70"><a href="#cb47-70" aria-hidden="true" tabindex="-1"></a>plt.ylim([<span class="fl">0.0</span>, <span class="fl">1.0</span>])</span>
+<span id="cb47-71"><a href="#cb47-71" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'False Positive Rate'</span>)</span>
+<span id="cb47-72"><a href="#cb47-72" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'True Positive Rate'</span>)</span>
+<span id="cb47-73"><a href="#cb47-73" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'ROC Curve (Cross-Validation) - Post SMOTE Data - kfold nsplits = 5 '</span>)</span>
+<span id="cb47-74"><a href="#cb47-74" aria-hidden="true" tabindex="-1"></a>plt.legend(loc<span class="op">=</span><span class="dv">0</span>, fontsize<span class="op">=</span><span class="st">'small'</span>)</span>
+<span id="cb47-75"><a href="#cb47-75" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb47-76"><a href="#cb47-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-77"><a href="#cb47-77" aria-hidden="true" tabindex="-1"></a><span class="co"># Print log of results</span></span>
+<span id="cb47-78"><a href="#cb47-78" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(log)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Empty DataFrame
+Columns: [Classifier, Accuracy (CV Mean)]
+Index: []
+KFold(n_splits=5, random_state=42, shuffle=True)
+Cross-validation accuracy for GaussianNB: 1.0
+true pos and fal pos [0. 0. 1.] [0. 1. 1.]:
+Confusion Matrix for GaussianNB (Cross-Validation):
+[[23  0]
+ [ 0 23]]
+
+Cross-validation accuracy for DecisionTreeClassifier: 0.8022222222222222
+true pos and fal pos [0.         0.04347826 1.        ] [0.         0.69565217 1.        ]:
+Confusion Matrix for DecisionTreeClassifier (Cross-Validation):
+[[22  1]
+ [ 6 17]]
+
+Cross-validation accuracy for RandomForestClassifier: 1.0
+true pos and fal pos [0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.26086957 0.34782609 0.43478261
+ 0.60869565 0.73913043 0.91304348 1.        ] [0.         0.04347826 0.13043478 0.2173913  0.56521739 0.65217391
+ 0.69565217 0.7826087  1.         1.         1.         1.
+ 1.         1.         1.         1.        ]:
+Confusion Matrix for RandomForestClassifier (Cross-Validation):
+[[23  0]
+ [ 0 23]]
+
+Cross-validation accuracy for LogisticRegression: 1.0
+true pos and fal pos [0. 0. 0. 1.] [0.         0.04347826 1.         1.        ]:
+Confusion Matrix for LogisticRegression (Cross-Validation):
+[[23  0]
+ [ 0 23]]
+
+Cross-validation accuracy for MLPClassifier: 0.9800000000000001
+true pos and fal pos [0. 0. 0. 1.] [0.         0.04347826 1.         1.        ]:
+Confusion Matrix for MLPClassifier (Cross-Validation):
+[[23  0]
+ [ 1 22]]
+
+Cross-validation accuracy for XGBClassifier: 0.8688888888888888
+true pos and fal pos [0.         0.         0.         0.         0.         0.
+ 0.         0.04347826 0.04347826 0.08695652 0.08695652 0.13043478
+ 0.13043478 0.17391304 0.26086957 0.43478261 0.65217391 0.7826087
+ 0.82608696 0.91304348 1.        ] [0.         0.04347826 0.08695652 0.34782609 0.39130435 0.56521739
+ 0.60869565 0.60869565 0.73913043 0.73913043 0.7826087  0.7826087
+ 0.91304348 0.91304348 0.91304348 0.91304348 1.         1.
+ 1.         1.         1.        ]:
+Confusion Matrix for XGBClassifier (Cross-Validation):
+[[20  3]
+ [ 3 20]]
+
+Cross-validation accuracy for SVC: 1.0
+true pos and fal pos [0. 0. 0. 1.] [0.         0.04347826 1.         1.        ]:
+Confusion Matrix for SVC (Cross-Validation):
+[[23  0]
+ [ 0 23]]
+</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>&lt;Figure size 640x480 with 0 Axes&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="esg_text_mining_poc_final_files/figure-html/cell-34-output-3.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               Classifier  Accuracy (CV Mean)
+0              GaussianNB            1.000000
+0  DecisionTreeClassifier            0.802222
+0  RandomForestClassifier            1.000000
+0      LogisticRegression            1.000000
+0           MLPClassifier            0.980000
+0           XGBClassifier            0.868889
+0                     SVC            1.000000</code></pre>
+</div>
+</div>
+<p>5.10 - Plot Accuracy data</p>
+<div id="fd1bfbbc" class="cell" data-execution_count="85">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>sns.set_color_codes(<span class="st">"muted"</span>)</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>sns.barplot(x<span class="op">=</span><span class="st">'Accuracy (CV Mean)'</span>, y<span class="op">=</span><span class="st">'Classifier'</span>, data<span class="op">=</span>log, color<span class="op">=</span><span class="st">"b"</span>)</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Accuracy %'</span>)</span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Classifier Accuracy Normal Models'</span>)</span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="esg_text_mining_poc_final_files/figure-html/cell-35-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>5.10 - Evaluate Model Performance - Some models performed reasonably well/ Was not expecting this given the limited data size. - <em>MLPClassifier</em> gives 1.0 ROC curve value and an accuracy of .925 in both pre and post SMOTE Data. This rings alarms bells that data is overfitting, or something is not right. This would require more investigation, would discount this model data. - Best performing models - <em>LogisticRegression</em> - largest ROC AUC value at .95 but has an accuracy of .75 which is 5th best accuracy. Performed well. - <em>XGBClassifier</em> - 0.81 ROC AUC value abut has an accuracy of 0.875. Again performed well. - Other also performed reasonably well.</p>
+<blockquote class="blockquote">
+<p>LogisticRegression had the followinfg confusion matrix.</p>
+</blockquote>
+<div class="sourceCode" id="cb52"><pre class="sourceCode py code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>[[ <span class="dv">0</span>  <span class="dv">7</span>]</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a> [ <span class="dv">0</span> <span class="dv">23</span>]]</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="op">=&gt;</span> <span class="dv">7</span> <span class="va">False</span> negatives <span class="op">-</span> said <span class="st">'bad'</span> esg but was <span class="st">'good'</span> esg company</span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a><span class="op">=&gt;</span> <span class="dv">23</span> <span class="va">True</span> Positives <span class="op">-</span> said <span class="st">'good'</span> esg <span class="kw">and</span> was <span class="st">'good'</span> esg company</span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a><span class="op">=&gt;</span> <span class="dv">4</span> <span class="va">True</span> Negatives <span class="op">-</span> said <span class="st">'bad'</span> esg <span class="kw">and</span> was <span class="st">'bad'</span> esg company</span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a><span class="op">=&gt;</span> <span class="dv">0</span> <span class="va">False</span> Positive <span class="op">-</span> said <span class="st">'good'</span> esg <span class="kw">and</span> was <span class="st">'bad'</span> esg company</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p>XGBClassifier had the following confusion matrix</p>
+</blockquote>
+<div class="sourceCode" id="cb53"><pre class="sourceCode py code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>[[ <span class="dv">4</span>  <span class="dv">3</span>]</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a> [ <span class="dv">1</span> <span class="dv">22</span>]]</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="op">=&gt;</span> <span class="dv">3</span> <span class="va">False</span> negatives <span class="op">-</span> said <span class="st">'bad'</span> esg but was <span class="st">'good'</span> esg company</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="op">=&gt;</span> <span class="dv">22</span> <span class="va">True</span> Positives <span class="op">-</span> said <span class="st">'good'</span> esg <span class="kw">and</span> was <span class="st">'good'</span> esg company</span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a><span class="op">=&gt;</span> <span class="dv">4</span> <span class="va">True</span> Negatives <span class="op">-</span> said <span class="st">'bad'</span> esg <span class="kw">and</span> was <span class="st">'bad'</span> esg company</span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a><span class="op">=&gt;</span> <span class="dv">0</span> <span class="va">False</span> Positive <span class="op">-</span> said <span class="st">'good'</span> esg <span class="kw">and</span> was <span class="st">'bad'</span> esg company</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Fewer False negatives is important as means telling people the company has poor ethical esg values when infact it has good esg values. This could potentially be unfair and lost business to the companies who were incorrectly labelled. This would need further investigation to try minimise the False negative values.</p>
+<p>Post-SMOTE applied data did make a difference. <em>SVC</em> has an ROC Value of .99, which again rings alarm bells and means this along with <em>MLPClassifier</em> would both be discounted as there is an issue with these being 1.0 or close to 1.0.</p>
+<p><em>XGBClassifier</em> and <em>LogisticRegression</em> remained stable and similar to the use of pre-smote data, whereas <em>DecisionTree</em> and <em>RandomForest</em> both deteriorated with SMOTE data.</p>
+<p>Best model overall would possibly be a combination of <strong>LogicalRegression</strong> and <strong>XGBClassifier</strong>. These both performed well and were stable in both scenarios.</p>
+<p>Overall, a larger data set is still required to validate the data and performance and further investigation and validation is required.</p>
+<section id="step-6---conclusions-and-learnings" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="step-6---conclusions-and-learnings"><span class="header-section-number">2.1</span> Step 6 - Conclusions and Learnings</h3>
+<p>Can we predict whether a company has good or bad esg practices based on reviewing their company reports. This is indicated by</p>
+<ul>
+<li>1 = good ‘esg’ company</li>
+<li>0 = bad ‘esg’ company</li>
+</ul>
+<p>Somewhat surprisingly, two elements wold lead us to believe that this shows promise in text mining analysis and classification as a method to indicate ‘esg’ company performance 1. <strong>Part 1. Data Analysis</strong> - The graph Positive Ethical Keyword Count per Company per 1000 words matches our expectations. - Least Ethical with Lowest Counts per 1000 words = <em>exxonmobil</em>, <em>jbs</em> and <em>aramco</em> - These 3 were selected as they have very low esg rating across our esg ratings i.e.&nbsp;bad esg companies - Companies with the Most ethical word counts per 1000 words = <em>kerrygroup</em>, <em>crh</em>, <em>snmufitkappa</em> and <em>kingspan</em> - These 4 were selected due to their high esg ratings i.e.&nbsp;esg good esg companies 1. <strong>Part 2. Classification</strong> - The cross fold validation and smote correctly correctly predicted 10 and 5 bad companies respectively. This is tghe most positive sign for me and a good indication of potential, especially given our small data set. true negatives woudl be hardest to predict as companies will use positive terms in reports many times, but the model cna still predict bad esg performers despite this.</p>
+<section id="challenges" class="level4" data-number="2.1.1">
+<h4 data-number="2.1.1" class="anchored" data-anchor-id="challenges"><span class="header-section-number">2.1.1</span> 6.1 Challenges</h4>
+<ul>
+<li>Standardizing and cleaning the date. Not all reports are the same or standardized. Lots of variations in data provided and formats. Volume of data. Need to get a lot more company report</li>
+<li>Time to process the pdfs is approx between 30 secs and 2 mins per pdf. This adds up when dealing with large numbers of pdfs… It takes approx 40 mins to process our small data set pof pdfs</li>
+<li>Companies can stack the reports by repeating positive terms. Always a risk, even if our classification models could see through that in a good few instances in our data set</li>
+<li>Storage - we need to increase our dataset hugely across a traneg of sources to improve accuracy. Storage may become an issue as data storage needs increase….
+<ul>
+<li>we used 44 files across 7 companies which took up aprox 500 MB of space</li>
+</ul></li>
+</ul>
+</section>
+<section id="improvements" class="level4" data-number="2.1.2">
+<h4 data-number="2.1.2" class="anchored" data-anchor-id="improvements"><span class="header-section-number">2.1.2</span> 6.2 Improvements</h4>
+<ul>
+<li>tie it into Company Registration Office (CRO) data to include ownership details</li>
+<li>Get more sample data</li>
+<li>Include social media and news articles for each company to enhance the data and catch potentisal negativity around it</li>
+<li>Include court documetn data</li>
+<li>if have different data sources i.e.company reports, social media, news, courts data can weight those accordingly to give more accurate result.</li>
+</ul>
+<p>Overall, this has been surprisingly successful. The initial assumption would be that it would be too difficult to discern a companies esg status solely base don their company reports. However, this shows great potential if the data set could be increased and especially if it can eb broadened to include other sources other than self authored reports.</p>
+</section>
+</section>
+<section id="appendix---references" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="appendix---references"><span class="header-section-number">2.2</span> Appendix - References</h3>
+<ul>
+<li><a href="https://oralytics.com/">oralytics</a> &gt;&gt;&gt; #GE2020 Analysing Party Manifestos using Python</li>
+<li><a href="https://github.com/pdfminer/pdfminer.six">https://github.com/pdfminer/pdfminer.six</a> &gt;&gt;&gt; community maintained fork of the original PDFMiner</li>
+<li><a href="https://pdfminersix.readthedocs.io">pdfprimer docs</a></li>
+<li><a href="https://www.nltk.org/">https://www.nltk.org/</a></li>
+<li><a href="https://docs.python.org/3/howto/regex.html">https://docs.python.org/3/howto/regex.html</a></li>
+<li><a href="https://docs.python.org/3/howto/regex.html">https://regex101.com/</a></li>
+<li>General ESG references outside of those already included are :
+<ul>
+<li><a href="https://www.responsible-investor.com/">https://www.responsible-investor.com/</a></li>
+<li><a href="https://www.knowesg.com">https://www.knowesg.com/</a></li>
+<li>various news sites</li>
+</ul></li>
+</ul>
+<p>[2] <a href="https://www.geeksforgeeks.org/python-convert-list-of-dictionaries-to-json/">Python – Convert list of dictionaries to JSON</a></p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

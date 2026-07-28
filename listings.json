@@ -3,7 +3,10 @@
     "listing": "/projects.html",
     "items": [
       "/r-projects/probability_and_statistics_1.html",
-      "/notebooks/fast_food_sentient_analysis.html"
+      "/notebooks/UCI-bank-marketing-analysis.html",
+      "/notebooks/fast_food_sentient_analysis.html",
+      "/notebooks/esg_text_mining_poc_final.html",
+      "/notebooks/exoplanet-clustering.html"
     ]
   }
 ]
