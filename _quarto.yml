@@ -9,6 +9,9 @@ project:
     - "*.R"
     - "*.ipynb"
     - "!files/"
+  resources:
+    - "static-html/**"
+
 
 website:
   title: "Data Science Interesting thigns site "
