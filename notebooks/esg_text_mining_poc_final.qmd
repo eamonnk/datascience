@@ -1,0 +1,9 @@
+---
+title: "ESG Analysis"
+subtitle: "Environment, Social Governance (ESG) company analysis"
+description: "Can we perform Data Analysis and Classification on company reports to determine and predict how ethical a company is in relation to environmetal, social and governance (esg) criteria? In other words, Can we gain a trustworthy ethical insight, into companies esg values based off data they themselves provide in their reports?"
+date: "2026-07-27"
+categories: [Python, Clustering, Text Mining]
+---
+
+[View the full analysis](../html/esg_text_mining_poc_final.html)
