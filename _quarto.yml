@@ -10,7 +10,7 @@ project:
     - "*.ipynb"
     - "!files/"
   resources:
-    - "static-html/**"
+    - "html/**"
 
 
 website:
